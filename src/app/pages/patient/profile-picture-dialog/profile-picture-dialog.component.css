@@ -1,0 +1,75 @@
+/* Profile Picture Update Dialog */
+.mat-dialog-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  
+  .file-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background: #2E7D32;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
+  .file-label:hover {
+    background: #1B5E20;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+  
+  small {
+    font-size: 0.9rem;
+    color: white;
+    opacity: 0.8;
+  }
+  
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    gap: 10px;
+  }
+  
+  button[mat-button] {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  
+  button[mat-flat-button] {
+    background: #1A9A63;
+    color: white;
+  }
+  
+  button[mat-flat-button]:hover {
+    background: #157a50;
+  }
+  
+  button[mat-flat-button]:disabled {
+    background: gray;
+    cursor: not-allowed;
+  }
+  

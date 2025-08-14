@@ -1,0 +1,131 @@
+<div class="bg-img">
+  <div class="overlay"></div>
+  <div class="cover-image">
+    <img src="www.jpg" alt="" role="presentation" class="full-cover">
+  </div>
+  
+  <app-p-header></app-p-header>
+
+  <div class="navbar-spacer"></div>
+
+  <app-side-navbar></app-side-navbar>
+
+  <div class="content-wrapper">
+    <div class="content">
+      <div class="filter-form">
+        <div class="form-header">
+          <h2>{{ 'chooseAppointment.title' | transloco }}</h2>
+          <p>{{ 'chooseAppointment.subtitle' | transloco }}</p>
+        </div>
+        <form [formGroup]="locationForm">
+          <!-- Country Field -->
+          <div class="form-group">
+            <label for="countryId" class="sr-only">{{ 'chooseAppointment.country' | transloco }}</label>
+            <div class="input-container">
+              <i class="fas fa-globe" aria-hidden="true"></i>
+              <select id="countryId" formControlName="countryId" 
+                      (change)="updateGovernorates(CountrySelector.value)" 
+                      #CountrySelector
+                      [attr.aria-label]="'chooseAppointment.country' | transloco"
+                      aria-required="true">
+                <option [value]="null" disabled selected>
+                  {{ 'chooseAppointment.selectCountry' | transloco }}
+                </option>
+                <option *ngFor="let c of countries" [value]="c.id">
+                  {{ translocoService.getActiveLang() === 'ar' ? c.name_Ar : c.name_En }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="formControls['countryId'].touched && formControls['countryId'].invalid" class="error">
+              <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+              <div *ngIf="formControls['countryId'].errors?.['required']">
+                {{ 'errors.countryRequired' | transloco }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Governorate Field -->
+          <div class="form-group">
+            <label for="governorateId" class="sr-only">{{ 'chooseAppointment.governorate' | transloco }}</label>
+            <div class="input-container">
+              <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+              <select id="governorateId" formControlName="governorateId" 
+                      (change)="updateDistricts(GovSelector.value)" 
+                      #GovSelector
+                      [attr.aria-label]="'chooseAppointment.governorate' | transloco"
+                      aria-required="true">
+                <option [value]="null" disabled selected>
+                  {{ 'chooseAppointment.selectGovernorate' | transloco }}
+                </option>
+                <option *ngFor="let g of governorates" [value]="g.id">
+                  {{ translocoService.getActiveLang() === 'ar' ? g.name_Ar : g.name_En }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="formControls['governorateId'].touched && formControls['governorateId'].invalid" class="error">
+              <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+              <div *ngIf="formControls['governorateId'].errors?.['required']">
+                {{ 'errors.governorateRequired' | transloco }}
+              </div>
+            </div>
+          </div>
+
+          <!-- District Field -->
+          <div class="form-group">
+            <label for="districtId" class="sr-only">{{ 'chooseAppointment.district' | transloco }}</label>
+            <div class="input-container">
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+              <select id="districtId" formControlName="districtId"
+                      [attr.aria-label]="'chooseAppointment.district' | transloco"
+                      aria-required="true">
+                <option [value]="null" disabled selected>
+                  {{ 'chooseAppointment.selectDistrict' | transloco }}
+                </option>
+                <option *ngFor="let d of districts" [value]="d.id">
+                  {{ translocoService.getActiveLang() === 'ar' ? d.name_Ar : d.name_En }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="formControls['districtId'].touched && formControls['districtId'].invalid" class="error">
+              <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+              <div *ngIf="formControls['districtId'].errors?.['required']">
+                {{ 'errors.districtRequired' | transloco }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Specialization Field -->
+          <div class="form-group">
+            <label for="specializationId" class="sr-only">{{ 'chooseAppointment.specialization' | transloco }}</label>
+            <div class="input-container">
+              <i class="fas fa-stethoscope" aria-hidden="true"></i>
+              <select id="specializationId" formControlName="specializationId"
+                      [attr.aria-label]="'chooseAppointment.specialization' | transloco">
+                <option [value]="null" disabled selected>
+                  {{ 'chooseAppointment.selectSpecialization' | transloco }}
+                </option>
+                <option *ngFor="let spec of specializations" [ngValue]="spec.id">
+                  {{ translocoService.getActiveLang() === 'ar' ? spec.name_Ar : spec.name_En }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+          </div>
+
+          <!-- Search Button -->
+          <button type="button" (click)="filterDoctors()" [attr.aria-label]="'chooseAppointment.searchButton' | transloco">
+            <i class="fas fa-search" aria-hidden="true"></i> 
+            {{ 'chooseAppointment.searchButton' | transloco }}
+          </button>
+        </form>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+

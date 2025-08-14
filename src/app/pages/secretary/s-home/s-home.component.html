@@ -1,0 +1,137 @@
+<div class="dashboard-wrapper">
+  <app-s-header></app-s-header>
+
+  <main class="dashboard-main-content">
+    <section class="primary-content">
+      <div class="analytics-card">
+        <div class="card-header">
+          <h2 class="card-title">{{ 'dashboard.appointmentStatus' | transloco }}</h2>
+        </div>
+
+        <div class="card-content">
+          <div *ngIf="isLoading" class="loader-container">
+            <div class="spinner"></div>
+            <p>{{ 'dashboard.loadingAppointments' | transloco }}</p>
+          </div>
+
+          <div *ngIf="!isLoading">
+            <div *ngIf="hasAppointmentData; else noDataTemplate" class="chart-and-stats-area">
+              <div class="chart-container" #chartContainerRef>
+                <ngx-charts-pie-chart
+                  *ngIf="isMobile"
+                  [results]="pieChartData"
+                  [scheme]="colorScheme"
+                  [labels]="showLabels"
+                  [doughnut]="isDoughnut"
+                  [legend]="showLegend"
+                  [legendPosition]="legendPosition"
+                  [legendTitle]="legendTitle"
+                  [view]="mobileView"
+                  [tooltipDisabled]="false"
+                  [animations]="true">
+                </ngx-charts-pie-chart>
+
+                <ngx-charts-pie-chart
+                  *ngIf="!isMobile"
+                  [results]="pieChartData"
+                  [scheme]="colorScheme"
+                  [labels]="showLabels"
+                  [doughnut]="isDoughnut"
+                  [legend]="showLegend"
+                  [legendPosition]="legendPosition"
+                  [legendTitle]="legendTitle"
+                  [view]="desktopView"
+                  [tooltipDisabled]="false">
+                </ngx-charts-pie-chart>
+              </div>
+
+              <div class="appointment-stats">
+                <div class="stat-box">
+                  <div class="stat-icon upcoming-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ upcomingCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.upcoming' | transloco }}</span>
+                  </div>
+                </div>
+
+                <div class="stat-box">
+                  <div class="stat-icon cancelled-icon">
+                    <i class="fas fa-times-circle"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ cancelledCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.cancelled' | transloco }}</span>
+                  </div>
+                </div>
+
+                <div class="stat-box">
+                  <div class="stat-icon processed-icon">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ processedCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.processed' | transloco }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #noDataTemplate>
+              <div class="empty-state">
+                <div class="empty-icon">
+                  <i class="fas fa-calendar-times"></i>
+                </div>
+                <h3>{{ 'dashboard.noAppointmentsTitle' | transloco }}</h3>
+                <p>{{ 'dashboard.noAppointmentsMessage' | transloco }}</p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="secondary-content">
+      <div class="actions-card">
+        <div class="card-header">
+          <h2 class="card-title">{{ 'dashboard.quickActions' | transloco }}</h2>
+        </div>
+
+        <div class="card-content">
+          <nav class="action-buttons">
+            <a routerLink="/my-appointment" class="action-button">
+              <span class="action-icon"><i class="fas fa-calendar-check"></i></span>
+              <span class="action-text">{{ 'header.appointments_sec' | transloco }}</span>
+            </a>
+
+            <a (click)="navigateToPhoneReserve()" class="action-button">
+              <span class="action-icon"><i class="fas fa-phone"></i></span>
+              <span class="action-text">{{ 'dashboard.phoneReserve' | transloco }}</span>
+            </a>
+
+            <a (click)="navigateToWalkInReserve()" class="action-button">
+              <span class="action-icon"><i class="fas fa-user-clock"></i></span>
+              <span class="action-text">{{ 'dashboard.walkinReserve' | transloco }}</span>
+            </a>
+
+            <a routerLink="/service-settings" class="action-button">
+              <span class="action-icon"><i class="fas fa-cog"></i></span>
+              <span class="action-text">{{ 'dashboard.serviceSettings' | transloco }}</span>
+            </a>
+
+            <a routerLink="/timeslot-management" class="action-button">
+              <span class="action-icon"><i class="fas fa-calendar-alt"></i></span>
+              <span class="action-text">{{ 'dashboard.timeslotManagement' | transloco }}</span>
+            </a>
+
+            <a routerLink="/patients" class="action-button">
+              <span class="action-icon"><i class="fas fa-users"></i></span>
+              <span class="action-text">{{ 'dashboard.patients' | transloco }}</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>

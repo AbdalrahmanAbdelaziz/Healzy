@@ -1,0 +1,365 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-color: #ffffff;
+    padding-top: env(safe-area-inset-top);
+}
+
+/* Full-width background container */
+.volunteer-background {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background-color: #f5f5f5;
+    padding: 60px 0;
+}
+
+.logo-container {
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.logo-image {
+    height: 50px;
+    width: 120px;
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+}
+
+.navbar {
+    background-color: #165B40;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(15px + env(safe-area-inset-top)) 30px 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.app-name {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #24CC81;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.right-button {
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    background-color: #24CC81;
+    color: #ffffff;
+    font-size: 1em;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: #1A9A63;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-spacer {
+    height: 100px; /* This already handles spacing under fixed navbar */
+}
+
+.landing-page {
+    font-family: Arial, sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.text-section {
+    max-width: 60%;
+}
+
+.text-section h1,
+.section h1 {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.text-section h2,
+.section h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.text-section h3 {
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.text-section p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.help-button {
+    background: #24CC81;
+    color: #fff;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: 600;
+}
+
+.help-button:hover {
+    background-color: #1A9A63;
+    transform: scale(1.05);
+}
+
+.image-section img {
+    width: 500px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mission-section {
+    padding: 60px 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.mission-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.volunteer-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.zoom-in {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.zoom-in.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .text-section {
+        max-width: 50%;
+    }
+
+    .image-section img {
+        width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo-container {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .right-button {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .section {
+        flex-direction: column;
+        gap: 30px;
+        padding: 40px 20px;
+    }
+
+    .volunteer-container,
+    .mission-container {
+        flex-direction: column;
+    }
+
+    .text-section {
+        max-width: 100%;
+        text-align: center;
+        order: 2;
+    }
+
+    .image-section {
+        order: 1;
+    }
+
+    .text-section h1,
+    .section h1 {
+        font-size: 1.8em;
+    }
+
+    .text-section h2,
+    .section h2 {
+        font-size: 1.5em;
+    }
+
+    .text-section h3 {
+        font-size: 1em;
+    }
+
+    .text-section p {
+        font-size: 1em;
+    }
+
+    .image-section img {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .help-button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-section h1,
+    .section h1 {
+        font-size: 1.6em;
+    }
+
+    .text-section h2,
+    .section h2 {
+        font-size: 1.3em;
+    }
+
+    .help-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+}
+
+/* Add these RTL-specific styles */
+[dir="rtl"] .right-button button:not(:last-child) {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] .text-section {
+    text-align: right;
+}
+
+[dir="rtl"] .mission-container,
+[dir="rtl"] .volunteer-container {
+    direction: rtl;
+}
+
+/* Language switcher button styles */
+.navbar button.lang-switcher {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
+    margin: 0 5px;
+}
+
+.navbar button.lang-switcher.active {
+    background: white;
+    color: #165B40;
+}

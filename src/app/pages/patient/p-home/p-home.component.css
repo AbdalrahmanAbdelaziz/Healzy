@@ -1,0 +1,824 @@
+/* General Content Layout */
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 100px;
+  min-height: 100vh;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* History Modal */
+.history-modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 0;
+  animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+  border-bottom: 1px solid #ECF0F1; /* border-color */
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+}
+
+.modal-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2C3E50; /* primary-color */
+  margin: 0;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #E74C3C; /* status-cancelled */
+}
+
+/* History Modal Body */
+.history-modal .modal-body {
+  padding: 25px;
+  flex-grow: 1;
+}
+
+/* History Cards */
+.history-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #ECF0F1; /* border-color */
+}
+
+.history-card:last-child {
+  margin-bottom: 0;
+}
+
+.history-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.history-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding: 0;
+  border-bottom: none;
+  background-color: transparent;
+}
+
+.history-card .card-header img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1ABC9C; /* secondary-color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.history-card .doctor-info h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2C3E50; /* primary-color */
+  margin: 0;
+}
+
+.history-card .doctor-info p {
+  font-size: 1rem;
+  color: #555;
+  margin: 3px 0;
+}
+
+.history-card .clinic {
+  font-size: 0.9rem;
+  color: #1ABC9C; /* secondary-color */
+  font-weight: 600;
+}
+
+.history-card .card-body {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #2C3E50; /* text-dark */
+}
+
+.history-card .status.done {
+  background: #2ECC71; /* status-done */
+  color: #FFFFFF; /* text-light */
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* Cancel Confirmation Modal */
+.confirmation-modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  padding: 25px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.confirmation-modal .modal-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1ABC9C; /* secondary-color */
+  margin-bottom: 15px;
+}
+
+.confirmation-modal .modal-body p {
+  font-size: 1.1rem;
+  color: #2C3E50; /* text-dark */
+  margin-bottom: 20px;
+}
+
+.confirmation-modal .modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.confirmation-modal .confirm-btn,
+.confirmation-modal .cancel-btn {
+  padding: 10px 25px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  transition: background 0.3s ease;
+  flex: 1;
+  max-width: 120px;
+}
+
+.confirmation-modal .confirm-btn {
+  background: #2ECC71;
+  color: white;
+}
+
+.confirmation-modal .confirm-btn:hover {
+  background: #16A085;
+}
+
+.confirmation-modal .cancel-btn {
+  background: #E74C3C;
+  color: white;
+}
+
+.confirmation-modal .cancel-btn:hover {
+  background: #C0392B;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 10px;
+  flex-grow: 1;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Appointments Container */
+.appointment-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px #65E4B3;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.appointment-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2C3E50; /* primary-color */
+  margin-bottom: 2rem;
+}
+
+/* No Appointments Message */
+.no-appointments {
+  font-size: 1.2rem;
+  color: #2C3E50; /* text-dark */
+  margin-top: 2rem;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.no-appointments a {
+  color: #1ABC9C; /* secondary-color */
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.no-appointments a:hover {
+  text-decoration: underline;
+  color: #16A085; /* dark-accent */
+}
+
+/* Appointment Grid */
+.appointment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* Appointment Card - Status-based Backgrounds */
+.appointment-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+  border: 2px solid #2ECC71;
+}
+
+.appointment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: #2ECC71;
+}
+
+.card-header img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1ABC9C; /* secondary-color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-info {
+  text-align: left;
+  flex: 1;
+}
+
+.doctor-info h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2C3E50; /* primary-color */
+  margin: 0 0 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.doctor-info h3::before {
+  content: "👨‍⚕️";
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+.doctor-info p {
+  font-size: 0.95rem;
+  color: #2C3E50; /* text-dark */
+  margin: 3px 0;
+  display: flex;
+  align-items: center;
+}
+
+.doctor-info p::before {
+  content: "🩺";
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.clinic {
+  font-size: 0.9rem;
+  color: #1ABC9C; /* secondary-color */
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.clinic::before {
+  content: "🏥";
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+/* Card Body */
+.card-body {
+  padding: 20px;
+  font-size: 1rem;
+  color: #2C3E50; /* text-dark */
+  text-align: left;
+}
+
+.card-body p {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-body p strong {
+  min-width: 70px;
+  display: inline-block;
+  color: #2C3E50; /* text-dark */
+}
+
+.card-body p::before {
+  margin-right: 10px;
+  font-size: 1.1rem;
+}
+
+.card-body p:nth-child(1)::before {
+  content: "📅";
+}
+
+.card-body p:nth-child(2)::before {
+  content: "⏰";
+}
+
+.status {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 15px 0 5px 0;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #757e83;
+  padding: 4px 2px;
+  color: black;
+}
+
+.status::before {
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.status.done {
+  background: #2ECC71; /* status-done */
+  color: white;
+  background-color: #66BB6A;
+}
+
+.status.done::before {
+  content: "✅";
+}
+
+.status.upcoming {
+  background: #3498DB; /* status-upcoming */
+  color: white;
+  background-color: #FFEF00;
+  color: black;
+}
+
+.status.upcoming::before {
+  content: "⏳";
+}
+
+.status.in-progress {
+  background: #9B59B6; /* status-in-progress */
+  color: white;
+  background-color: #7E57C2;
+  color: black;
+}
+
+.status.in-progress::before {
+  content: "🔄";
+}
+
+.status.arrived {
+  background: #F39C12; /* status-arrived */
+  color: white;
+  background-color: #42A5F5;
+  color: black;
+}
+
+.status.arrived::before {
+  content: "🚶‍♂️";
+}
+
+.status.cancelled {
+  background: #FF6B6B;
+  color: white;
+}
+
+.status.cancelled::before {
+  content: "❌";
+}
+
+/* Card Footer */
+.card-footer {
+  margin-top: auto;
+  padding: 15px 20px;
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cancel-btn {
+  background: #e74c3c;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.cancel-btn:hover {
+  background: #C0392B;
+  transform: translateY(-2px);
+}
+
+.reschedule-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.reschedule-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* History Button */
+.history-btn {
+  background: #2ECC71;
+  color: black;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.history-btn:hover {
+  background: #16A085;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    padding-top: 80px;
+    gap: 10px;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .appointment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-header img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .doctor-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .card-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .reschedule-btn {
+    width: 100%;
+  }
+
+  .appointment-container {
+    padding: 20px 15px;
+  }
+}
+
+/* Animation for buttons */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cancel-btn:hover,
+.reschedule-btn:hover,
+.history-btn:hover {
+  animation: pulse 0.5s ease;
+}
+
+/* Feedback Modal Styles */
+.feedback-modal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  padding: 25px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.feedback-modal .modal-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ECF0F1; /* border-color */
+  padding-bottom: 15px;
+  background-color: white;
+  position: static;
+  box-shadow: none;
+}
+
+.feedback-modal .modal-body {
+  margin-bottom: 20px;
+}
+
+.feedback-modal .modal-body p {
+  font-size: 1.1rem;
+  color: #2C3E50; /* text-dark */
+  margin-bottom: 20px;
+}
+
+.rating-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  font-size: 2rem;
+}
+
+.rating-container div {
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.2s;
+  margin: 0 5px;
+}
+
+.rating-container div.active {
+  color: #F1C40F; /* star-color */
+}
+
+.rating-container div:hover {
+  color: #F1C40F; /* star-color */
+}
+
+.form-group {
+  margin-top: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2C3E50; /* text-dark */
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.submit-btn {
+  background: #1ABC9C; /* secondary-color */
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #16A085; /* dark-accent */
+}
+
+.skip-btn {
+  background: #ccc;
+  color: #2C3E50; /* text-dark */
+  padding: 10px 25px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.skip-btn:hover {
+  background: #bbb;
+}
+
+/* History Card Rating Button */
+.history-card .rate-btn {
+  background: #1ABC9C; /* secondary-color */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+.history-card .rate-btn:hover {
+  background: #16A085; /* dark-accent */
+}
+
+/* Make modal header sticky */
+.history-modal {
+  position: relative;
+  overflow-y: auto;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #2ECC71; /* primary-color */
+  padding: 15px 25px;
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px 16px 0 0;
+}
+
+.sticky-header h2 {
+  color: #FFFFFF; /* text-light */
+}
+
+/* Dark mode support */
+/* You'll need to define your dark mode colors directly here if you remove variables entirely */
+.dark-mode .sticky-header {
+  /* Example for dark mode without variables */
+  background: #333; /* A dark background */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure close button remains visible */
+.close-btn {
+  position: relative;
+  z-index: 11;
+  color: #FFFFFF; /* text-light */
+}
+
+.close-btn:hover {
+  color: #E74C3C; /* status-cancelled */
+}
+
+.rated-message {
+  color: #1ABC9C; /* secondary-color */
+  font-weight: bold;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rated-message i {
+  font-size: 1.2rem;
+}
+
+/* RTL Specific Styles */
+[dir="rtl"] .card-body p strong {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+[dir="rtl"] .doctor-info {
+  text-align: right;
+}
+
+[dir="rtl"] .modal-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .modal-footer {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .form-group textarea {
+  text-align: right;
+}
+
+[dir="rtl"] .history-btn::before,
+[dir="rtl"] .cancel-btn::before,
+[dir="rtl"] .reschedule-btn::before {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .doctor-info h3::before,
+[dir="rtl"] .doctor-info p::before,
+[dir="rtl"] .clinic::before,
+[dir="rtl"] .card-body p:nth-child(1)::before,
+[dir="rtl"] .card-body p:nth-child(2)::before {
+  margin-right: 0;
+  margin-left: 8px;
+}

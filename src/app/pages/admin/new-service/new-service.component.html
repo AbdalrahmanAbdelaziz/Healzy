@@ -1,0 +1,83 @@
+<app-admin-header></app-admin-header>
+
+<div class="page-container">
+  <div class="bg-img">
+    <div class="cover-image"></div>
+    <div class="overlay"></div>
+  </div>
+  
+  <div class="form-container">
+    <div class="form-content">
+      <div class="form-header">
+        <h1>{{ 'service_form.title' | transloco }}</h1>
+      </div>
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-field">
+          <label for="serviceName">{{ 'service_form.service_name' | transloco }}</label>
+          <input 
+            type="text" 
+            id="serviceName" 
+            [(ngModel)]="newService.serviceName"
+            name="serviceName"
+            [placeholder]="'service_form.service_name_placeholder' | transloco"
+            required
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="serviceDescription">{{ 'service_form.description' | transloco }}</label>
+          <textarea 
+            id="serviceDescription" 
+            [(ngModel)]="newService.serviceDescription"
+            name="serviceDescription"
+            [placeholder]="'service_form.description_placeholder' | transloco"
+          ></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="duration">{{ 'service_form.duration' | transloco }}</label>
+          <input 
+            type="number" 
+            id="duration" 
+            [(ngModel)]="newService.avgDurationInMinutes"
+            name="avgDurationInMinutes"
+            min="1"
+            [placeholder]="'service_form.duration_placeholder' | transloco"
+            required
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="specialization">{{ 'service_form.specialization' | transloco }}</label>
+          <select 
+            id="specialization"
+            [(ngModel)]="newService.specializationId"
+            name="specializationId"
+            required
+          >
+            <option value="" disabled selected hidden>
+              {{ 'service_form.select_specialization' | transloco }}
+            </option>
+            <option *ngFor="let spec of specializations" [value]="spec.id">
+              {{ getTranslatedName(spec) }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="resetForm()">
+            {{ 'common.reset' | transloco }}
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+            <span *ngIf="!isSubmitting">{{ 'service_form.create_button' | transloco }}</span>
+            <span *ngIf="isSubmitting">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              {{ 'common.creating' | transloco }}
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

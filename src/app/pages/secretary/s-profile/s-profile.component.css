@@ -1,0 +1,172 @@
+/* General Page Styling */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    overflow-x: hidden;
+  }
+  
+  /* Background Image */
+  .bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Overlay */
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for better contrast */
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* Profile Container */
+  .profile-container {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    max-width: 800px;
+    width: 90%; /* Adjusted width for better responsiveness */
+    margin: 100px auto; /* Center the container */
+    max-height: 80vh; /* Limit height to 80% of the viewport */
+    overflow-y: auto; /* Make the form scrollable */
+  }
+  
+  /* Logo */
+  .logo {
+    width: 120px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  /* Profile Picture */
+  .profile-picture-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #24CC81; /* Green border */
+  }
+  
+  .upload-label {
+    display: block;
+    margin-top: 10px;
+    color: #165B40; /* Dark green for the label */
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .upload-label:hover {
+    color: #24CC81; /* Green on hover */
+  }
+  
+  /* Form Groups */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #165B40; /* Dark green for labels */
+    margin-bottom: 8px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #24CC81; /* Green border on focus */
+    box-shadow: 0 0 8px rgba(36, 204, 129, 0.5);
+    outline: none;
+  }
+  
+  /* Error Messages */
+  .error {
+    color: #D32F2F; /* Red for errors */
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Submit Button */
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #165B40; /* Dark green for the button */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #24CC81; /* Green on hover */
+  }
+  
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .profile-container {
+      padding: 20px;
+      max-width: 90%; /* Adjusted for smaller screens */
+    }
+  
+    .profile-picture {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profile-container {
+      padding: 15px;
+      max-width: 95%; /* Adjusted for mobile screens */
+    }
+  
+    .profile-picture {
+      width: 100px;
+      height: 100px;
+    }
+  }

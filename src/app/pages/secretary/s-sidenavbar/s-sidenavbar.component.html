@@ -1,0 +1,22 @@
+<!-- <div class="content">
+    <div class="side-navbar" [class.collapsed]="isCollapsed">
+      <button class="toggle-btn" (click)="toggleSidebar()" type="button" title="Toggle Sidebar" aria-label="Toggle Sidebar">
+        <i class="fas" [ngClass]="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'"></i>
+      </button>
+      
+    
+      <div class="user-info" *ngIf="!isCollapsed">
+        <img [src]="patient.data.profilePicture ? BASE_URL + '/' + patient.data.profilePicture : 'default.jpg'" 
+             alt="User profile picture" class="user-img" />
+        
+        <div class="user-details">
+          <h3><i class="fas fa-user"></i> {{ patient.data.firstName }} {{ patient.data.lastName }}</h3>
+          <p><i class="fas fa-at"></i> {{ patient.data.username }}</p>
+        </div>
+      </div>
+    
+      <div class="side-navbar-links">
+        <a routerLink="/s-profile" class="side-navbar-link"><i class="fas fa-id-card"></i> <span *ngIf="!isCollapsed">Profile</span></a>
+        <a (click)="logout()" class="side-navbar-link"><i class="fas fa-sign-out-alt"></i> <span *ngIf="!isCollapsed">Logout</span></a>
+      </div>
+    </div> -->

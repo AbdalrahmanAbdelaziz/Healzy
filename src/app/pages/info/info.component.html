@@ -1,0 +1,82 @@
+<div class="landing-page" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <header class="navbar">
+    <div class="logo-container">
+      <img src="vv_w.png" 
+           [alt]="'info.logoAlt' | transloco" 
+           alt="Company logo"  
+           class="logo-image" 
+           routerLink="/">
+    </div>
+    
+    <!-- <div class="language-switcher">
+      <button (click)="switchLanguage('en')" [class.active]="currentLang === 'en'">EN</button>
+      <span class="separator">|</span>
+      <button (click)="switchLanguage('ar')" [class.active]="currentLang === 'ar'">عربي</button>
+    </div> -->
+    
+    <div class="right-button">
+      <button routerLink="/login">{{ 'info.login' | transloco }}</button>
+      <button routerLink="/register">{{ 'info.register' | transloco }}</button>
+    </div>
+  </header>
+
+  <div class="navbar-spacer"></div>
+
+  <!-- Volunteer Section with full-width background -->
+  <div class="volunteer-background">
+    <div class="volunteer-container full-width section fade-in">
+      <div class="text-section">
+        <h1>{{ 'info.findDoctorsTitle' | transloco }}</h1>
+        <p>{{ 'info.findDoctorsSubtitle' | transloco }}</p>
+        <button class="help-button" routerLink="/login">{{ 'info.bookAppointment' | transloco }}</button>
+      </div>
+
+      <div class="image-section">
+        <img src="f.webp" [alt]="'info.doctorConsultation' | transloco" alt="Doctor consultation illustration">
+      </div>
+    </div>
+  </div>
+
+  <div class="mission-section full-width section zoom-in">
+    <div class="mission-container">
+      <div class="image-section">
+        <img src="ww.jpg" alt="" aria-hidden="true" />
+      </div>
+
+      <div class="text-section">
+        <h2>{{ 'info.whyChooseTitle' | transloco }}</h2>
+        <p>{{ 'info.whyChooseText' | transloco }}</p>
+        <button class="help-button" routerLink="/login">{{ 'info.learnMore' | transloco }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Volunteer Section with full-width background -->
+  <div class="volunteer-background">
+    <div class="volunteer-container full-width section fade-in">
+      <div class="text-section">
+        <h1>{{ 'info.howItWorksTitle' | transloco }}</h1>
+        <h3>{{ 'info.howItWorksSubtitle' | transloco }}</h3>
+        <p>{{ 'info.howItWorksText' | transloco }}</p>
+        <button class="help-button" routerLink="/login">{{ 'info.startNow' | transloco }}</button>
+      </div>
+
+      <div class="image-section">
+        <img src="ee.png" alt="" aria-hidden="true" />
+      </div>
+    </div>
+  </div>
+
+  <div class="mission-section full-width section zoom-in">
+    <div class="image-section">
+      <img src="d.jpg" alt="" aria-hidden="true">
+    </div>
+
+    <div class="text-section">
+      <h1>{{ 'info.manageAppointmentsTitle' | transloco }}</h1>
+      <h3>{{ 'info.manageAppointmentsSubtitle' | transloco }}</h3>
+      <p>{{ 'info.manageAppointmentsText' | transloco }}</p>
+      <button class="help-button" routerLink="/login">{{ 'info.viewAppointments' | transloco }}</button>
+    </div>
+  </div>
+</div>

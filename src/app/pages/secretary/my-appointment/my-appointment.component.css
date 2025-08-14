@@ -1,0 +1,388 @@
+/* my-appointments.component.css */
+
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 0;
+  color: #333; /* Darker default text for better contrast */
+}
+
+/* Appointment Container */
+.appointment-container {
+  max-width: 1200px;
+  margin: 100px auto 40px auto; /* Adjusted top margin for header */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px #24CC81;
+}
+
+/* Title */
+.appointment-container h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+}
+
+/* Dropdown Styling */
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 15px; /* Space between label and select */
+}
+
+.dropdown-container label {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.dropdown-container select {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 2px solid #24CC81; /* Border color from primary */
+  background: #fff;
+  color: #165B40;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 220px;
+}
+
+.dropdown-container select:focus {
+  outline: none;
+  border-color: #165B40; /* Darker green on focus */
+  box-shadow: 0 0 0 3px rgba(36, 204, 129, 0.2); /* Soft shadow on focus */
+}
+
+/* Table Responsive Wrapper */
+.table-responsive {
+  overflow-x: auto; /* Ensures table is scrollable on smaller screens */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Table Styling */
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden; /* Ensures rounded corners apply to content */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-table thead {
+  background: #24CC81; /* Primary header background */
+}
+
+.appointment-table th,
+.appointment-table td {
+  padding: 18px 15px; /* Increased padding for better spacing */
+  text-align: center;
+  border-bottom: 1px solid #eee; /* Lighter border for distinction */
+}
+
+.appointment-table th {
+  font-size: 1.05rem;
+  font-weight: 600;
+  white-space: nowrap; /* Prevent wrapping in headers */
+}
+
+.appointment-table tbody tr:last-child td {
+  border-bottom: none; /* No border for the last row */
+}
+
+.appointment-table tbody tr:hover {
+  background: #eee; /* Lighter hover background */
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Actions Column Specific Styling */
+.appointment-table td.actions {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  justify-content: center;
+  gap: 8px; /* Space between action buttons */
+  padding: 10px 15px; /* Adjust padding for button container */
+}
+
+/* Default button style */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px; /* Slightly more rounded buttons */
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+/* Button colors */
+.btn-arrived {
+  background: #4CAF50; /* Green */
+  color: white;
+}
+
+.btn-next {
+  background: #2196F3; /* Blue */
+  color: white;
+}
+
+.btn-progress {
+  background: #FF9800; /* Orange */
+  color: white;
+}
+
+.btn-processed {
+  background: #9C27B0; /* Purple */
+  color: white;
+}
+
+.btn-reschedule {
+  background: #00BCD4; /* Cyan */
+  color: white;
+}
+
+.btn-cancel {
+  background: #F44336; /* Red */
+  color: white;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px); /* Lift effect on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+}
+
+/* Disabled button style */
+.btn:disabled {
+  background-color: #cccccc;
+  color: #888888;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none; /* No lift effect when disabled */
+  box-shadow: none; /* No shadow when disabled */
+}
+
+/* Empty State Styles */
+.no-appointments {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 350px; /* Increased height for better visual presence */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px #24CC81;
+  margin-top: 30px;
+  padding: 50px;
+}
+
+.empty-state {
+  text-align: center;
+  max-width: 600px;
+}
+
+.empty-state h3 {
+  color: #165B40;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.empty-state p {
+  color: #666;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .appointment-container {
+    padding: 30px;
+    margin-top: 90px;
+  }
+
+  .appointment-container h2 {
+    font-size: 2.2rem;
+  }
+
+  .dropdown-container label {
+    font-size: 1.1rem;
+  }
+
+  .dropdown-container select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    min-width: 200px;
+  }
+
+  .appointment-table th,
+  .appointment-table td {
+    padding: 15px 10px;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 9px 15px;
+    font-size: 0.9rem;
+  }
+
+  .empty-state h3 {
+    font-size: 1.6rem;
+  }
+
+  .empty-state p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .appointment-container {
+    padding: 20px;
+    margin-top: 80px;
+    padding-bottom: 80px; /* Added for bottom navbar space */
+  }
+
+  .appointment-container h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+  }
+
+  .dropdown-container {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+    align-items: flex-start; /* Align dropdown items to start */
+  }
+
+  .dropdown-container select {
+    width: 100%; /* Full width for select on mobile */
+    min-width: unset; /* Remove min-width constraint */
+  }
+
+  .appointment-table {
+    border-radius: 8px; /* Smaller border radius for mobile */
+  }
+
+  .appointment-table th,
+  .appointment-table td {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+    display: block; /* Stack table cells for better readability */
+    /* REMOVED text-align: left !important; from here */
+    border-bottom: none; /* Remove individual cell borders when stacked */
+  }
+
+  .appointment-table thead {
+    display: none; /* Hide table header on small screens */
+  }
+
+  .appointment-table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #eee; /* Add a border to each row as a card */
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 2px 8px #24CC81;
+  }
+
+  /* Specific centering for patient name and time slot */
+  .appointment-table tbody tr td:nth-child(1), /* Patient Name */
+  .appointment-table tbody tr td:nth-child(2) { /* Time Slot */
+    text-align: center; /* Center the content */
+  }
+
+
+  .appointment-table tbody tr td:first-child {
+    font-weight: 600;
+    padding-top: 15px;
+  }
+
+  .appointment-table tbody tr td:last-child {
+    border-bottom: none;
+    padding-bottom: 15px;
+  }
+
+  .appointment-table td::before {
+    content: attr(data-label); /* Use data-label for content before cell */
+    font-weight: 600;
+    display: block; /* Change to block so label and content stack */
+    margin-bottom: 5px; /* Add space between label and content */
+    width: auto; /* Allow label to take full width */
+    text-align: center; /* Center the label too */
+    color: #666;
+  }
+
+  .appointment-table td.actions {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 10px;
+    padding-top: 15px;
+  }
+
+  .btn {
+    width: 100%; /* Full width buttons on mobile */
+    max-width: 250px; /* Max width for consistency */
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .empty-state {
+    padding: 20px;
+  }
+
+  .empty-state h3 {
+    font-size: 1.5rem;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .appointment-container {
+    padding: 15px;
+    margin-top: 70px;
+  }
+
+  .appointment-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .dropdown-container label {
+    font-size: 1rem;
+  }
+
+  .dropdown-container select {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .appointment-table th,
+  .appointment-table td {
+    padding: 10px 5px;
+    font-size: 0.85rem;
+  }
+
+  .appointment-table td::before {
+    width: auto; /* Adjust label width for smaller screens */
+  }
+
+  .btn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .empty-state h3 {
+    font-size: 1.3rem;
+  }
+
+  .empty-state p {
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,164 @@
+.side-navbar {
+    width: 220px;
+    background-color: #165B40;
+    color: white;
+    font: bold;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 55px;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .side-navbar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .side-navbar-link {
+    font-size: 1.1em;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Change icon color */
+  .side-navbar-link i {
+    color: #24CC81;
+    font-size: 1.2rem;
+  }
+  
+  .side-navbar-link:hover {
+    background-color: #1A9A63;
+    transform: scale(1.05);
+  }
+  
+  .side-navbar-link:hover i {
+    color: white !important;
+  }
+  
+  .user-details i {
+    color: #24CC81 !important;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .user-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+  }
+  
+  .side-navbar.collapsed {
+    width: 60px;
+    padding: 20px 10px;
+  }
+  
+  .side-navbar.collapsed .side-navbar-link span {
+    display: none;
+  }
+  
+  /* New rule: Make icons white when sidebar is collapsed */
+  .side-navbar.collapsed .side-navbar-link i {
+    color: white !important;
+  }
+  
+  .toggle-btn {
+    position: absolute;
+    top: 10px;
+    right: -15px;
+    background-color: #1A9A63;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .toggle-btn:hover {
+    background-color: #24CC81;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .side-navbar {
+      display: none; /* Hides the sidebar on smaller screens */
+    }
+  
+    /* Navbar */
+    .navbar {
+      padding: 10px 20px;
+      flex-direction: column;
+      margin-top: 100px;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      position: static;
+      transform: none;
+      text-align: center;
+      gap: 15px;
+    }
+  
+    .nav-links a {
+      padding: 8px 12px;
+    }
+  
+    /* Side Navbar */
+    .side-navbar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      top: 0;
+      border-radius: 0;
+      padding: 15px;
+    }
+  
+    .side-navbar-links {
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 10px;
+      justify-content: center;
+    }
+  
+    .side-navbar-link {
+      padding: 10px;
+      font-size: 1rem;
+    }
+  
+    /* Hide toggle button on mobile */
+    .toggle-btn {
+      display: none;
+    }
+  
+    /* Content Layout */
+    .content {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+    }
+  }

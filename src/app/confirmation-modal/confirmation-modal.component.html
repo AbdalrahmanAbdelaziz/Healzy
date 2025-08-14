@@ -1,0 +1,9 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal-content">
+    <h3>{{ 'confirmationModal.areYouSure' | transloco }}</h3>
+    <div class="modal-actions">
+      <button class="btn btn-danger" (click)="onConfirm()">{{ 'confirmationModal.yes' | transloco }}</button>
+      <button class="btn btn-secondary" (click)="onCancel()">{{ 'confirmationModal.no' | transloco }}</button>
+    </div>
+  </div>
+</div>

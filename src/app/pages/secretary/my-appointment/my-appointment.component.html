@@ -1,0 +1,100 @@
+<app-s-header></app-s-header>
+<app-s-sidenavbar></app-s-sidenavbar>
+
+<div class="appointment-container">
+  <h2>{{ 'myAppointments.title' | transloco }}</h2>
+  <div class="dropdown-container">
+    <label for="dateDropdown">{{ 'myAppointments.selectDate' | transloco }}:</label>
+    <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="onDateSelect($event)">
+      <option *ngFor="let day of availableDays" [value]="day.date">
+        {{ day.date }} ({{ day.dayOfWeek }})
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="appointments && appointments.length > 0; else emptyState">
+    <table class="appointment-table">
+      <thead>
+        <tr>
+          <th>{{ 'myAppointments.patientName' | transloco }}</th>
+          <th>{{ 'myAppointments.timeSlot' | transloco }}</th>
+          <th>{{ 'myAppointments.bookingWay' | transloco }}</th>
+          <th>{{ 'myAppointments.notes' | transloco }}</th>
+          <th>{{ 'myAppointments.status' | transloco }}</th>
+          <th>{{ 'myAppointments.actions' | transloco }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointments">
+          <td>{{ appointment.patientName }}</td>
+          <td>{{ appointment.timeSlot.startTime }} - {{ appointment.timeSlot.endTime }}</td>
+          <td>
+            {{
+              translocoService.getActiveLang() === 'ar' ?
+              appointment.bookingWay_Ar :
+              appointment.bookingWay_En
+            }}
+          </td>
+          <td>{{ appointment.notes }}</td>
+          <td>
+            {{
+              translocoService.getActiveLang() === 'ar' ?
+              appointment.appointmentStatus_Ar :
+              appointment.appointmentStatus_En
+            }}
+          </td>
+          <td class="actions">
+            <ng-container *ngIf="appointment.appointmentStatus_En === 'UpComing'">
+              <button class="btn btn-arrived" (click)="markAsArrived(appointment.id)">{{ 'myAppointments.arrived' | transloco }}</button>
+              <button class="btn btn-reschedule" (click)="reschedule(appointment.id, doctorId)">{{ 'myAppointments.reschedule' | transloco }}</button>
+              <button class="btn btn-cancel" (click)="openCancelModal(appointment.id)">{{ 'myAppointments.cancel' | transloco }}</button>
+            </ng-container>
+            <ng-container *ngIf="appointment.appointmentStatus_En === 'Arrived'">
+              <button class="btn btn-next"
+              (click)="markAsNextInQueue(appointment.id)"
+              [disabled]="hasNextInQueueAppointment() && appointment.appointmentStatus_En !== 'NextInQueue'">
+              {{ 'myAppointments.nextInQueue' | transloco }}
+              </button>
+              <button class="btn btn-cancel" (click)="openCancelModal(appointment.id)">{{ 'myAppointments.cancel' | transloco }}</button>
+            </ng-container>
+
+            <ng-container *ngIf="appointment.appointmentStatus_En === 'NextInQueue'">
+              <button class="btn btn-progress" (click)="markAsInProgress(appointment.id)" [disabled]="appointment.appointmentStatus_En === 'NextInQueue'">{{ 'myAppointments.inProgress' | transloco }}</button>
+              <button class="btn btn-cancel" (click)="openCancelModal(appointment.id)">{{ 'myAppointments.cancel' | transloco }}</button>
+            </ng-container>
+
+            <ng-container *ngIf="appointment.appointmentStatus_En === 'InProgress'">
+              <button class="btn btn-processed" (click)="markAsProcessed(appointment.id)">{{ 'myAppointments.processed' | transloco }}</button>
+              <button class="btn btn-cancel" (click)="openCancelModal(appointment.id)">{{ 'myAppointments.cancel' | transloco }}</button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="no-appointments">
+      <div class="empty-state">
+        <h3>{{ 'myAppointments.noAppointmentsScheduled' | transloco }}</h3>
+        <p>{{ 'myAppointments.noAppointmentsMessage' | transloco }}</p>
+      </div>
+    </div>
+  </ng-template>
+
+
+</div>
+
+
+
+<app-confirmation-modal
+  [isVisible]="isCancelModalOpen"
+  (confirmed)="confirmCancel()"
+  (canceled)="closeCancelModal()"
+></app-confirmation-modal>
+
+<app-checkout-modal
+  [isVisible]="isCheckoutModalVisible"
+  [appointmentId]="appointmentToCheckout?.id"
+  (closed)="closeCheckoutModal()"
+></app-checkout-modal>

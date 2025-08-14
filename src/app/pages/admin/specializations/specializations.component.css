@@ -1,0 +1,318 @@
+/* Container Styles */
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1400px;
+  margin: 80px auto 50px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 150px);
+}
+
+/* Mobile Bottom Padding */
+@media screen and (max-width: 768px) {
+  .container {
+    padding-bottom: 100px;
+  }
+}
+
+/* Card Header with Centered Title */
+.card-header {
+  background: linear-gradient(135deg, #165B40 0%, #1A9A63 100%);
+  padding: 2rem 1.5rem;
+  border-bottom: none;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.card-header h1 {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  color: white;
+}
+
+/* Professional Search Bar */
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.search-input {
+  padding-left: 40px;
+  padding-right: 40px;
+  height: 46px;
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  box-shadow: 0 4px 12px rgba(24, 204, 129, 0.2);
+  outline: none;
+}
+
+.btn-clear {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #165B40;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-clear:hover {
+  color: #495057;
+}
+
+/* Specializations Grid */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 50px 0 0;
+  padding: 0;
+}
+
+.col {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.specialization-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  min-height: 120px;
+}
+
+.specialization-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: rgba(24, 204, 129, 0.5);
+}
+
+.specialization-card .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.specialization-card .card-title {
+  font-weight: 600;
+  color: #24CC81;
+  font-size: 1.2rem;
+  margin: 0;
+  text-align: center;
+}
+
+/* Professional Card Footer */
+.specialization-card-footer {
+  background-color: #165B40;
+  padding: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* No Results Styling */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.no-results i {
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.no-results h4 {
+  color: #343a40;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.no-results p {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1399.98px) {
+  .container {
+    max-width: 1140px;
+  }
+  .row {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .container {
+    max-width: 720px;
+  }
+  .row {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+  .card-header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .container {
+    max-width: 540px;
+  }
+  .row {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .header-content {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .card-header h1 {
+    font-size: 1.5rem;
+  }
+  .search-input {
+    height: 42px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark Mode Compatibility */
+.dark-mode .specialization-card {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+.dark-mode .specialization-card .card-title {
+  color: #24CC81;
+}
+
+.dark-mode .specialization-card-footer {
+  background-color: #252525;
+  border-top-color: #333;
+}
+
+.dark-mode .no-results h4 {
+  color: #f8f9fa;
+}
+
+.dark-mode .no-results p {
+  color: #adb5bd;
+}
+
+.dark-mode .search-input {
+  background-color: #3a3a3a;
+  color: #f8f9fa;
+  border: 1px solid #4a4a4a;
+}
+
+.dark-mode .search-icon,
+.dark-mode .btn-clear {
+  color: #adb5bd;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  .card-header h1 {
+    text-align: right;
+  }
+
+  .search-input-group {
+    flex-direction: row-reverse;
+  }
+
+  .search-icon {
+    left: auto;
+    right: 15px;
+  }
+
+  .btn-clear {
+    right: auto;
+    left: 10px;
+  }
+
+  .alert-danger button {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+
+  .no-results {
+    text-align: right;
+  }
+
+  .specialization-card .card-title {
+    text-align: right;
+  }
+}
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

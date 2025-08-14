@@ -1,0 +1,70 @@
+<app-admin-header></app-admin-header>
+
+<div class="container">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">{{ 'specialization_form.title' | transloco }}</h2>
+    </div>
+    
+    <div class="card-body">
+      <form [formGroup]="specializationForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- English Name -->
+          <div class="col-md-6 mb-3">
+            <label for="name_En" class="form-label">{{ 'specialization_form.english_name' | transloco }}</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="name_En"
+              formControlName="name_En"
+              [ngClass]="{ 'is-invalid': f['name_En'].touched && f['name_En'].errors }"
+            >
+            <div *ngIf="f['name_En'].touched && f['name_En'].errors" class="invalid-feedback">
+              <div *ngIf="f['name_En'].errors?.['required']">
+                {{ 'validation.english_name_required' | transloco }}
+              </div>
+              <div *ngIf="f['name_En'].errors?.['maxlength']">
+                {{ 'validation.max_length_50' | transloco }}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Arabic Name -->
+          <div class="col-md-6 mb-3">
+            <label for="name_Ar" class="form-label">{{ 'specialization_form.arabic_name' | transloco }}</label>
+            <input 
+              type="text" 
+              class="form-control text-end" 
+              id="name_Ar"
+              formControlName="name_Ar"
+              dir="rtl"
+              [ngClass]="{ 'is-invalid': f['name_Ar'].touched && f['name_Ar'].errors }"
+            >
+            <div *ngIf="f['name_Ar'].touched && f['name_Ar'].errors" class="invalid-feedback">
+              <div *ngIf="f['name_Ar'].errors?.['required']">
+                {{ 'validation.arabic_name_required' | transloco }}
+              </div>
+              <div *ngIf="f['name_Ar'].errors?.['maxlength']">
+                {{ 'validation.max_length_50' | transloco }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="d-flex justify-content-end mt-4">
+          <button 
+            type="submit" 
+            class="btn btn-primary px-4"
+            [disabled]="isSubmitting || specializationForm.invalid"
+          >
+            <span *ngIf="!isSubmitting">{{ 'specialization_form.create_button' | transloco }}</span>
+            <span *ngIf="isSubmitting">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              {{ 'common.creating' | transloco }}
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

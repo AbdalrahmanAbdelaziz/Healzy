@@ -1,0 +1,113 @@
+<div class="container" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <app-admin-header></app-admin-header>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">{{ 'services.title' | transloco }}</h1>
+  
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Loading State -->
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+      <!-- Error State -->
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+        {{ errorMessage }}
+        <button 
+        type="button" 
+        class="btn-close" 
+        (click)="errorMessage = null"
+        [attr.aria-label]="'general.close' | transloco"
+        title="Close"
+      >
+      </button>
+      
+      </div>
+
+      <!-- Success State -->
+      <div *ngIf="!isLoading && !errorMessage">
+        <!-- Specialization Filter Tags -->
+        <div class="filter-container mb-4">
+          <div class="filter-header d-flex justify-content-between align-items-center mb-3">
+            <span class="badge bg-secondary">
+              {{ filteredServices.length }} {{ 'services.services_count' | transloco }}
+            </span>
+          </div>
+          
+          <div class="filter-tags">
+            <button 
+              class="filter-tag all-tag" 
+              [class.active]="activeFilter === null"
+              (click)="filterBySpecialization(null)">
+              <i class="fas fa-list me-1"></i> 
+              {{ 'services.all_specializations' | transloco }}
+            </button>
+            <button 
+              *ngFor="let spec of allSpecializations"
+              class="filter-tag" 
+              [class.active]="activeFilter === spec.id"
+              [style.backgroundColor]="activeFilter === spec.id ? getTagColor(spec.id) : ''"
+              [style.borderColor]="getTagColor(spec.id)"
+              (click)="filterBySpecialization(spec.id)">
+              <i [class]="getSpecializationIcon(spec.name_En) + ' me-1'"></i>
+              {{ spec | localizedField:'name' }}
+              <span class="badge bg-white text-dark ms-2">
+                {{ getServiceCount(spec.id) }}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Services Table -->
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th class="sortable" (click)="sortServices('id')">
+                  {{ 'services.table.id' | transloco }}
+                </th>
+                <th class="sortable" (click)="sortServices('serviceName')">
+                  {{ 'services.table.service_name' | transloco }}
+                </th>
+                <th>{{ 'services.table.description' | transloco }}</th>
+                <th class="sortable" (click)="sortServices('avgDurationInMinutes')">
+                  {{ 'services.table.duration' | transloco }}
+                </th>
+                <th>{{ 'services.table.specialization' | transloco }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let service of filteredServices">
+                <td class="fw-bold">{{ service.id }}</td>
+                <td>{{ service.serviceName }}</td>
+                <td class="text-muted">{{ service.serviceDescription | truncate:50 }}</td>
+                <td>
+                  <span class="duration-badge">
+                    {{ formatDuration(service.avgDurationInMinutes) }}
+                  </span>
+                </td>
+                <td>
+                  <span 
+                    class="badge rounded-pill px-3 py-2 d-inline-flex align-items-center"
+                   
+                  >
+                    <i [class]="getSpecializationIcon(service.specializationName || '') + ' me-1'"></i>
+                    {{ service.specializationName }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="filteredServices.length === 0">
+                <td colspan="5" class="text-center py-4 text-muted">
+                  {{ 'services.no_services_found' | transloco }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

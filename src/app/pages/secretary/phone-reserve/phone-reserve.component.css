@@ -1,0 +1,65 @@
+/* Main Container */
+.phone-reserve-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Full viewport height for centering */
+    padding: 20px;
+  }
+  
+  /* Buttons Container */
+  .buttons-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  /* Individual Button Styles */
+  .nav-button {
+    background: linear-gradient(145deg, #1a9a63, #157a50);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    width: 200px;
+  }
+  
+  .nav-button:hover:not(:disabled) {
+    transform: scale(1.05);
+    background: linear-gradient(145deg, #157a50, #1a9a63);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-button:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(26, 154, 99, 0.6);
+  }
+  
+  .nav-button:disabled {
+    background: gray;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  
+  /* Responsive Layout for Buttons */
+  @media (max-width: 768px) {
+    .buttons-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .nav-button {
+      width: 100%;
+    }
+  }
+  

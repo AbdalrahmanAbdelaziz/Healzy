@@ -1,0 +1,27 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>{{ 'admin_dashboard.create_user' | transloco }}</h2>
+    <p>{{ 'admin_dashboard.select_user_type' | transloco }}</p>
+  </div>
+
+  <div class="options-container">
+    <div *ngFor="let option of options" class="option-card" 
+         [style.border-color]="option.color"
+         (click)="selectOption(option.route)">
+      <div class="option-icon" [style.background-color]="option.color">
+        <mat-icon>{{option.icon}}</mat-icon>
+      </div>
+      <div class="option-content">
+        <h3>{{ option.title | transloco }}</h3>
+        <p>{{ option.description | transloco }}</p>
+      </div>
+      <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button mat-stroked-button color="primary" (click)="close()">
+      {{ 'common.cancel' | transloco }}
+    </button>
+  </div>
+</div>

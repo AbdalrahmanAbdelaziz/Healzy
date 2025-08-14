@@ -1,0 +1,93 @@
+<app-s-header></app-s-header>
+<app-s-sidenavbar></app-s-sidenavbar>
+
+<div class="main-content">
+  <div class="container">
+    <div class="revenue-header">
+      <h2>{{ 'daily_report.title' | transloco }}</h2>
+      <button
+        class="btn-export"
+        (click)="exportToPDF()"
+        [disabled]="isGeneratingPDF || appointments.length === 0"
+        [attr.aria-busy]="isGeneratingPDF"
+      >
+        <span class="btn-content">
+          <i class="fas" [class.fa-file-pdf]="!isGeneratingPDF" [class.fa-spinner]="isGeneratingPDF" [class.fa-spin]="isGeneratingPDF"></i>
+          <span class="btn-text">
+            {{ isGeneratingPDF ? ('revenue.exporting' | transloco) : ('revenue.export_pdf' | transloco) }}
+          </span>
+        </span>
+      </button>
+    </div>
+
+    <div class="dropdown-container">
+      <label for="dateDropdown">{{ 'revenue.select_date' | transloco }}:</label>
+      <select
+        id="dateDropdown"
+        [(ngModel)]="selectedDate"
+        (change)="onDateSelect($event)"
+      >
+        <option *ngFor="let day of availableDays" [value]="day.date">
+          {{ day.date }} ({{ day.dayOfWeek }})
+        </option>
+      </select>
+    </div>
+
+    <div class="table-container">
+      <table class="revenue-table" #revenueTable>
+        <thead>
+          <tr>
+            <th rowspan="2">#</th>
+            <th rowspan="2">{{ 'revenue.patient_name' | transloco }}</th>
+            <th rowspan="2">{{ 'revenue.total' | transloco }}</th>
+            <th colspan="4">{{ 'revenue.paid' | transloco }}</th>
+            <th rowspan="2">{{ 'revenue.remaining' | transloco }}</th>
+            <th rowspan="2">{{ 'revenue.actions' | transloco }}</th>
+          </tr>
+          <tr>
+            <th>{{ 'revenue.cash' | transloco }}</th>
+            <th>{{ 'revenue.wallet' | transloco }}</th>
+            <th>{{ 'revenue.insta' | transloco }}</th>
+            <th>{{ 'revenue.visa' | transloco }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="appointments.length === 0">
+            <td colspan="10" class="no-data">
+              <div class="no-data-message">
+                <i class="fas fa-calendar-times"></i>
+                <p>{{ 'revenue.no_data' | transloco }}</p>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngFor="let appointment of appointments; let rowIndex = index">
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ appointment.patientName }}</td>
+            <td>{{ appointment.totalPrice || 0 }}</td>
+            <td>{{ appointment.paidCash || 0 }}</td>
+            <td>{{ appointment.paidWallet || 0 }}</td>
+            <td>{{ appointment.paidInstapay || 0 }}</td>
+            <td>{{ appointment.paidVisa || 0 }}</td>
+            <td>{{ getRemainingToPay(appointment) }}</td>
+            <td>
+              <button
+                *ngIf="hasRemainingPayment(appointment)"
+                class="btn-pay-remaining"
+                (click)="openCheckoutModal(appointment)"
+              >
+                {{ 'revenue.pay_remaining' | transloco }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-checkout-modal
+  [isVisible]="isCheckoutModalVisible"
+  [appointmentId]="selectedAppointmentId"
+  (closed)="closeCheckoutModal()"
+></app-checkout-modal>

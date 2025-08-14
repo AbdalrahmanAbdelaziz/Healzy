@@ -1,0 +1,36 @@
+<div class="bg" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <app-p-header></app-p-header>
+
+  <div class="navbar-spacer"></div>
+  <app-side-navbar></app-side-navbar>
+
+  <!-- Page Header Title -->
+  <div class="page-header">
+    <h1>{{ 'findDoctors.title' | transloco }}</h1>
+    <p>{{ 'findDoctors.subtitle' | transloco }}</p>
+  </div>
+
+  <div class="doctor-cards">
+    <div class="doctor-card" *ngFor="let doctor of doctors" (click)="goToDoctorProfile(doctor)">
+      <div class="doctor-image-container">
+        <div class="doctor-image-container">
+          <img 
+            [src]="(BASE_URL + '/' + doctor.profilePicture) || 'assets/default-avatar.jpg'"
+            alt="Doctor profile picture"
+            title="Doctor profile picture"
+            class="doctor-image"
+          />
+        </div>
+      </div>
+      <div class="doctor-details">
+        <h3>{{ doctor.firstName }} {{ doctor.lastName }}</h3>
+        <p class="clinic"><i class="fas fa-hospital"></i> {{ clinics[doctor.clinicId]?.name || ('findDoctors.unknownClinic' | transloco) }}</p>
+        <p class="price"><i class="fas fa-money-bill-wave"></i> {{ doctor.checkPrice || 'N/A' }} {{ 'findDoctors.currency' | transloco }}</p>
+        <p class="rating"><i class="fas fa-star"></i> 
+          {{ doctor.avgFeedbackRating ? (doctor.avgFeedbackRating | number:'1.1-1') : ('findDoctors.noRatings' | transloco) }}
+        </p>
+        <button class="book-appointment">{{ 'findDoctors.bookButton' | transloco }}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1187 @@
+{
+    "landing": {
+      "logoAlt": "HOGOZATY Logo",
+      "coverAlt": "Cover Image",
+      "login": "Login",
+      "register": "Register",
+      "title": "Your Trusted Healthcare Companion",
+      "subtitle": "Book appointments with top doctors, get medical advice, and manage your health effortlessly. Your well-being is just a click away!",
+      "howItWorks": "How It Works?"
+    },
+
+    "info": {
+      "logoAlt": "HOGOZATY Logo",
+      "login": "Login",
+      "register": "Register",
+      "findDoctorsTitle": "Find Trusted Doctors & Book Appointments Instantly",
+      "findDoctorsSubtitle": "Skip long waiting times and book consultations with top-rated doctors in just a few clicks.",
+      "bookAppointment": "Book Appointment",
+      "doctorConsultation": "Doctor Consultation",
+      "whyChooseTitle": "Why Choose HEALZY?",
+      "whyChooseText": "We connect you with certified doctors, ensuring hassle-free appointments, medical record tracking, and easy access to healthcare.",
+      "learnMore": "Learn More",
+      "healthcareMission": "Healthcare Mission",
+      "howItWorksTitle": "How It Works",
+      "howItWorksSubtitle": "Easy & Quick Steps to Get the Care You Need",
+      "howItWorksText": "Find specialists, choose a time that fits your schedule, and get expert medical advice from the comfort of your home.",
+      "startNow": "Start Now",
+      "howItWorksImage": "How It Works",
+      "manageAppointmentsTitle": "Manage Your Appointments",
+      "manageAppointmentsSubtitle": "Keep Track of Your Consultations Anytime",
+      "manageAppointmentsText": "View your upcoming visits, receive reminders, and access your consultation history in one place.",
+      "viewAppointments": "View Your Appointments",
+      "trackAppointments": "Track Appointments",
+      "already_assigned": "This service is already assigned to you."
+
+      
+    },
+
+    "login": {
+      "errors": {
+      "errorTitle": "Error",
+      "generalError": "Login failed. Please try again.",
+      "connectionFailed": "Failed to connect to server. Check your internet connection or try again later.",
+      "unauthorized": "Invalid credentials. Please check your username/email and password.",
+      "notFound": "Service not available. Please contact support."
+      
+    },
+        "coverImageAlt": "Healthcare Background",
+        "logoAlt": "HOGOZATY Logo",
+        
+          "emailPlaceholder": "Email or Username or Phone",
+          "passwordPlaceholder": "Password",
+            "emailRequired": "Email is required and should be valid.",
+            "passwordRequired": "Password is required.",
+            "incompleteFields": "Please complete all required fields.",
+            "warning": "Warning",
+            "login": "LOGIN",
+          "forgotPassword": "Forgot Password?",
+          "signUp": "Sign Up Now",
+          "noAccount": "Don't have an account?"
+        },
+      
+      "register": {
+    "coverImageAlt": "Healthcare Background",
+    "logoAlt": "HOGOZATY Logo",
+    "form": {
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "username": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "phoneNumber": "Phone Number",
+      "phoneNumberPlaceholder": "Enter your phone number",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "dateOfBirth": "Date of Birth",
+      "gender": "Gender",
+      "selectGender": "Select Gender",
+      "country": "Country",
+      "selectCountry": "Select Country",
+      "governorate": "Governorate",
+      "selectGovernorate": "Select Governorate",
+      "district": "District",
+      "selectDistrict": "Select District",
+      "profilePicture": "Profile Picture",
+      "emergencyContactName": "Emergency Contact Name",
+      "emergencyContactPlaceholder": "Enter emergency contact name",
+      "emergencyContactPhone": "Emergency Contact Phone",
+      "emergencyContactPhonePlaceholder": "Enter emergency contact phone",
+      "bloodType": "Blood Type",
+      "bloodTypePlaceholder": "Enter your blood type",
+       "usernameHint": "Must be at least 4 characters (English only)"
+    },
+    "formErrors": {
+      "firstNameRequired": "First Name is required.",
+      "lastNameRequired": "Last Name is required.",
+      "usernameRequired": "Username is required.",
+      "usernameMinLength": "Minimum length is {{length}} characters.",
+      "passwordRequired": "Password is required.",
+      "passwordMinLength": "Minimum length is {{length}} characters.",
+      "phoneNumberRequired": "Phone Number is required.",
+      "incompleteFields": "Please complete all required fields.",
+      "warning": "Incomplete Data"
+    },
+    "buttons": {
+      "register": "Register"
+    },
+    "links": {
+      "goToLogin": "GO TO LOGIN!"
+    },
+    "success": {
+      "message": "Registration successful! Please login."
+    },
+    "errors": {
+      "loadGenders": "Failed to load genders",
+      "loadCountries": "Failed to load countries",
+      "registrationFailed": "Failed to register. Please try again.",
+      "loadGovernorates": "Failed to load governorate options",
+      "loadDistricts": "Failed to load district options",
+      "connectionFailed": "Failed to connect to the server. Please check your internet connection or try again later."
+    }
+  },
+
+  "header": {
+    "logoAlt": "HOGOZATY Logo",
+    "darkModeToggle": "Toggle Dark Mode",
+    "home": "Home",
+    "appointments": "New Appointment",
+    "appointments_sec": "Appointments",
+    "profile": "Profile",
+     "contactUs": "Contact Us",
+    "logout": "Logout",
+    "toggleDarkMode": "Toggle Dark Mode",
+    "daybook": "Daily Report",
+    "revenues": "Revenues"
+  },
+
+  "pHome": {
+    "doctorImageAlt": "Doctor Image",
+    "generalPractitioner": "General Practitioner",
+    "unknownClinic": "Unknown",
+    "appointments": {
+      "title": "Your Appointments",
+      "viewHistory": "View History",
+      "noAppointments": "No upcoming or in-progress appointments.",
+      "bookNow": "Book an appointment",
+      "date": "Date",
+      "time": "Time",
+      "cancel": "Cancel Reservation",
+      "reschedule": "Reschedule",
+      "cancelSuccess": "Appointment cancelled successfully!",
+      "cancelError": "Failed to cancel appointment. Please try again."
+    },
+    "status": {
+      "upcoming": "Upcoming",
+      "arrived": "Arrived",
+      "nextinqueue": "Next in Queue",
+      "inprogress": "In Progress",
+      "proccessed": "Completed",
+      "done": "Done"
+    },
+    "history": {
+      "title": "Appointment History"
+    },
+    "cancelModal": {
+      "title": "Cancel Appointment",
+      "message": "Are you sure you want to cancel this appointment?",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "feedback": {
+      "title": "Rate Your Appointment",
+      "question": "How was your appointment with Dr. {{doctor}} on {{date}}?",
+      "comments": "Comments (optional)",
+      "commentsPlaceholder": "Share your experience...",
+      "submit": "Submit Feedback",
+      "skip": "Skip for Now",
+      "rateButton": "Rate This Appointment",
+      "rated": "Rated",
+      "ratingRequired": "Please select a rating",
+      "success": "Thank you for your feedback!",
+      "error": "Failed to submit feedback. Please try again."
+    }
+  },
+  "mostChosenDoctors": {
+    "title": "Most Chosen Doctors",
+    "general": "General",
+    "unknownSpecialization": "Unknown Specialization",
+    "doctorAltText": "Profile photo of Dr. {name}, {specialization} specialist"
+  },
+
+  "chooseAppointment": {
+    "title": "Find Your Doctor",
+    "subtitle": "Select your preferences to find the perfect specialist",
+    "coverImageAlt": "Medical background image",
+    "country": "Country",
+    "governorate": "Governorate",
+    "district": "District",
+    "specialization": "Specialization",
+    "selectCountry": "Select Country",
+    "selectGovernorate": "Select Governorate",
+    "selectDistrict": "Select District",
+    "selectSpecialization": "Select Specialization",
+    "searchButton": "Find Doctors"
+  },
+  "errors": {
+    "countryRequired": "Country is required",
+    "governorateRequired": "Governorate is required",
+    "districtRequired": "District is required",
+    "noDoctorId": "No doctor ID found for the secretary.",
+    "fetchAppointments": "Failed to fetch appointments.",
+    "fetchAvailableDays": "Failed to fetch available days.",
+    "fetchAppointmentError": "Failed to fetch appointment data",
+    "paymentError": "Failed to process payment",
+    "pdfGenerationError": "Failed to generate PDF receipt",
+    "failed_load_genders": "Failed to load genders",
+    "failed_load_clinics": "Failed to load clinics",
+    "failed_load_specializations": "Failed to load specializations",
+    "failed_load_doctors": "Failed to load doctors",
+    "failed_load_countries": "Failed to load countries",
+    "failed_load_governorates": "Failed to load governorates",
+    "failed_load_districts": "Failed to load districts",
+    "load_specializations_error": "An error occurred while loading specializations",
+    "service_creation_error": "An error occurred while creating service",
+    "load_doctors_error": "An error occurred while loading doctors",
+    "loginFailed": "Login failed. Please check your credentials.",
+    "error": "Error"
+ 
+    
+   
+  
+    
+  },
+
+  "findDoctors": {
+    "title": "Find Your Doctor",
+    "subtitle": "Browse top professionals and schedule your consultation",
+    "doctorAltText": "Photo of Dr. {{ name }}",
+    "unknownClinic": "Unknown Clinic",
+    "currency": "EGP",
+    "noRatings": "No Ratings",
+    "bookButton": "Book Appointment"
+  },
+
+  "doctorProfile": {
+    "doctorAltText": "Photo of Dr. {{ name }}",
+    "patientAltText": "Photo of patient {{ name }}",
+    "clinicImageAlt": "Clinic image",
+    "reviews": "reviews",
+    "specialization": "Specialization",
+    "location": "Location",
+    "price": "Consultation Price",
+    "currency": "EGP",
+    "bio": "Bio",
+    "noBio": "No bio available",
+    "bookButton": "See Available Time Slots",
+    "reviewsTab": "Reviews",
+    "clinicTab": "Clinic Details",
+    "patientReviews": "Patient Reviews",
+    "noComment": "No comment provided",
+    "noReviews": "No reviews yet",
+    "loadingReviews": "Loading reviews...",
+    "clinicInfo": "Clinic Information",
+    "loadingClinic": "Loading clinic information...",
+    "clinicNameDefault": "Clinic Name",
+    "phone": "Phone",
+    "email": "Email",
+    "notProvided": "Not provided",
+    "clinicGallery": "Clinic Gallery",
+    "locationNotSpecified": "Location not specified",
+    "noGallery": "No gallery images available",
+    "mapLocation": "Location on Map",
+    "mapPlaceholder": "Interactive map would be displayed here",
+    "closeLightbox": "Close lightbox",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "imageCounter": "Image {{ current }} of {{ total }}"
+  },
+
+
+
+  "appointments": {
+    "reservedStatus": "Reserved",
+    "reserveButton": "Reserve",
+    "noSlotsMessage": "No available time slots today.",
+     "selectDateTitle": "Select an Appointment Date",
+    "noAppointmentsMessage": "No available appointments at the moment.",
+    "statusArrived": "Appointment status updated to Arrived.",
+    "statusNextInQueue": "Appointment status updated to Next in Queue.",
+    "statusProcessed": "Appointment status updated to Processed.",
+    "failedStatusUpdate": "Failed to update appointment status.",
+    "cancelSuccess": "Appointment cancelled successfully!",
+    "failedCancel": "Failed to cancel appointment. Please try again.",
+    "invalidAppointment": "Invalid appointment selected.",
+    "receiptFetched": "Receipt fetched successfully.",
+    "failedReceiptFetch": "Failed to fetch receipt.",
+    "doctor_appointments": "Doctor's Appointments",
+    "arrival_time": "Arrival Time",
+    "select_date": "Select Date",
+    "patient_name": "Patient Name",
+    "time_slot": "Time Slot",
+    "actions": "Actions",
+    "status": "Status",
+    "booking_way": "Booking way",
+    "in_progress": "In Progress",
+    "no_patients": "There Is No Next Patient.",
+    "reschedule": "Reschedule",
+    "no_patients_today": "No Patients Today Yet",
+    "onlyOneNextInQueue": "There is already an appointment marked as Next In Queue. Only one appointment can be Next In Queue at a time.",
+    "statusUpdated": "Appointment status updated to In Progress",
+    "statusUpdateFailed": "Failed to update appointment status",
+    "invalidCheckPrice": "Please enter a valid check price (greater than 0)",
+    "setCheckPriceError": "Failed to set check price",
+    "checkPriceSet": "Check price set successfully"
+  
+  },
+
+  "booking": {
+    "confirmTitle": "Confirm Your Booking",
+    "doctorAltText": "Photo of Dr. {{ name }}",
+    "specialization": "Specialization",
+    "price": "Examination Price",
+    "currency": "EGP",
+    "patientInfo": "Patient Information",
+    "name": "Name",
+    "phone": "Phone Number",
+    "appointmentDetails": "Appointment Details",
+    "date": "Date",
+    "from": "From",
+    "to": "To",
+    "location": "Clinic Location",
+    "notesTitle": "Additional Notes",
+    "notesPlaceholder": "Enter any additional notes...",
+    "confirmButton": "Confirm Booking",
+    "successMessage": "Your appointment has been booked successfully!",
+    "errorMessage": "An error occurred while booking. Please try again.",
+    "missingInfoError": "Missing required booking information.",
+    "invalidDetailsError": "Invalid appointment details. Please try again.",
+    "title": "Book an Appointment",
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "submitButton": "Book Appointment",
+    "bookingWayError": "Failed to load booking method. Please try again.",
+    "bookingWayMissingError": "Booking method information is missing. Please try again."
+    
+  },
+
+
+
+  "timeSlots": {
+    "reservedStatus": "Reserved",
+    "reserveButton": "Reserve",
+    "noSlotsMessage": "No available time slots today.",
+    "noSlotsAlt": "No slots available illustration"
+  },
+
+  "reschedule": {
+    "confirmTitle": "Confirm Your Rescheduling",
+    "doctorAltText": "Photo of Dr. {{ name }}",
+    "specialization": "Specialization",
+    "price": "Examination Price",
+    "currency": "EGP",
+    "patientInfo": "Patient Information",
+    "name": "Name",
+    "phone": "Phone Number",
+    "appointmentDetails": "Appointment Details",
+    "date": "Date",
+    "from": "From",
+    "to": "To",
+    "location": "Clinic Location",
+    "notes": "Additional Notes",
+    "notesPlaceholder": "Enter any additional notes...",
+    "confirmButton": "Confirm Reschedule",
+    "successMessage": "Your appointment has been rescheduled successfully!",
+    "errorMessage": "Failed to reschedule appointment. Please try again."
+  },
+
+  "profile": {
+    "changePicture": "Change Picture",
+    "firstName": "First Name",
+    "enterFirstName": "Enter your first name",
+    "lastName": "Last Name",
+    "enterLastName": "Enter your last name",
+    "username": "Username",
+    "enterUsername": "Enter your username",
+    "phoneNumber": "Phone Number",
+    "enterPhoneNumber": "Enter your phone number",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "updateButton": "Update Profile",
+    "updateSuccess": "Profile updated successfully",
+    "picture_alt": "Profile Picture",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone_number": "Phone Number"
+
+  },
+  "validation": {
+    "firstNameRequired": "First Name is required",
+    "lastNameRequired": "Last Name is required",
+    "usernameRequired": "Username is required",
+    "phoneRequired": "Phone Number is required",
+    "minLength": "Minimum length is {{value}}",
+    "selectPaymentMethod": "Please select a payment method",
+    "enterValidAmount": "Please enter a valid payment amount",
+    "amountExceedsRemaining": "Paid amount cannot exceed remaining amount",
+    "first_name_required": "First name is required",
+    "last_name_required": "Last name is required",
+    "username_required": "Username is required (min 4 characters)",
+    "valid_email": "Valid email is required",
+    "phone_required": "Phone number is required",
+    "password_required": "Password is required (min 6 characters)",
+    "dob_required": "Date of birth is required",
+    "gender_required": "Gender is required",
+    "clinic_required": "Clinic is required",
+    "specialization_required": "Specialization is required",
+    "brief_required": "Brief description is required",
+    "valid_price": "Valid price is required",
+    "doctor_required": "Doctor assignment is required",
+    "hire_date_required": "Hire date is required",
+    "name_required": "Clinic name is required",
+    "country_required": "Country is required",
+    "governorate_required": "Governorate is required",
+    "district_required": "District is required",
+    "service_name_required": "Service name is required",
+    "duration_positive": "Duration must be greater than 0",
+    "english_name_required": "English name is required",
+    "arabic_name_required": "Arabic name is required",
+    "max_length_50": "Maximum 50 characters allowed"
+  },
+
+  "auth": {
+    "welcome": "Welcome {{name}}!",
+    "loginFailed": "Login Failed",
+    "resetLinkSent": "Password reset link sent!",
+    "resetLinkFailed": "Failed to send reset link",
+    "resetSuccess": "Password reset successfully",
+    "resetFailed": "Failed to reset password",
+    "patientRegistrationSuccess": "Patient registered successfully!",
+    "patientRegistrationError": "Failed to register patient, Please try again."
+  },
+
+"dashboard": {
+  "appointmentStatus": "My Appointments",
+  "noAppointmentsTitle": "No Appointments Today",
+  "noAppointmentsMessage": "You currently have no scheduled appointments",
+  "createNewAppointment": "Create New Appointment",
+  "quickActions": "Actions",
+  "phoneReserve": "Phone Reserve",
+  "walkinReserve": "Walk-in Reserve",
+  "serviceSettings": "Service Settings",
+  "timeslotManagement": "Timeslot Management",
+  "patients": "Patients",
+  "appointmentStatuses": {
+    "upcoming": "Upcoming",
+    "processed": "Finished",
+    "cancelled": "Cancelled",
+    "inProgress": "In Progress",
+    "nextInQueue": "Next in Queue",
+    "arrived": "Arrived",
+    "done": "Completed"
+  }
+},
+
+
+"patientCheck": {
+  "title": "Check Patient Registration",
+  "phoneLabel": "Phone Number", 
+  "phonePlaceholder": "Enter phone number",
+  "checkButton": "Check",
+  "notRegistered": "Patient not registered.",
+  "addPatientButton": "Add New Patient",
+  "registeredMessage": "Patient is registered! Patient ID: {{patientId}}",
+  "goToAppointments": "Go to Doctor Appointments"
+},
+
+"confirmReschedule": {
+  "title": "Are you sure you want to reschedule to this time?",
+  "yesButton": "Yes",
+  "noButton": "No"
+},
+
+"manageServices": {
+  "title": "Manage Services",
+  "serviceName": "Service Name",
+  "price": "Price",
+  "description": "Description",
+  "duration": "Duration",
+  "addServiceButton": "Add Service",
+  "selectServicesTitle": "Select Services to Add",
+  "priceInputLabel": "Price (EGP)",
+  "durationInputLabel": "Duration (minutes)",
+  "cancelButton": "Cancel"
+},
+
+"success": {
+  "service_added": "Service added successfully.",
+   "paymentSuccess": "Payment processed successfully",
+   "pdfSavedAndShared": "Receipt saved and ready to share!",
+    "pdfSavedOnly": "Receipt saved successfully!"
+},
+"warning": {
+  "fill_all_fields": "Please fill all fields."
+},
+"error": {
+  "fetch_services_failed": "Failed to fetch available services.",
+  "specialization_missing": "Specialization ID is missing."
+},
+
+"manageTimeSlots": {
+  "title": "Manage Time Slots",
+  "selectDayLabel": "Select a Day",
+  "workingFromLabel": "Working From",
+  "workingToLabel": "Working To",
+  "slotIntervalLabel": "Slot Interval (mins)",
+  "repeatWeeksLabel": "Repeat for How Many Weeks",
+  "submitButton": "Submit"
+},
+
+"days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+
+  "toast": {
+    "timeSlotsCreated": "Time slots created successfully!",
+    "timeSlotsError": "Failed to create time slots. Please try again.",
+    "timeSlotsWarning": "Please fill all fields and ensure a valid doctor ID is available."
+  },
+
+  "patientsPage": {
+    "title": "Patients",
+    "searchPlaceholder": "Search by name or phone number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "lastAppointment": "Last Appointment"
+  },
+
+  "myAppointments": {
+    "title": "Doctor's Appointments",
+    "selectDate": "Select Date",
+    "patientName": "Patient Name",
+    "timeSlot": "Time Slot",
+    "actions": "Actions",
+    "arrived": "Arrived",
+    "reschedule": "Reschedule",
+    "cancel": "Cancel",
+    "nextInQueue": "Next in Queue",
+    "inProgress": "In Progress",
+    "enter": "Enter",
+    "processed": "Check Out",
+    "noAppointmentsScheduled": "No Appointments Scheduled",
+    "noAppointmentsMessage": "There are no appointments booked for the selected date. Please check another day or enjoy your free time!",
+    "statusArrived": "Appointment marked as arrived",
+    "statusNextInQueue": "Appointment marked as next in queue",
+    "statusProcessed": "Appointment marked as processed",
+    "failedStatusUpdate": "Failed to update appointment status",
+    "onlyOneNextInQueue": "Only one appointment can be next in queue at a time",
+    "cancelSuccess": "Appointment cancelled successfully",
+    "failedCancel": "Failed to cancel appointment",
+    "receiptFetched": "Receipt fetched successfully",
+    "failedReceiptFetch": "Failed to fetch receipt",
+    "invalidAppointment": "Invalid appointment",
+    "failedFetchUpdatedData": "Failed to fetch updated appointment data",
+    "arrivalTime": "Arrival Time",
+    "bookingWay": "Booking",
+    "notes": "Notes",
+    "status": "Status"
+  },
+
+  "confirmationModal": {
+    "areYouSure": "Are you sure?",
+    "yes": "Yes",
+    "no": "No"
+  },
+
+
+  "general": {
+    "loading": "Processing your request...",
+    "minutes": "mins",
+    "currency": "EGP",
+    "cancel": "Cancel",
+    "processing": "Processing...",
+    "error": "Error",
+    "success": "Success",
+    "english": "English",
+    "arabic": "العربية",
+    "close": "Close"
+  },
+
+
+  "paymentMethods": {
+    "cash": "Cash",
+    "instapay": "Instapay",
+    "wallet": "Wallet",
+    "visa": "Visa"
+  },
+  "receipt": {
+    "title": "Appointment Receipt",
+    "transaction": "Transaction #{{id}}",
+    "appointmentDetails": "Appointment Details",
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "date": "Date",
+    "time": "Time",
+    "servicesRendered": "Services Rendered",
+    "service": "Service",
+    "description": "Description",
+    "duration": "Duration",
+    "price": "Price",
+    "noDescription": "No description",
+    "consultationFee": "Fees",
+    "totalAmountDue": "Total Amount Due",
+    "paymentSummary": "Payment Summary",
+    "totalPrice": "Total Price",
+    "amountPaid": "Amount Paid",
+    "remainingBalance": "Remaining Balance",
+    "thankYou": "Thank you for choosing our clinic",
+    "noServices": "No services were recorded for this appointment",
+    "paymentDetails": "Payment Details",
+    "method": "Method",
+    "amount": "Amount",
+    "filename": "Receipt_{{id}}_{{date}}",
+    "quantity": "Quantity",
+     "unitPrice": "Unit Price",
+    "total": "Total"
+  },
+  "payment": {
+    "completePayment": "Complete Payment",
+    "selectMethod": "Select Payment Method",
+    "paymentAmount": "Payment Amount",
+    "amountPlaceholder": "0.00",
+    "maxAmount": "Maximum payable amount",
+    "confirmPayment": "Confirm Payment"
+  },
+
+  "revenue": {
+    "title": "Revenue",
+    "select_date": "Select Date",
+    "patient_name": "Patient Name",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Remaining",
+    "actions": "Actions",
+    "cash": "Cash",
+    "wallet": "Wallet",
+    "insta": "Insta",
+    "visa": "Visa",
+    "no_data": "No revenue data found for the selected date.",
+    "pay_remaining": "Pay Remaining",
+    "export_pdf": "Export PDF",
+    "exporting": "Exporting...",
+    "export_tooltip": "Export this report as PDF"
+  },
+
+  "quick_actions": {
+    "next": "Next",
+    "my_appointments": "My Appointments",
+    "service_settings": "Service Settings",
+    "timeslot_management": "Timeslot Management",
+    "patients": "Patients"
+  },
+
+  "toastr": {
+    "no_doctor_id": "No user ID found for the doctor.",
+    "fetch_appointments_failed": "Failed to fetch appointments",
+    "fetch_days_failed": "Failed to fetch available days",
+    "status_updated": "Appointment status updated to In Progress",
+    "status_update_failed": "Failed to update appointment status",
+    "missing_parameters": "Date or Doctor ID is missing from route parameters.",
+    "no_doctor_found": "No doctor found with the given specialization ID.",
+    "doctor_details_error": "Error fetching doctor details",
+    "timeslots_error": "Error loading available time slots",
+    "missing_reschedule_info": "Missing required rescheduling information",
+    "reschedule_success": "Your appointment has been rescheduled successfully!",
+    "reschedule_error": "An error occurred while rescheduling",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "no_appointment_id": "No appointment ID provided",
+    "load_services_error": "Failed to load doctor services",
+    "visit_completed": "Patient processed successfully",
+    "load_appointment_error": "Failed to load appointment details",
+    "load_patient_error": "Failed to load patient details",
+    "load_medical_history_error": "Failed to load medical history",
+    "load_visit_history_error": "Failed to load visit history",
+    "file_too_large": "File {0} is too large (max 5MB)",
+    "unsupported_file_type": "File type not supported: {0}",
+    "draft_saved": "Draft saved locally",
+    "missing_diagnosis": "Please add at least a diagnosis or upload files",
+    "upload_error": "Error uploading files",
+    "diagnosis_submitted": "Visit details submitted successfully",
+    "diagnosis_error": "Error submitting diagnosis",
+    "service_exists": "Service already added",
+    "service_added": "Service added successfully",
+    "add_service_error": "Failed to add service",
+    "missing_details": "Please add at least one detail (diagnosis, signs, prescription) or upload files",
+    "medical_record_added": "Medical record added successfully",
+    "medical_record_error": "Error adding medical record",
+    "check_price_included": "Check price added to receipt",
+    "check_price_excluded": "Check price removed from receipt",
+    "check_price_update_failed": "Failed to update check price status"
+  },
+
+
+  "daily_report": {
+    "title": "Daily Report",
+    "select_date": "Select Date",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Remaining",
+    "cash": "Cash",
+    "visa": "Visa",
+    "wallet": "Wallet",
+    "instapay": "Instapay",
+    "no_data": "No revenue data found for the selected date."
+  },
+
+  "patient_profile": {
+    "title": "Patient Profile",
+    "appointment_time": "Appointment Time",
+    "id": "ID",
+    "gender": "Gender",
+    "age": "Age",
+    "blood_type": "Blood Type",
+    "not_specified": "Not specified",
+    "years": " years",
+     "doctor_check_price": "Doctor Check Price",
+    "apply_discount": "Apply Discount",
+    "discount_applied": "Discount Applied",
+    "off": "OFF",
+    "tabs": {
+      "personal": "Personal Information",
+      "history": "Visit History",
+      "current": "Current Visit",
+      "diagnosis": "Visit Details"
+    },
+    "contact_info": "Contact Information",
+    "email": "Email",
+    "phone": "Phone",
+    "demographics": "Demographics",
+    "dob": "Date of Birth",
+    "nationality": "Nationality",
+    "emergency_contact": "Emergency Contact",
+    "name": "Name",
+    "visit_history": "Patient Visit History",
+    "search_visits": "Search visits...",
+    "sort_history": "Sort visit history by date",
+    "newest_first": "Newest First",
+    "oldest_first": "Oldest First",
+    "no_history": "No visit history found for this patient",
+    "loading": "Loading patient information...",
+    "diagnosis": "Diagnosis",
+    "services": "Services Provided",
+    "attachments": "Attachments",
+    "receipt": "Medical Services Receipt",
+    "appointment_num": "Appointment #",
+    "date": "Date",
+    "available_services": "Available Services",
+    "discount_placeholder": "Discount %",
+    "add": "Add",
+    "added": "Added",
+    "selected_services": "Selected Services",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "total_discount": "Total Discount",
+    "total_amount": "Total Amount",
+    "complete_visit": "Complete Visit",
+    "visit_details": "Visit Details",
+    "prescription": "Prescription",
+    "upload_files": "Upload Files",
+    "diagnosis_placeholder": "Enter diagnosis details...",
+    "prescription_placeholder": "Enter prescription details...",
+    "upload_instructions": "Drag & drop files here or click to browse",
+    "upload_restrictions": "Supports images, PDFs, and medical reports (max 5MB each)",
+    "remove_file": "Remove file",
+    "save_draft": "Save Draft",
+    "submitting": "Submitting...",
+    "submit_details": "Submit Visit Details",
+    "signs": "Signs",
+    "signs_description": "Clinical Signs",
+    "signs_placeholder": "Enter observed clinical signs and symptoms...",
+    "include_check_price": "Include Doctor's Check Price",
+    "setting_price": "Setting Price...",
+   
+    "check_price": "Check Price",
+    "check_price_amount": "Check Price Amount",
+    "enter_check_price": "Enter check price",
+    "set_price": "Set Price",
+    "services_total": "Total Services Cost",
+    "price_set": "Price Set",
+    "choose_service": "Select Services",
+    "select_service": "Select a service...",
+    "quantity": "Quantity",
+    "add_service": "Add Service",
+    "each": "each",
+    "search_history": "Search history...",
+    "treatment": "Treatment",
+    "services_provided": "Services Provided",
+    "service_name": "Service Name",
+    "price": "Price",
+    "total": "Total",
+    "paid_cash": "Paid Cash",
+    "paid_visa": "Paid Visa",
+    "paid_wallet": "Paid Wallet",
+    "paid_instapay": "Paid Instapay",
+    "remaining": "Remaining",
+    "view_file": "View File",
+    "using_custom_price": "Custom Price",
+    "using_original_price": "Original Price",
+    "service_price": "Service Price",
+    "services_subtotal": "Services Subtotal",
+    "included": "Included",
+    "excluded": "Excluded",
+    "will_be_included": "Will be included in total",
+    "will_not_be_included": "Will not be included in total",
+    "processing": "Processing...",
+    "check_price_excluded": "Check price excluded from total",
+    "check_price_set": "Check price successfully applied",
+    "invalid_check_price": "Invalid check price amount",
+    "reset": "Reset",
+    "custom_price": "Custom Price",
+    "original_price": "Original Price"
+   
+      
+   
+    
+  
+  },
+
+  "admin_dashboard": {
+    "title": "Admin Dashboard",
+    "subtitle": "Manage your healthcare system efficiently",
+    "go_to": "Go to",
+    "cards": {
+      "all_users": {
+        "title": "All Users",
+        "description": "View and manage all system users"
+      },
+      "rev": {
+        "title": "Revenues",
+        "description": "Manage income streams and financial transactions"
+      },
+      "new_user": {
+        "title": "New User",
+        "description": "Create a new user"
+      },
+      "clinics": {
+        "title": "Clinics",
+        "description": "View and manage all clinics"
+      },
+      "new_clinic": {
+        "title": "New Clinic",
+        "description": "Register a new clinic"
+      },
+      "specializations": {
+        "title": "Specializations",
+        "description": "Manage all medical specializations"
+      },
+      "new_specialization": {
+        "title": "New Specialization",
+        "description": "Add new medical specialization"
+      },
+      "services": {
+        "title": "Services",
+        "description": "Manage all healthcare services"
+      },
+      "new_service": {
+        "title": "New Service",
+        "description": "Add new healthcare service"
+      }
+    },
+
+    "create_user": "Create New User",
+    "select_user_type": "Select the type of user you want to create",
+    "user_types": {
+      "doctor": "Doctor",
+      "doctor_description": "Create a new doctor account",
+      "secretary": "Secretary",
+      "secretary_description": "Create a new secretary account"
+    }
+  },
+
+  "common": {
+    "cancel": "Cancel",
+     "reset": "Reset",
+    "creating": "Creating...",
+     "clear_search": "Clear search",
+    "retry": "Retry",
+    "loading": "Loading...",
+    "refresh": "Refresh",
+    "page": "Page",
+    "of": "of"    ,
+    "exporting": "Exporting...",
+    "export_pdf": "Export PDF"
+    },
+
+  "doctor_form": {
+    "register_title": "Register New Doctor",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone Number",
+    "password": "Password",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "select_gender": "Select Gender",
+    "clinic": "Clinic",
+    "select_clinic": "Select Clinic",
+    "specialization": "Specialization",
+    "select_specialization": "Select Specialization",
+    "brief": "Brief",
+    "check_price": "Check Price",
+    "profile_picture": "Profile Picture",
+    "register_button": "Register Doctor",
+    "incomplete_fields_title": "Incomplete Data",
+    "incomplete_fields_message": "Please complete all required fields.",
+    "create_success": "Doctor created successfully!",
+    "create_error": "Failed to create doctor. Please try again."
+  },
+
+  "secretary_form": {
+    "register_title": "Register New Secretary",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone Number",
+    "password": "Password",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "select_gender": "Select Gender",
+    "assigned_doctor": "Assigned Doctor",
+    "select_doctor": "Select Doctor",
+    "doctor_display": "Dr. {firstName} {lastName} ({specialization})",
+    "hire_date": "Hire Date",
+    "profile_picture": "Profile Picture",
+    "register_button": "Register Secretary",
+    "incomplete_fields_title": "Incomplete Data",
+    "incomplete_fields_message": "Please complete all required fields.",
+    "create_success": "Secretary created successfully!",
+    "create_error": "Failed to create secretary. Please try again."
+  },
+
+  "clinics": {
+    "management": "Clinics Management",
+    "search_label": "Search Clinics",
+    "search_placeholder": "Search by name, email or phone",
+    "country_label": "Country",
+    "governorate_label": "Governorate",
+    "all_countries": "All Countries",
+    "all_governorates": "All Governorates",
+    "reset_filters": "Reset Filters",
+    "loading": "Loading clinics...",
+    "no_results_title": "No clinics found",
+    "no_results_message": "Try adjusting your search or filters",
+    "clinic_image_alt": "Clinic image",
+    "more_images": "more",
+    "view_details": "View Details",
+    "edit": "Edit"
+  },
+
+  "clinic_form": {
+    "register_title": "Create New Clinic",
+    "register_subtitle": "Fill in the details to register a new clinic",
+    "name": "Clinic Name",
+    "name_placeholder": "Enter clinic name",
+    "country": "Country",
+    "select_country": "Select Country",
+    "governorate": "Governorate",
+    "select_governorate": "Select Governorate",
+    "district": "District",
+    "select_district": "Select District",
+    "phone": "Phone",
+    "phone_placeholder": "Enter phone number",
+    "email": "Email",
+    "email_placeholder": "Enter email",
+    "gallery_label": "Clinic Gallery (Multiple images allowed)",
+    "select_images": "Select Images",
+    "create_button": "Create Clinic",
+    "incomplete_fields_title": "Incomplete Data",
+    "incomplete_fields_message": "Please complete all required fields.",
+    "create_success": "Clinic created successfully!",
+    "create_error": "Failed to create clinic. Please try again."
+  },
+
+
+  "services": {
+    "title": "Medical Services",
+    "services_count": "services",
+    "all_specializations": "All Specializations",
+    "no_services_found": "No services found for the selected filter",
+    "errors": {
+      "load_failed": "Failed to load data",
+      "generic": "An error occurred while loading data. Please try again later."
+    },
+    "table": {
+      "id": "ID",
+      "service_name": "Service Name",
+      "description": "Description",
+      "duration": "Duration",
+      "specialization": "Specialization"
+    }
+  },
+
+  "service_form": {
+    "title": "Create New Medical Service",
+    "service_name": "Service Name",
+    "service_name_placeholder": "Enter service name",
+    "description": "Description",
+    "description_placeholder": "Enter service description",
+    "duration": "Duration (minutes)",
+    "duration_placeholder": "30",
+    "specialization": "Specialization",
+    "select_specialization": "Select a specialization...",
+    "create_button": "Create Service",
+    "create_success": "Service created successfully!",
+    "create_error": "Failed to create service"
+  },
+
+
+  "specialization_form": {
+    "title": "Add New Specialization",
+    "english_name": "English Name",
+    "arabic_name": "Arabic Name",
+    "create_button": "Create Specialization",
+    "create_success": "Specialization created successfully!",
+    "create_error": "Failed to create specialization"
+  },
+
+  "specializations": {
+    "title": "Medical Specializations",
+    "search_placeholder": "Search specializations...",
+    "no_results_title": "No specializations found",
+    "no_results_message": "Try adjusting your search query",
+    "view_details": "View Details"
+  },
+
+  "doctors": {
+    "title": "Doctors Management",
+    "search_placeholder": "Search doctors...",
+    "no_results_title": "No doctors found",
+    "no_results_message": "Try adjusting your search query",
+    "name": "Name",
+    "specialization": "Specialization",
+    "phone": "Phone",
+    "email": "Email",
+    "location": "Location",
+    "check_price": "Check Price",
+    "revenue": "Revenue (10%)",
+     "month": "Month",
+    "year": "Year",
+    "month_placeholder": "Enter month (1-12)",
+    "year_placeholder": "Enter year",
+    "get_revenue": "Get Revenue Report",
+    "our_revenue": "Our Revenue",
+    "dr_revenue": "DR Revenue",
+    "total_revenue": "Total Revenue",
+    "no_data_title": "No Data Loaded",
+    "no_data_message": "Please select a month and year to view revenue data",
+    "doctor_revenue": "Doctor Revenue"
+  },
+
+   "doctor_appointments": {
+    "title": "Doctor Appointments For The Month",
+    "month_year": "Appointments for {month}/{year}",
+    "patient_name": "Patient Name",
+    "date": "Date",
+    "time": "Time",
+    "status": "Status",
+    "total_price": "Total Price",
+    "payment_method": "Payment Method",
+    "no_appointments_title": "No Appointments Found",
+    "no_appointments_message": "There are no appointments for the selected month and year.",
+    "total_payment": "Total Payment",
+    "check_price": "Check Price",
+     "our_revenue": "Our Revenue",
+     "totals": "Totals"
+    
+  },
+
+
+   "footer": {
+    "companyDescription": "Providing exceptional healthcare services with compassion and excellence since 2025.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "doctors": "Our Doctors",
+    "contact": "Contact Us",
+    "emergencyCare": "Emergency Care",
+    "primaryCare": "Primary Care",
+    "dentalCare": "Dental Care",
+    "laboratory": "Laboratory",
+    "radiology": "Radiology",
+    "contactUs": "Contact Us",
+    "workingHours": "Working Hours",
+    "copyright": "HEALZY",
+    "allRightsReserved": "All Rights Reserved",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "sitemap": "Sitemap",
+     "aboutCompany": "About Our Company",
+    "connectWithUs": "Connect With Us",
+    "address": "Address",
+    "phone": "Phone",
+    "availableHours": "Available 24/7 for emergencies",
+    "email": "Email",
+    "responseTime": "Response within 24 hours",
+    "sendMessage": "Send Us a Message",
+    "yourName": "Your Name",
+    "yourEmail": "Your Email",
+    "subject": "Subject",
+    "yourMessage": "Your Message",
+    "send": "Send"
+  },
+
+  "users": {
+    "all_users": "All Users",
+    "search_placeholder": "Search users...",
+    "no_results_title": "No users found",
+    "no_results_message": "No users match your search criteria. Try a different search term.",
+    "no_data_title": "No users available",
+    "no_data_message": "There are currently no users in the system.",
+    "profile": "Profile",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "location": "Location",
+    "status": "Status",
+    "role": "Role",
+    "view_details": "View Details",
+    "not_specified": "Not specified",
+    "doctors": "Doctors",
+    "patients": "Patients",
+    "no_doctors_title": "No Doctors Found",
+    "no_doctors_message": "There are currently no doctors registered in the system.",
+    "no_patients_title": "No Patients Found",
+    "no_patients_message": "There are currently no patients registered in the system.",
+    "last_visit": "Last Visit",
+    "no_visits": "No visits yet"
+  }
+
+
+  
+
+  
+
+
+
+
+
+}
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+  
+  

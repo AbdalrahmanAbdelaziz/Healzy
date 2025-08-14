@@ -1,0 +1,238 @@
+/* revenue.component.css */
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  /* color: #333; */
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  padding: 40px;
+  /* color: #888; */
+  font-style: italic;
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.no-data-message i {
+  font-size: 2.5rem;
+  color: #24CC81;
+}
+
+.no-data-message p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.main-content {
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px #24CC81;
+  border-radius: 8px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.dropdown-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dropdown-container label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.dropdown-container select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1rem;
+  width: 200px;
+  text-align: center;
+}
+
+.table-container {
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.revenue-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1rem;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  color: black;
+}
+
+.revenue-table th,
+.revenue-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.revenue-table th {
+  background-color: #24CC81;
+  color: #fff;
+  font-weight: bold;
+}
+
+.revenue-table th[rowspan] {
+  vertical-align: middle;
+}
+
+.revenue-table tbody tr:hover {
+  background-color: rgba(22, 91, 64, 0.1);
+}
+
+.revenue-table tbody tr:nth-child(even) {
+  background-color: #f4f4f4;
+}
+
+/* Pay Remaining Button */
+.btn-pay-remaining {
+  background-color: #673AB7;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.btn-pay-remaining:hover {
+  background-color: #5E35B1;
+}
+
+.revenue-table td:last-child {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .revenue-table {
+      font-size: 0.9rem;
+  }
+
+  .revenue-table th,
+  .revenue-table td {
+      padding: 8px;
+  }
+
+  .table-container {
+      padding: 10px;
+  }
+
+  .btn-pay-remaining {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .revenue-table {
+      font-size: 0.8rem;
+  }
+
+  .revenue-table th,
+  .revenue-table td {
+      padding: 6px;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-export {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-export:hover {
+  background-color: #b71c1c;
+}
+
+.btn-export:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn-export i {
+  font-size: 1.2rem;
+}
+
+/* Tooltip styling */
+.btn-export {
+  position: relative;
+}
+
+.btn-export:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 100;
+  margin-bottom: 5px;
+}
+
+.btn-export:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% - 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+  z-index: 100;
+}

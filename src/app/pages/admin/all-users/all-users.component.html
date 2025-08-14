@@ -1,0 +1,160 @@
+<app-admin-header></app-admin-header>
+
+<div class="admin-container" [dir]="getCurrentDirection()">
+  <div class="admin-card">
+    <!-- Card Header -->
+    <div class="card-header">
+      <div class="header-content">
+        <h1>{{ 'users.all_users' | transloco }}</h1>
+        
+        <!-- Tabs -->
+        <div class="tabs-container">
+          <button 
+            class="tab-button" 
+            [class.active]="activeTab === 'doctors'"
+            (click)="setActiveTab('doctors')"
+          >
+            {{ 'users.doctors' | transloco }}
+          </button>
+          <button 
+            class="tab-button" 
+            [class.active]="activeTab === 'patients'"
+            (click)="setActiveTab('patients')"
+          >
+            {{ 'users.patients' | transloco }}
+          </button>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+          <div class="search-input-group">
+            <i class="fas fa-search search-icon"></i>
+            <input 
+              id="user-search"
+              type="text" 
+              class="search-input" 
+              [placeholder]="'users.search_placeholder' | transloco"
+              [attr.title]="'users.search_placeholder' | transloco"
+              (input)="filterUsers($event)"
+              [disabled]="isLoading"
+              [value]="searchQuery"
+            >
+            <button 
+              type="button"
+              class="btn-clear" 
+              *ngIf="searchQuery" 
+              (click)="clearSearch()"
+              [attr.aria-label]="'common.clear_search' | transloco"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+      <!-- Loading State -->
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+      <!-- Error State -->
+      <div *ngIf="errorMessage && !isLoading" class="error-state">
+        <div class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ errorMessage }}</span>
+        </div>
+        <button class="btn-retry" (click)="loadData()">
+          {{ 'common.retry' | transloco }}
+        </button>
+      </div>
+
+      <!-- Success State -->
+      <div *ngIf="!isLoading && !errorMessage">
+        <!-- No Results -->
+        <div *ngIf="(activeTab === 'doctors' ? doctors.length : patients.length) > 0 && 
+                   (activeTab === 'doctors' ? filteredDoctors.length : filteredPatients.length) === 0" 
+             class="no-results">
+          <i class="fas fa-search"></i>
+          <h3>{{ 'users.no_results_title' | transloco }}</h3>
+          <p>{{ 'users.no_results_message' | transloco }}</p>
+          <button class="btn-clear-search" (click)="clearSearch()">
+            {{ 'common.clear_search' | transloco }}
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="(activeTab === 'doctors' ? doctors.length : patients.length) === 0 && !isLoading && !errorMessage" 
+             class="empty-state">
+          <i class="fas" [class.fa-user-md]="activeTab === 'doctors'" [class.fa-user-injured]="activeTab === 'patients'"></i>
+          <h3>{{ activeTab === 'doctors' ? ('users.no_doctors_title' | transloco) : ('users.no_patients_title' | transloco) }}</h3>
+          <p>{{ activeTab === 'doctors' ? ('users.no_doctors_message' | transloco) : ('users.no_patients_message' | transloco) }}</p>
+          <button class="btn-retry" (click)="loadData()">
+            {{ 'common.refresh' | transloco }}
+          </button>
+        </div>
+
+        <!-- Doctors Table -->
+        <div *ngIf="activeTab === 'doctors' && filteredDoctors.length > 0" class="table-responsive">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>{{ 'users.name' | transloco }}</th>
+                <th>{{ 'users.phone' | transloco }}</th>
+                <th>{{ 'users.email' | transloco }}</th>
+                <th>{{ 'users.location' | transloco }}</th>
+                <th>{{ 'users.status' | transloco }}</th>
+                <th>{{ 'users.role' | transloco }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doctor of filteredDoctors">
+                <td>{{ doctor.firstName }} {{ doctor.lastName }}</td>
+                <td>{{ doctor.phoneNumber }}</td>
+                <td>{{ doctor.email }}</td>
+                <td>
+                  <span *ngIf="doctor.country_En">
+                    {{ getTranslatedName(doctor, 'country') }}، 
+                    {{ getTranslatedName(doctor, 'governorate') }}، 
+                    {{ getTranslatedName(doctor, 'district') }}
+                  </span>
+                  <span *ngIf="!doctor.country_En">{{ 'users.not_specified' | transloco }}</span>
+                </td>
+                <td>
+                  <span class="status-badge" [class.active]="doctor.accountStatus_En === 'Active'">
+                    {{ getTranslatedName(doctor, 'accountStatus') }}
+                  </span>
+                </td>
+                <td>{{ getTranslatedName(doctor, 'applicationRole') }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Patients Table -->
+        <div *ngIf="activeTab === 'patients' && filteredPatients.length > 0" class="table-responsive">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>{{ 'users.name' | transloco }}</th>
+                <th>{{ 'users.phone' | transloco }}</th>
+                <th>{{ 'users.email' | transloco }}</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let patient of filteredPatients">
+                <td>{{ patient.firstName }} {{ patient.lastName }}</td>
+                <td>{{ patient.phoneNumber }}</td>
+                <td>{{ patient.email }}</td>
+               
+                
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

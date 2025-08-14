@@ -1,0 +1,156 @@
+<div class="modal-overlay" *ngIf="isVisible && appointmentData" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <div class="modal-content">
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p class="loading-text">{{ 'general.loading' | transloco }}</p>
+    </div>
+
+    <!-- Receipt Content for PDF -->
+    <div #receiptContent class="receipt-content">
+      <div class="receipt-header">
+        <div class="receipt-logo">
+          <img src="vv_b.png" alt="App Logo">
+        </div>
+        <h3 class="receipt-title">{{ 'receipt.title' | transloco }}</h3>
+        <p class="receipt-subtitle">{{ 'receipt.transaction' | transloco:{id: appointmentId} }}</p>
+      </div>
+
+      <!-- Appointment Info -->
+      <div class="appointment-info">
+        <h4 class="section-title">{{ 'receipt.appointmentDetails' | transloco }}</h4>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">{{ 'receipt.patient' | transloco }}:</span>
+            <span class="value">{{ appointmentData.patientName }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'receipt.doctor' | transloco }}:</span>
+            <span class="value">{{ appointmentData.doctorName }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'receipt.date' | transloco }}:</span>
+            <span class="value">{{ appointmentData.timeSlot.date | date:'mediumDate' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">{{ 'receipt.time' | transloco }}:</span>
+            <span class="value">{{ appointmentData.timeSlot.startTime | slice:0:5 }} - {{ appointmentData.timeSlot.endTime | slice:0:5 }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Table -->
+    <div class="services-section">
+    <h4 class="section-title">{{ 'receipt.servicesRendered' | transloco }}</h4>
+    <div *ngIf="receiptServices.length > 0" class="responsive-table">
+      <div class="table-scroll-container">
+        <div class="table-header">
+          <div class="col service-name">{{ 'receipt.service' | transloco }}</div>
+          <div class="col service-quantity">{{ 'receipt.quantity' | transloco }}</div>
+          <div class="col service-unit-price">{{ 'receipt.unitPrice' | transloco }}</div>
+          <div class="col service-total">{{ 'receipt.total' | transloco }}</div>
+        </div>
+        <div class="table-body">
+          <div *ngFor="let service of receiptServices" class="table-row">
+            <div class="col service-name" [attr.data-label]="'receipt.service' | transloco">{{ service.serviceName || 'N/A' }}</div>
+            <div class="col service-quantity" [attr.data-label]="'receipt.quantity' | transloco">{{ service.quantity || 1 }}</div>
+            <div class="col service-unit-price" [attr.data-label]="'receipt.unitPrice' | transloco">{{ (service.singleServicePriceForAppointment || 0).toFixed(2) }} {{ 'general.currency' | transloco }}</div>
+            <div class="col service-total" [attr.data-label]="'receipt.total' | transloco">{{ (service.singleServicePriceForAppointment * (service.quantity || 1)).toFixed(2) }} {{ 'general.currency' | transloco }}</div>
+          </div>
+          <div class="table-row fee-row">
+            <div class="col service-name" colspan="3">{{ 'receipt.consultationFee' | transloco }}</div>
+            <div class="col service-total">{{ (appointmentData.checkPrice || 0).toFixed(2) }} {{ 'general.currency' | transloco }}</div>
+          </div>
+        </div>
+        <div class="table-footer">
+          <div class="col total-label" colspan="3">{{ 'receipt.totalAmountDue' | transloco }}</div>
+          <div class="col total-value">{{ (appointmentData.totalPrice || 0).toFixed(2) }} {{ 'general.currency' | transloco }}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="receiptServices.length === 0" class="no-services">
+      <p>{{ 'receipt.noServices' | transloco }}</p>
+    </div>
+  </div>
+
+      <!-- Payment Summary -->
+      <div class="payment-summary">
+        <h4 class="section-title">{{ 'receipt.paymentSummary' | transloco }}</h4>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="label">{{ 'receipt.totalPrice' | transloco }}:</span>
+            <span class="value">{{ (appointmentData.totalPrice || 0).toFixed(2) }} {{ 'general.currency' | transloco }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">{{ 'receipt.amountPaid' | transloco }}:</span>
+            <span class="value">{{ calculateTotalPaid().toFixed(2) }} {{ 'general.currency' | transloco }}</span>
+          </div>
+          <div class="summary-item remaining">
+            <span class="label">{{ 'receipt.remainingBalance' | transloco }}:</span>
+            <span class="value">{{ (appointmentData.remainingToPay || 0).toFixed(2) }} {{ 'general.currency' | transloco }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="receipt-footer">
+        <p>{{ 'receipt.thankYou' | transloco }}</p>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <form (ngSubmit)="onSubmit()" class="payment-form" *ngIf="!isLoading">
+      <div class="form-section">
+        <h4 class="section-title">{{ 'payment.completePayment' | transloco }}</h4>
+        
+        <div class="payment-methods">
+          <label class="methods-label">{{ 'payment.selectMethod' | transloco }}:</label>
+          <div class="payment-options">
+            <div *ngFor="let method of paymentMethods"
+                 [class.active]="paymentMethod === method.name"
+                 (click)="onPaymentMethodChange(method.name)"
+                 class="payment-option">
+              <div class="option-icon">
+                <i [class]="method.icon"></i>
+              </div>
+              <span class="option-label">{{ method.displayName }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="amount-input">
+          <label for="paidAmount">{{ 'payment.paymentAmount' | transloco }} ({{ 'general.currency' | transloco }})</label>
+          <div class="input-group">
+            <input type="number"
+                   id="paidAmount"
+                   [(ngModel)]="paidAmount"
+                   name="paidAmount"
+                   min="0"
+                   [max]="appointmentData.remainingToPay"
+                   step="0.01"
+                   [placeholder]="'payment.amountPlaceholder' | transloco"
+                   required
+                   class="amount-field">
+          </div>
+          <div class="amount-hint" *ngIf="appointmentData.remainingToPay > 0">
+            {{ 'payment.maxAmount' | transloco }}: {{ appointmentData.remainingToPay.toFixed(2) }} {{ 'general.currency' | transloco }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" 
+                class="btn btn-secondary" 
+                (click)="onClose()" 
+                [disabled]="isLoading">
+          {{ 'general.cancel' | transloco }}
+        </button>
+        <button type="submit" 
+                class="btn btn-primary" 
+                [disabled]="isLoading || !paymentMethod || paidAmount <= 0">
+          <i class="fa-solid fa-credit-card"></i>
+          {{ isLoading ? ('general.processing' | transloco) : ('payment.confirmPayment' | transloco) }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

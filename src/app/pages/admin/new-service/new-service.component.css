@@ -1,0 +1,435 @@
+/* =============== BASE STYLES =============== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+    height: 100%;
+  }
+  
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    height: 100%;
+    overflow-x: hidden;
+    background-color: #f0f2f5;
+  }
+  
+  /* =============== LAYOUT STRUCTURE =============== */
+  .page-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bg-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+  }
+  
+  .cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f2f5;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(40%);
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  
+  .form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 16px 40px; /* Top, sides, bottom padding */
+    z-index: 1;
+    margin-top: 80px;
+    overflow-y: auto;
+  }
+  
+  .form-content {
+    background-color: rgba(255, 255, 255, 0.98);
+    width: 100%;
+    max-width: 576px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.5s ease-out;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  /* =============== FORM ELEMENTS =============== */
+  .form-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  
+  .form-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #165B40;
+    margin-bottom: 8px;
+  }
+  
+  .form-field {
+    margin-bottom: 24px;
+  }
+  
+  .form-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+  }
+  
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+  
+  .form-field textarea {
+    min-height: 96px;
+    resize: vertical;
+  }
+  
+  .form-field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+  }
+  
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus {
+    outline: none;
+    border-color: #24CC81;
+    box-shadow: 0 0 0 3px rgba(36, 204, 129, 0.2);
+  }
+  
+  /* =============== BUTTONS =============== */
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  
+  .btn {
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #24CC81;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1A9A63;
+    transform: translateY(-2px);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid #24CC81;
+    color: #24CC81;
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(36, 204, 129, 0.05);
+  }
+  
+  /* =============== ANIMATIONS =============== */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* =============== RESPONSIVE BREAKPOINTS =============== */
+  
+  /* Large Desktops (1440px and up) */
+  @media (min-width: 1440px) {
+    .form-content {
+      max-width: 640px;
+      padding: 48px;
+    }
+  }
+  
+  /* Standard Desktops (1280px) */
+  @media (max-width: 1280px) {
+    .form-content {
+      max-width: 560px;
+    }
+  }
+  
+  /* Nest Hub Max (1280x800) */
+  @media (max-width: 1280px) and (max-height: 800px) {
+    .form-container {
+      padding: 64px 16px 32px;
+    }
+    
+    .form-content {
+      padding: 32px;
+      max-width: 544px;
+    }
+  }
+  
+  /* Small Desktops/Tablets (1024px) */
+  @media (max-width: 1024px) {
+    .form-content {
+      max-width: 520px;
+    }
+  }
+  
+  /* Nest Hub (1024x600) */
+  @media (max-width: 1024px) and (max-height: 600px) {
+    .form-container {
+      padding: 56px 16px 24px;
+      margin-top: 60px;
+    }
+    
+    .form-content {
+      padding: 28px;
+      max-width: 512px;
+    }
+    
+    .form-header h1 {
+      font-size: 24px;
+    }
+    
+    .form-field {
+      margin-bottom: 20px;
+    }
+    
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      padding: 12px 16px;
+    }
+    
+    .form-field textarea {
+      min-height: 80px;
+    }
+    
+    .form-actions {
+      margin-top: 24px;
+    }
+  }
+  
+  /* Tablets (768px) */
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 60px 16px 30px;
+    }
+    
+    .form-content {
+      padding: 32px;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+  }
+  
+  /* iPhone SE (320px), Galaxy S8+ (360px) */
+  @media (max-width: 400px) {
+    .form-container {
+      padding: 16px 12px 20px; /* Adjusted bottom padding */
+      margin-top: 60px;
+    }
+    
+    .form-content {
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .form-header h1 {
+      font-size: 22px;
+    }
+    
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      padding: 12px;
+    }
+    
+    .btn {
+      padding: 12px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Surface Duo (540px) - Foldable specific */
+  @media (max-width: 540px) and (max-height: 720px) {
+    .form-container {
+      padding: 20px 12px 24px; /* Adjusted bottom padding */
+    }
+    
+    .form-content {
+      padding: 24px;
+    }
+    
+    .form-header h1 {
+      font-size: 24px;
+    }
+  }
+  
+  /* Small Phones (360px and below) */
+  @media (max-width: 360px) {
+    .form-container {
+      padding: 16px 10px 20px; /* Adjusted bottom padding */
+    }
+    
+    .form-content {
+      padding: 18px;
+    }
+    
+    .form-header h1 {
+      font-size: 20px;
+    }
+  }
+  
+  /* Short Screens (600px height and below) */
+  @media (max-height: 600px) {
+    .form-container {
+      padding-top: 64px;
+      padding-bottom: 20px; /* Ensured bottom padding */
+    }
+    
+    .form-content {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .form-field {
+      margin-bottom: 16px;
+    }
+    
+    .form-field textarea {
+      min-height: 80px;
+    }
+  }
+  
+  /* Very Short Screens (500px height and below) */
+  @media (max-height: 500px) {
+    .form-container {
+      padding-top: 48px;
+      padding-bottom: 16px; /* Ensured bottom padding */
+    }
+    
+    .form-header h1 {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    
+    .form-field {
+      margin-bottom: 12px;
+    }
+    
+    .form-field textarea {
+      min-height: 60px;
+    }
+    
+    .form-actions {
+      margin-top: 20px;
+    }
+  }
+  
+  /* Specific fix for Galaxy S8+ (360x740) */
+  @media (max-width: 360px) and (max-height: 740px) {
+    .form-container {
+      padding-bottom: 24px; /* Extra bottom padding */
+    }
+  }
+  
+  /* Specific fix for iPhone SE (320x568) */
+  @media (max-width: 320px) and (max-height: 568px) {
+    .form-container {
+      padding-bottom: 20px; /* Adjusted bottom padding */
+    }
+    
+    .form-content {
+      padding: 16px;
+    }
+    
+    .form-header h1 {
+      font-size: 20px;
+    }
+    
+    .btn {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+
+  /* RTL Support */
+[dir="rtl"] {
+  .form-container {
+    text-align: right;
+  }
+
+  .form-field label {
+    text-align: right;
+  }
+
+  .form-actions {
+    flex-direction: row-reverse;
+  }
+
+  .btn-outline {
+    margin-left: 10px;
+    margin-right: 0;
+  }
+
+  .spinner-border {
+    margin-left: 5px;
+    margin-right: 0;
+  }
+}

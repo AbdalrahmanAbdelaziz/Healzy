@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Update Profile Picture</h2>
+
+<div mat-dialog-content>
+  <label for="fileInput" class="file-label">Choose a profile picture</label>
+  <input
+    type="file"
+    id="fileInput"
+    (change)="onFileSelected($event)"
+    aria-describedby="fileInputHelp"
+    accept="image/*"
+  />
+  <small id="fileInputHelp">Only image files are allowed.</small>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="uploadImage()"
+    [disabled]="!selectedFile"
+  >
+    Upload
+  </button>
+</div>

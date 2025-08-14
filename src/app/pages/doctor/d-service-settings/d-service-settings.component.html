@@ -1,0 +1,79 @@
+<app-d-header></app-d-header>
+
+<div class="container">
+  <h2>{{ 'manageServices.title' | transloco }}</h2>
+
+  <!-- Services Table -->
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'manageServices.serviceName' | transloco }}</th>
+          <th>{{ 'manageServices.price' | transloco }}</th>
+          <th>{{ 'manageServices.description' | transloco }}</th>
+          <th>{{ 'manageServices.duration' | transloco }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of doctorServices">
+          <td [attr.data-label]="'manageServices.serviceName' | transloco">{{ service.serviceName }}</td>
+          <td [attr.data-label]="'manageServices.price' | transloco">{{ service.servicePrice }} EGP</td>
+          <td [attr.data-label]="'manageServices.description' | transloco">{{ service.serviceDescription }}</td>
+          <td [attr.data-label]="'manageServices.duration' | transloco">{{ service.avgDurationInMinutes }} min</td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add New Service Button -->
+  <button class="add-btn" (click)="openServiceModal()">
+    + {{ 'manageServices.addServiceButton' | transloco }}
+  </button>
+
+  <!-- Service Modal -->
+  <div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <!-- Close Button (X) -->
+      <button class="close-btn" (click)="closeServiceModal()">
+        <span class="close-icon">&times;</span>
+      </button>
+
+      <h3>{{ 'manageServices.selectServicesTitle' | transloco }}</h3>
+
+      <div class="services-list">
+        <div class="service-item" *ngFor="let service of availableServices">
+          <div class="service-header">
+            <label class="service-name">
+              {{ service.serviceName }}
+            </label>
+            <p class="service-description">{{ service.serviceDescription }}</p>
+          </div>
+
+          <div class="service-inputs">
+            <!-- Price Input -->
+            <div class="input-group">
+              <label>{{ 'manageServices.priceInputLabel' | transloco }}</label>
+              <input type="number" placeholder="0.00" [(ngModel)]="service.price" min="0" step="0.01" />
+            </div>
+            <!-- Duration Input -->
+            <div class="input-group">
+              <label>{{ 'manageServices.durationInputLabel' | transloco }}</label>
+              <input type="number" placeholder="0" [(ngModel)]="service.doctorAvgDurationForServiceInMinutes" min="0" />
+            </div>
+          </div>
+
+          <!-- Add Button -->
+          <button class="add-btn" (click)="validateAndAddService(service)">
+            {{ 'manageServices.addServiceButton' | transloco }}
+          </button>
+        </div>
+      </div>
+
+      <button class="cancel-btn" (click)="closeServiceModal()">
+        {{ 'manageServices.cancelButton' | transloco }}
+      </button>
+    </div>
+  </div>
+</div>
+

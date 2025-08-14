@@ -1,0 +1,48 @@
+<div [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <!-- Conditional Header -->
+  <ng-container *ngIf="patient?.data?.applicationRole_En === 'Patient'; else secretaryHeader">
+    <app-p-header></app-p-header>
+  </ng-container>
+  <ng-template #secretaryHeader>
+    <app-s-header></app-s-header>
+  </ng-template>
+
+  <div class="navbar-spacer"></div>
+
+ 
+
+  <div class="content">
+    <div class="appointments-container">
+      <h2 class="date-title">{{ selectedDate | date: (translocoService.getActiveLang() === 'ar' ? 'EEEE, dd MMMM yyyy' : 'EEEE, MMMM dd yyyy') }}</h2>
+      
+
+      <div *ngIf="timeSlots.length > 0; else noSlots" class="slots-grid">
+
+        <div *ngFor="let slot of timeSlots" class="slot-card" [ngClass]="{ 'booked-slot': slot.timeSlotStatusId != 30 }">
+
+          <span class="time-range">{{ slot.startTime }} - {{ slot.endTime }}</span>
+          
+
+          <span *ngIf="slot.timeSlotStatusId != 30" class="status booked">
+            {{ 'timeSlots.reservedStatus' | transloco }}
+          </span>
+          
+
+          <button *ngIf="slot.timeSlotStatusId == 30" 
+                  (click)="bookTimeslot(slot)" 
+                  class="reserve-btn">
+            {{ 'timeSlots.reserveButton' | transloco }}
+          </button>
+        </div>
+      </div>
+
+
+      <ng-template #noSlots>
+        <div class="no-appointments">
+          <p>{{ 'timeSlots.noSlotsMessage' | transloco }}</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+

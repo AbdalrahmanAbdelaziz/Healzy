@@ -1,0 +1,39 @@
+<app-d-header></app-d-header>
+
+<div class="container">
+  <h2>{{ 'manageTimeSlots.title' | transloco }}</h2>
+
+  <form [formGroup]="timeSlotForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Select Day -->
+    <label for="day">{{ 'manageTimeSlots.selectDayLabel' | transloco }}:</label>
+    <select id="day" formControlName="selectedDay">
+      <option *ngFor="let day of weekDays" [value]="day.date">
+        {{ day.day }} ({{ day.date }})
+      </option>
+    </select>
+
+    <!-- Working Hours -->
+    <div class="time-container">
+      <label for="from">{{ 'manageTimeSlots.workingFromLabel' | transloco }}:</label>
+      <input type="time" id="from" formControlName="workingFrom" required>
+
+      <label for="to">{{ 'manageTimeSlots.workingToLabel' | transloco }}:</label>
+      <input type="time" id="to" formControlName="workingTo" required>
+    </div>
+
+    <!-- Slot Interval -->
+    <label for="interval">{{ 'manageTimeSlots.slotIntervalLabel' | transloco }}:</label>
+    <input type="number" id="interval" formControlName="slotInterval" min="1">
+
+    <!-- Repeat Weeks -->
+    <label for="repeat">{{ 'manageTimeSlots.repeatWeeksLabel' | transloco }}:</label>
+    <input type="number" id="repeat" formControlName="repeatWeeks" min="1">
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="timeSlotForm.invalid">{{ 'manageTimeSlots.submitButton' | transloco }}</button>
+
+  </form>
+</div>
+
+

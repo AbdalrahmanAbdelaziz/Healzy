@@ -1,0 +1,185 @@
+/* General Container */
+.container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 30px;
+  background: #24CC81;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Title */
+.container h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+/* Centering the input field properly */
+.input-container {
+  display: flex;
+  justify-content: center; /* Centers the input horizontally */
+  width: 100%;
+}
+
+input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+  background-color: #165B40;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons */
+button {
+  background: #165B40;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background: #1A9A63;
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Messages */
+p {
+  font-size: 1.2rem;
+  color: white;
+  margin-top: 15px;
+  background: #1A9A63;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Patient ID Styling */
+p strong {
+  color: #ffeb3b;
+  font-weight: bold;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .container {
+    margin: 80px auto;
+    padding: 20px;
+  }
+
+  .container h2 {
+    font-size: 1.5rem; /* Smaller title for small screens */
+  }
+
+  input[type="text"] {
+    font-size: 0.9rem; /* Smaller font size for small screens */
+    padding: 10px;
+  }
+
+  button {
+    font-size: 0.9rem; /* Smaller font size for small screens */
+    padding: 10px 15px;
+  }
+
+  p {
+    font-size: 1rem; /* Smaller font size for small screens */
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 60px auto;
+    padding: 15px;
+  }
+
+  .container h2 {
+    font-size: 1.3rem; /* Even smaller title for very small screens */
+  }
+
+  input[type="text"] {
+    font-size: 0.8rem; /* Smaller font size for very small screens */
+    padding: 8px;
+  }
+
+  button {
+    font-size: 0.8rem; /* Smaller font size for very small screens */
+    padding: 8px 12px;
+  }
+
+  p {
+    font-size: 0.9rem; /* Smaller font size for very small screens */
+    padding: 8px;
+  }
+}
+
+/* RTL specific styles */
+[dir="rtl"] .container {
+  text-align: right;  
+}
+
+[dir="rtl"] .input-container input {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] button {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/* For visually hidden labels (Option 2) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Basic form styling */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

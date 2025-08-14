@@ -1,0 +1,44 @@
+<div class="bg-img">
+  <app-d-header></app-d-header>
+  <div class="overlay"></div>
+  <div class="profile-container">
+    <form [formGroup]="profileForm">
+      <!-- Profile Picture -->
+      <div class="form-group">
+        <div class="profile-picture-container">
+          <img [src]="BASE_URL + '/' + profileForm.value.profilePicture || 'assets/default-profile.png'" alt="Profile Picture" class="profile-picture" />
+        </div>
+      </div>
+
+      <!-- First Name (Readonly) -->
+      <div class="form-group">
+        <label for="firstName">{{ 'profile.first_name' | transloco }}</label>
+        <input id="firstName" type="text" formControlName="firstName" readonly />
+      </div>
+
+      <!-- Last Name (Readonly) -->
+      <div class="form-group">
+        <label for="lastName">{{ 'profile.last_name' | transloco }}</label>
+        <input id="lastName" type="text" formControlName="lastName" readonly />
+      </div>
+
+      <!-- Username (Readonly) -->
+      <div class="form-group">
+        <label for="username">{{ 'profile.username' | transloco }}</label>
+        <input id="username" type="text" formControlName="username" readonly />
+      </div>
+
+      <!-- Phone Number (Readonly) -->
+      <div class="form-group">
+        <label for="phoneNumber">{{ 'profile.phone_number' | transloco }}</label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" readonly />
+      </div>
+
+      <!-- Email (Readonly) -->
+      <div class="form-group">
+        <label for="email">{{ 'profile.email' | transloco }}</label>
+        <input id="email" type="email" formControlName="email" readonly />
+      </div>
+    </form>
+  </div>
+</div>

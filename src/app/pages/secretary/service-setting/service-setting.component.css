@@ -1,0 +1,426 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 100px auto 20px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px #24CC81;
+}
+
+h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Table Styles */
+.table-responsive {
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+table thead {
+  background-color: #24CC81;
+}
+
+table th, table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:last-child {
+  border-bottom: none;
+}
+
+table tbody tr:hover {
+  background-color: #165B40;
+}
+
+/* Buttons */
+.add-btn {
+  background-color: #165B40;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.add-btn:hover {
+  background-color: #1A9A63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: calc(100vw - 40px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: modalFadeIn 0.3s ease;
+  position: relative;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close Button (X) */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.close-icon {
+  font-size: 24px;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover .close-icon {
+  color: #e74c3c;
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  color: #165B40;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.service-item {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.service-item:hover {
+  border-color: #1A9A63;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.service-header {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.service-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #165B40;
+  margin-bottom: 5px;
+  display: block;
+  width: 100%;
+}
+
+.service-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  width: 100%;
+}
+
+.service-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  border-color: #1A9A63;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 154, 99, 0.1);
+}
+
+.modal-content .add-btn {
+  width: 100%;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.cancel-btn {
+  background-color: #e74c3c;
+  padding: 12px;
+  width: 100%;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+
+.cancel-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .container {
+    margin: 80px auto 20px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    margin: 70px auto 15px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  table th, table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .modal-content {
+    width: calc(100vw - 30px);
+    padding: 15px;
+  }
+
+  .modal-content h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .service-item {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    margin: 60px auto 10px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  table {
+    min-width: 100%;
+  }
+
+  table th, table td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  /* Make table responsive for very small screens */
+  table {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody {
+    display: block;
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+  }
+
+  td:last-child {
+    border-bottom: none;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #165B40;
+    margin-right: 10px;
+    flex: 1;
+  }
+
+  td span {
+    flex: 2;
+    text-align: right;
+  }
+
+  .add-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .modal-content {
+    width: calc(100vw - 20px);
+    padding: 12px;
+  }
+
+  .service-item {
+    padding: 12px;
+  }
+
+  .service-name {
+    font-size: 16px;
+  }
+
+  .input-group input {
+    padding: 8px 10px;
+  }
+
+  .cancel-btn {
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 15px;
+  }
+}
+
+/* Truncate pipe style */
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  display: inline-block;
+}
+
+/* Add this to your existing CSS */
+@media screen and (max-width: 768px) {
+  .container {
+    padding-bottom: 100px; /* Enough space for fixed bottom navbar */
+  }
+}

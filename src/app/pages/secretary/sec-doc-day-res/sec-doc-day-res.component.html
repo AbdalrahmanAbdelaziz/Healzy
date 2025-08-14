@@ -1,0 +1,49 @@
+<ng-container *ngIf="patient?.data?.applicationRole_En === 'Patient'; else notPatient">
+  <app-p-header></app-p-header>
+</ng-container>
+<ng-template #notPatient>
+  <ng-container *ngIf="patient?.data?.applicationRole_En === 'Doctor'; else secretaryHeader">
+    <app-d-header></app-d-header>
+  </ng-container>
+</ng-template>
+<ng-template #secretaryHeader>
+  <app-s-header></app-s-header>
+</ng-template>
+
+<div class="navbar-spacer"></div>
+
+<div class="content" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <div class="appointments-container">
+    <h2 class="date-title">
+      {{ selectedDate | date: (translocoService.getActiveLang() === 'ar' ? 'EEEE، dd MMMM yyyy' : 'EEEE, dd MMMM yyyy') }}
+    </h2>
+    
+    <div *ngIf="timeSlots.length > 0; else noSlots" class="slots-grid">
+      <div *ngFor="let slot of timeSlots" class="slot-card" [ngClass]="{ 'booked-slot': slot.timeSlotStatusId != 30 }">
+        <span class="time-range">{{ slot.startTime }} - {{ slot.endTime }}</span>
+        
+        <span *ngIf="slot.timeSlotStatusId != 30" class="status booked">
+          {{ 'timeSlots.reservedStatus' | transloco }}
+        </span>
+        
+        <button *ngIf="slot.timeSlotStatusId == 30" (click)="openModal(slot)" class="reserve-btn">
+          {{ 'timeSlots.reserveButton' | transloco }}
+        </button>
+      </div>
+    </div>
+
+    <ng-template #noSlots>
+      <div class="no-appointments">
+        <p>{{ 'timeSlots.noSlotsMessage' | transloco }}</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<app-confirm-reschedule-modal 
+  [isVisible]="isModalVisible" 
+  (confirmed)="confirmReschedule()" 
+  (canceled)="closeModal()">
+</app-confirm-reschedule-modal>

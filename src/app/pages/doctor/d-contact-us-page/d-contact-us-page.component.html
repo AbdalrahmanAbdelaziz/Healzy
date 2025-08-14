@@ -1,0 +1,64 @@
+<main class="contact-container">
+    <app-d-header></app-d-header>
+
+    <div class="contact-content">
+        <!-- Company Info -->
+        <section class="contact-section company-info">
+            <div class="logo-container">
+                <img src="vv_b.png" alt="Company Logo" class="footer-logo" />
+            </div>
+            <h2 class="section-title">{{ 'footer.aboutCompany' | transloco }}</h2>
+            <p class="company-description">
+                {{ 'footer.companyDescription' | transloco }}
+            </p>
+            <div class="social-section">
+                <h3 class="social-title">{{ 'footer.connectWithUs' | transloco }}</h3>
+                <ul class="social-links">
+                    <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Info -->
+        <section class="contact-section contact-info">
+            <h2 class="section-title">{{ 'footer.contactUs' | transloco }}</h2>
+            <ul class="contact-details">
+                <li>
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>{{ 'footer.address' | transloco }}</h3>
+                        <p>123 Medical Street, Health City, HC 12345</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>{{ 'footer.phone' | transloco }}</h3>
+                        <p>01029970031</p>
+                        <p class="contact-note">{{ 'footer.availableHours' | transloco }}</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>{{ 'footer.email' | transloco }}</h3>
+                        <p>riekoaaziz&#64;gmail.com</p>
+                        <p class="contact-note">{{ 'footer.responseTime' | transloco }}</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+      
+    </div>
+</main>

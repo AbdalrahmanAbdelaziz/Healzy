@@ -1,0 +1,174 @@
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(to bottom right, #f0f4f8, #e8edf3);
+    min-height: 100vh;
+    margin-top: 100px;
+  }
+  
+  .registration-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 3rem;
+    width: 100%;
+    max-width: 1000px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .registration-card h2 {
+    font-size: 2rem;
+    color: #24CC81;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #24CC81;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.9rem 1rem;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fdfdfd;
+    color: #24CC81;
+    transition: border 0.3s, box-shadow 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: #165B40;
+    box-shadow: 0 0 0 1px #165B40;
+    outline: none;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .error-message {
+    color: #e53935;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    font-weight: 500;
+  }
+  
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  
+  .form-actions button {
+    padding: 0.9rem 1.8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .form-actions button[type="submit"] {
+    background-color: #165B40;
+    color: white;
+  }
+  
+  .form-actions button[type="submit"]:hover {
+    background-color: #1A9A63;
+  }
+  
+  .form-actions button[type="submit"]:disabled {
+    background-color: #cfd8dc;
+    cursor: not-allowed;
+  }
+  
+  .form-actions .cancel {
+    background-color: #eceff1;
+    color: #455a64;
+  }
+  
+  .form-actions .cancel:hover {
+    background-color: #d9e0e5;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .registration-card {
+      padding: 2rem;
+    }
+  
+    .form-group {
+      flex: 1 1 100%;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .registration-card {
+      padding: 1.5rem 1rem;
+    }
+  
+    .registration-card h2 {
+      font-size: 1.6rem;
+    }
+  
+    .form-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .form-actions button {
+      width: 100%;
+    }
+  }
+
+  /* RTL Support */
+[dir="rtl"] {
+  .registration-card {
+    text-align: right;
+  }
+
+  .form-group label {
+    text-align: right;
+  }
+
+  .error-message {
+    text-align: right;
+  }
+
+  .form-actions {
+    flex-direction: row-reverse;
+  }
+
+  .form-actions button.cancel {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+}
+  

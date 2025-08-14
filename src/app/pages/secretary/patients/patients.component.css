@@ -1,0 +1,201 @@
+/* Layout */
+.main-content {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px #24CC81;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Search Bar */
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 800px;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* Desktop Table */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+  margin: 0 auto;
+}
+
+.patients-table th,
+.patients-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.patients-table th {
+  background-color: #24CC81;
+  color: white;
+  font-weight: bold;
+}
+
+.patients-table tbody tr:hover {
+  background-color: #165B40;
+}
+
+/* Mobile Cards */
+.mobile-cards {
+  display: none;
+}
+
+.patient-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.patient-card p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .main-content {
+    margin-top: 70px;
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .patients-table th,
+  .patients-table td {
+    font-size: 0.9rem;
+    padding: 10px 8px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Hide table and show cards */
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: block;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .search-bar input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 10px;
+    margin-top: 60px;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+
+  .patient-card {
+    padding: 12px;
+  }
+
+  .patient-card p {
+    font-size: 0.85rem;
+  }
+
+  .search-bar input {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Hide table and show cards */
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: block;
+    padding-bottom: 100px; /* Enough space for fixed bottom navbar */
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .search-bar input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  overflow: hidden;
+}

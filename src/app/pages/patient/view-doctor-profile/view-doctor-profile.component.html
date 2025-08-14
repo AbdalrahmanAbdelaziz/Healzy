@@ -1,0 +1,257 @@
+<div [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'"
+     aria-hidden="true">
+  <app-p-header></app-p-header>
+
+  <div class="navbar-spacer"></div>
+
+  <div class="container">
+    <!-- Doctor Profile Section -->
+    <div class="profile-card" *ngIf="doctor">
+      <!-- Left: Doctor Image -->
+      <div class="image-container">
+        <img 
+        [src]="(BASE_URL + '/' + doctor.profilePicture) || 'default-avatar.jpg'"
+        alt="Doctor profile picture"
+        title="Doctor profile picture"
+        class="doctor-image"
+      />
+      </div>
+
+      <!-- Right: Doctor Details -->
+      <div class="details">
+        <h2 class="name">{{ doctor.firstName }} {{ doctor.lastName }}</h2>
+        
+        <!-- Star Rating Display -->
+        <div class="rating-container">
+          <div class="stars">
+            <span *ngFor="let star of [1,2,3,4,5]">
+              <i class="fas fa-star" [class.filled]="star <= roundedRating"></i>
+            </span>
+          </div>
+          <span class="rating-text">
+            {{ roundedRating | number:'1.1-1' }} ({{ feedbacks.length }} {{ 'doctorProfile.reviews' | transloco }})
+          </span>
+        </div>
+
+        <div class="info-group">
+          <p><strong>{{ 'doctorProfile.specialization' | transloco }}:</strong> {{ specializationName }}</p>
+          <p><strong>{{ 'doctorProfile.location' | transloco }}:</strong> {{ doctor.country_En }}, {{ doctor.governorate_En }}, {{ doctor.district_En }}</p>
+          <p><strong>{{ 'doctorProfile.price' | transloco }}: </strong> <span>{{ doctor.checkPrice }} {{ 'doctorProfile.currency' | transloco }}</span></p>
+        </div>
+
+        <p class="bio"><strong>{{ 'doctorProfile.bio' | transloco }}:</strong> {{ doctor.brief || ('doctorProfile.noBio' | transloco) }}</p>
+
+        <button (click)="goToAppointments()">{{ 'doctorProfile.bookButton' | transloco }}</button>
+      </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="tabs-section">
+      <div class="tabs">
+        <button 
+          [class.active]="currentTab === 'reviews'" 
+          (click)="changeTab('reviews')">
+          {{ 'doctorProfile.reviewsTab' | transloco }}
+        </button>
+        <button 
+          [class.active]="currentTab === 'clinic'" 
+          (click)="changeTab('clinic')">
+          {{ 'doctorProfile.clinicTab' | transloco }}
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <!-- Reviews Tab Content -->
+        <div *ngIf="currentTab === 'reviews'" class="reviews-tab">
+          <div class="feedback-section" *ngIf="feedbacks.length > 0">
+            <h2 class="section-title">{{ 'doctorProfile.patientReviews' | transloco }}</h2>
+            <div class="feedback-list">
+              <div class="feedback-card" *ngFor="let feedback of feedbacks">
+                <div class="feedback-header">
+                  <div class="patient-avatar">
+                    <img 
+                    [src]="(BASE_URL + '/' + feedback.patient?.profilePicture) || 'default-avatar.jpg'"
+                      alt="Patient profile picture"
+                     title="Patient profile picture"
+                     class="patient-image"
+                    />
+                  </div>
+                  <div class="patient-info">
+                    <span class="patient-name">{{ feedback.patient?.firstName }} {{ feedback.patient?.lastName }}</span>
+                    <div class="feedback-rating">
+                      <span *ngFor="let star of [1,2,3,4,5]">
+                        <i class="fas fa-star" [class.filled]="star <= feedback.rating"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="feedback-content">
+                  <p class="feedback-comment">{{ feedback.comment || ('doctorProfile.noComment' | transloco) }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="no-feedback" *ngIf="feedbacks.length === 0 && !isLoading">
+            <i class="fas fa-comment-slash"></i>
+            <p>{{ 'doctorProfile.noReviews' | transloco }}</p>
+          </div>
+
+          <div class="loading-spinner" *ngIf="isLoading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>{{ 'doctorProfile.loadingReviews' | transloco }}</p>
+          </div>
+        </div>
+
+        <!-- Clinic Tab Content -->
+        <div *ngIf="currentTab === 'clinic'" class="clinic-tab">
+          <div class="clinic-content-wrapper">
+            <div class="clinic-info-card">
+              <!-- <h2 class="section-title">{{ 'doctorProfile.clinicInfo' | transloco }}</h2> -->
+              
+              <div *ngIf="clinicLoading" class="loading-spinner">
+                <div class="spinner"></div>
+                <p>{{ 'doctorProfile.loadingClinic' | transloco }}</p>
+              </div>
+              
+              <div *ngIf="clinicError" class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>{{ clinicError }}</p>
+              </div>
+              
+              <div *ngIf="clinic && !clinicLoading" class="clinic-details-container">
+                <div class="clinic-header">
+                  <div class="clinic-title">
+                    <h3>{{ clinic.name || ('doctorProfile.clinicNameDefault' | transloco) }}</h3>
+                  </div>
+                  <div class="clinic-contact">
+                    <div class="contact-item">
+                      <i class="fas fa-phone-alt"></i>
+                      <div>
+                        <span class="contact-label">{{ 'doctorProfile.phone' | transloco }}</span>
+                        <span class="contact-value">{{ clinic.phone || ('doctorProfile.notProvided' | transloco) }}</span>
+                      </div>
+                    </div>
+                    <div class="contact-item">
+                      <i class="fas fa-envelope"></i>
+                      <div>
+                        <span class="contact-label">{{ 'doctorProfile.email' | transloco }}</span>
+                        <span class="contact-value">{{ clinic.email || ('doctorProfile.notProvided' | transloco) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clinic-section">
+                  <h4 class="section-subtitle">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ 'doctorProfile.location' | transloco }}
+                  </h4>
+                  <div class="location-details">
+                    <div class="location-item" *ngIf="clinic.district_En">
+                      <i class="fas fa-building"></i>
+                      <span>{{ clinic.district_En }}</span>
+                    </div>
+                    <div class="location-item" *ngIf="clinic.governorate_En">
+                      <i class="fas fa-city"></i>
+                      <span>{{ clinic.governorate_En }}</span>
+                    </div>
+                    <div class="location-item" *ngIf="clinic.country_En">
+                      <i class="fas fa-globe"></i>
+                      <span>{{ clinic.country_En }}</span>
+                    </div>
+                    <div *ngIf="!clinic.district_En && !clinic.governorate_En && !clinic.country_En" class="no-location">
+                      <i class="fas fa-map-marked-alt"></i>
+                      <span>{{ 'doctorProfile.locationNotSpecified' | transloco }}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="clinic-section" *ngIf="clinic.clinicGallery && clinic.clinicGallery.length > 0">
+                  <h4 class="section-subtitle">
+                    <i class="fas fa-images"></i>
+                    {{ 'doctorProfile.clinicGallery' | transloco }}
+                  </h4>
+                  <div class="gallery-grid">
+                    <div class="gallery-item" 
+                         *ngFor="let image of clinic.clinicGallery; let i = index"
+                         (click)="openLightbox(i)">
+                      <img [src]="BASE_URL + '/' + image" [alt]="'doctorProfile.clinicImageAlt' | transloco">
+                      <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="no-gallery" *ngIf="!clinic.clinicGallery || clinic.clinicGallery.length === 0">
+                  <div class="no-content-message">
+                    <i class="fas fa-camera"></i>
+                    <p>{{ 'doctorProfile.noGallery' | transloco }}</p>
+                  </div>
+                </div>
+                
+                <!-- <div class="clinic-section">
+                  <h4 class="section-subtitle">
+                    <i class="fas fa-map-marked-alt"></i>
+                    {{ 'doctorProfile.mapLocation' | transloco }}
+                  </h4>
+                  <div class="map-container">
+                    <div class="map-placeholder">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <p>{{ 'doctorProfile.mapPlaceholder' | transloco }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            
+            <div *ngIf="showLightbox && clinic && clinic.clinicGallery" class="lightbox-overlay" (click)="closeLightbox()">
+              <div class="lightbox-container" (click)="$event.stopPropagation()">
+                <button 
+                type="button"
+                class="lightbox-close" 
+                (click)="closeLightbox()" 
+                [attr.aria-label]="'doctorProfile.closeLightbox' | transloco"
+                [title]="'doctorProfile.closeLightbox' | transloco">
+                <i class="fas fa-times" aria-hidden="true"></i>
+                <span class="sr-only">{{ 'doctorProfile.closeLightbox' | transloco }}</span>
+              </button>
+              
+              <button 
+              type="button"
+              class="lightbox-nav prev" 
+              (click)="navigateLightbox(-1); $event.stopPropagation()" 
+              [attr.aria-label]="'doctorProfile.previousImage' | transloco"
+              [title]="'doctorProfile.previousImage' | transloco">
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>
+              <span class="sr-only">{{ 'doctorProfile.previousImage' | transloco }}</span>
+            </button>
+                <div class="lightbox-content">
+                  <img 
+                  [src]="(BASE_URL + '/' + clinic.clinicGallery[galleryLightboxIndex]) || 'default-clinic-image.jpg'"
+                  alt="Clinic facility photo"
+                  title="Clinic facility photo"
+                  class="clinic-gallery-image"
+                />
+                 </div>
+                 <button 
+                 type="button"
+                 class="lightbox-nav next" 
+                 (click)="navigateLightbox(1); $event.stopPropagation()" 
+                 [attr.aria-label]="'doctorProfile.nextImage' | transloco"
+                 [title]="'doctorProfile.nextImage' | transloco">
+                 <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                 <span class="sr-only">{{ 'doctorProfile.nextImage' | transloco }}</span>
+               </button>
+                <div class="lightbox-caption">
+                  {{ 'doctorProfile.imageCounter' | transloco: { current: galleryLightboxIndex + 1, total: clinic.clinicGallery.length } }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

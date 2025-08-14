@@ -1,0 +1,77 @@
+<app-d-header></app-d-header>
+<app-d-sidenavbar></app-d-sidenavbar>
+
+<!-- Main Content Wrapper -->
+<div class="main-content">
+  <div class="container">
+    <div class="report-header">
+      <h2>{{ 'daily_report.title' | transloco }}</h2>
+      <button 
+        class="btn-export"
+        (click)="exportToPDF()"
+        [disabled]="isGeneratingPDF || appointments.length === 0"
+        [title]="'revenue.export_tooltip' | transloco">
+        <i class="fas fa-file-pdf"></i>
+        {{ isGeneratingPDF ? ('revenue.exporting' | transloco) : ('revenue.export_pdf' | transloco) }}
+      </button>
+    </div>
+
+    <!-- Dropdown for date selection -->
+    <div class="dropdown-container">
+      <label for="dateDropdown">{{ 'revenue.select_date' | transloco }}:</label>
+      <select
+        id="dateDropdown"
+        [(ngModel)]="selectedDate"
+        (change)="onDateSelect($event)"
+      >
+        <option *ngFor="let day of availableDays" [value]="day.date">
+          {{ day.date }} ({{ day.dayOfWeek }})
+        </option>
+      </select>
+    </div>
+
+    <div class="table-container" #reportContent>
+      <table class="revenue-table" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+        <thead>
+          <tr>
+            <th rowspan="2">#</th>
+            <th rowspan="2">{{ 'revenue.patient_name' | transloco }}</th>
+            <th rowspan="2">{{ 'revenue.total' | transloco }}</th>
+            <th colspan="4">{{ 'revenue.paid' | transloco }}</th>
+            <th rowspan="2">{{ 'revenue.remaining' | transloco }}</th>
+          </tr>
+          <tr>
+            <th>{{ 'revenue.cash' | transloco }}</th>
+            <th>{{ 'revenue.wallet' | transloco }}</th>
+            <th>{{ 'revenue.insta' | transloco }}</th>
+            <th>{{ 'revenue.visa' | transloco }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Display message if no data is available -->
+          <tr *ngIf="appointments.length === 0">
+            <td colspan="9" class="no-data">
+              <div class="no-data-message">
+                <i class="fas fa-calendar-times"></i>
+                <p>{{ 'revenue.no_data' | transloco }}</p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Display data if available -->
+          <tr *ngFor="let appointment of appointments; let rowIndex = index">
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ appointment.patientName }}</td>
+            <td>{{ (appointment.totalPrice || 0) | number:'1.2-2' }}</td>
+            <td>{{ (appointment.paidCash || 0) | number:'1.2-2' }}</td>
+            <td>{{ (appointment.paidWallet || 0) | number:'1.2-2' }}</td>
+            <td>{{ (appointment.paidInstapay || 0) | number:'1.2-2' }}</td>
+            <td>{{ (appointment.paidVisa || 0) | number:'1.2-2' }}</td>
+            <td>{{ getRemainingToPay(appointment) | number:'1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

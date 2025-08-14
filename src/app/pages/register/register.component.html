@@ -1,0 +1,147 @@
+<div class="bg-img" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  <div class="overlay"></div>
+  <div class="cover-image">
+    <img src="www.jpg" alt="" role="presentation" class="full-cover">
+  </div>
+
+  <div class="navbar-spacer"></div>
+  <div class="register-container">
+    <img src="vv_b.png" alt="" class="logo" routerLink="/" />
+    
+    <!-- <div class="lang-switcher">
+      <button (click)="switchLanguage('en')" [class.active]="currentLang === 'en'">EN</button>
+      <button (click)="switchLanguage('ar')" [class.active]="currentLang === 'ar'">عربي</button>
+    </div> -->
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- First Name (Required) -->
+      <div class="form-group">
+        <label for="firstName">{{ 'register.form.firstName' | transloco }} <span class="required">*</span></label>
+        <input id="firstName" type="text" formControlName="firstName" [placeholder]="'register.form.firstNamePlaceholder' | transloco" />
+        <div *ngIf="formControls['firstName'].touched && formControls['firstName'].invalid" class="error">
+          <div *ngIf="formControls['firstName'].errors?.['required']">
+            {{ 'register.formErrors.firstNameRequired' | transloco }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Last Name (Required) -->
+      <div class="form-group">
+        <label for="lastName">{{ 'register.form.lastName' | transloco }} <span class="required">*</span></label>
+        <input id="lastName" type="text" formControlName="lastName" [placeholder]="'register.form.lastNamePlaceholder' | transloco" />
+        <div *ngIf="formControls['lastName'].touched && formControls['lastName'].invalid" class="error">
+          <div *ngIf="formControls['lastName'].errors?.['required']">
+            {{ 'register.formErrors.lastNameRequired' | transloco }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Username (Required) -->
+      <div class="form-group">
+        <label for="username">{{ 'register.form.username' | transloco }} <span class="required">*</span></label>
+        <input id="username" type="text" formControlName="username" [placeholder]="'register.form.usernamePlaceholder' | transloco" />
+        <div *ngIf="formControls['username'].touched && formControls['username'].invalid" class="error">
+          <div *ngIf="formControls['username'].errors?.['required']">
+            {{ 'register.formErrors.usernameRequired' | transloco }}
+          </div>
+          <div *ngIf="formControls['username'].errors?.['minlength']">
+            {{ 'register.formErrors.usernameMinLength' | transloco: { length: formControls['username'].errors?.['minlength'].requiredLength } }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Password (Required) -->
+      <div class="form-group">
+        <label for="password">{{ 'register.form.password' | transloco }} <span class="required">*</span></label>
+        <input id="password" type="password" formControlName="password" [placeholder]="'register.form.passwordPlaceholder' | transloco" />
+        <div *ngIf="formControls['password'].touched && formControls['password'].invalid" class="error">
+          <div *ngIf="formControls['password'].errors?.['required']">
+            {{ 'register.formErrors.passwordRequired' | transloco }}
+          </div>
+          <div *ngIf="formControls['password'].errors?.['minlength']">
+            {{ 'register.formErrors.passwordMinLength' | transloco: { length: formControls['password'].errors?.['minlength'].requiredLength } }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Number (Required) -->
+      <div class="form-group">
+        <label for="phoneNumber">{{ 'register.form.phoneNumber' | transloco }} <span class="required">*</span></label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" [placeholder]="'register.form.phoneNumberPlaceholder' | transloco" />
+        <div *ngIf="formControls['phoneNumber'].touched && formControls['phoneNumber'].invalid" class="error">
+          <div *ngIf="formControls['phoneNumber'].errors?.['required']">
+            {{ 'register.formErrors.phoneNumberRequired' | transloco }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Optional Fields -->
+      <div class="form-group optional">
+        <label for="email">{{ 'register.form.email' | transloco }}</label>
+        <input id="email" type="email" formControlName="email" [placeholder]="'register.form.emailPlaceholder' | transloco" />
+      </div>
+
+      <div class="form-group optional">
+        <label for="dateOfBirth">{{ 'register.form.dateOfBirth' | transloco }}</label>
+        <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
+      </div>
+
+      <div class="form-group optional">
+        <label for="genderId">{{ 'register.form.gender' | transloco }}</label>
+        <select id="genderId" formControlName="genderId">
+          <option [value]="null" disabled>{{ 'register.form.selectGender' | transloco }}</option>
+          <option *ngFor="let gender of genders" [value]="gender.id">{{ gender.name_En }}</option>
+        </select>
+      </div>
+
+      <div class="form-group optional">
+        <label for="countryId">{{ 'register.form.country' | transloco }}</label>
+        <select id="countryId" formControlName="countryId" (change)="updateGovernorates(CountrySelector.value)" #CountrySelector>
+          <option [value]="null" disabled>{{ 'register.form.selectCountry' | transloco }}</option>
+          <option *ngFor="let c of countries" [value]="c.id">{{ c.name_En }}</option>
+        </select>
+      </div>
+
+      <div class="form-group optional">
+        <label for="governorateId">{{ 'register.form.governorate' | transloco }}</label>
+        <select id="governorateId" formControlName="governorateId" (change)="updateDistricts(GovSelector.value)" #GovSelector>
+          <option [value]="null" disabled>{{ 'register.form.selectGovernorate' | transloco }}</option>
+          <option *ngFor="let g of governorates" [value]="g.id">{{ g.name_En }}</option>
+        </select>
+      </div>
+
+      <div class="form-group optional">
+        <label for="districtId">{{ 'register.form.district' | transloco }}</label>
+        <select id="districtId" formControlName="districtId">
+          <option [value]="null" disabled>{{ 'register.form.selectDistrict' | transloco }}</option>
+          <option *ngFor="let d of districts" [value]="d.id">{{ d.name_En }}</option>
+        </select>
+      </div>
+
+      <div class="form-group optional">
+        <label for="profilePicture">{{ 'register.form.profilePicture' | transloco }}</label>
+        <input id="profilePicture" class="form-control" type="file" (change)="onFileChange($event)" #picSelector />
+      </div>
+
+      <!-- <div class="form-group optional">
+        <label for="emergencyContactName">{{ 'register.form.emergencyContactName' | transloco }}</label>
+        <input id="emergencyContactName" type="text" formControlName="emergencyContactName" [placeholder]="'register.form.emergencyContactPlaceholder' | transloco" />
+      </div>
+
+      <div class="form-group optional">
+        <label for="emergencyContactPhone">{{ 'register.form.emergencyContactPhone' | transloco }}</label>
+        <input id="emergencyContactPhone" type="text" formControlName="emergencyContactPhone" [placeholder]="'register.form.emergencyContactPhonePlaceholder' | transloco" />
+      </div>
+
+      <div class="form-group optional">
+        <label for="bloodType">{{ 'register.form.bloodType' | transloco }}</label>
+        <input id="bloodType" type="text" formControlName="bloodType" [placeholder]="'register.form.bloodTypePlaceholder' | transloco" />
+      </div> -->
+
+      <!-- Submit Button -->
+      <button type="submit">{{ 'register.buttons.register' | transloco }}</button>
+    </form>
+
+    <a routerLink="/login">{{ 'register.links.goToLogin' | transloco }}</a>
+  </div>
+</div>

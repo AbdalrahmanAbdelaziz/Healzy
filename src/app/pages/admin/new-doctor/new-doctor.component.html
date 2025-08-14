@@ -1,0 +1,146 @@
+<app-admin-header></app-admin-header>
+
+<div class="registration-container">
+    <div class="registration-card">
+      <h2>{{ 'doctor_form.register_title' | transloco }}</h2>
+      
+      <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">{{ 'doctor_form.first_name' | transloco }} *</label>
+            <input type="text" id="firstName" formControlName="firstName">
+            <div *ngIf="formControls['firstName'].touched && formControls['firstName'].errors" class="error-message">
+              {{ 'validation.first_name_required' | transloco }}
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="lastName">{{ 'doctor_form.last_name' | transloco }} *</label>
+            <input type="text" id="lastName" formControlName="lastName">
+            <div *ngIf="formControls['lastName'].touched && formControls['lastName'].errors" class="error-message">
+              {{ 'validation.last_name_required' | transloco }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="username">{{ 'doctor_form.username' | transloco }} *</label>
+            <input type="text" id="username" formControlName="username">
+            <div *ngIf="formControls['username'].touched && formControls['username'].errors" class="error-message">
+              {{ 'validation.username_required' | transloco }}
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">{{ 'doctor_form.email' | transloco }} *</label>
+            <input type="email" id="email" formControlName="email">
+            <div *ngIf="formControls['email'].touched && formControls['email'].errors" class="error-message">
+              {{ 'validation.valid_email' | transloco }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phoneNumber">{{ 'doctor_form.phone' | transloco }} *</label>
+            <input type="tel" id="phoneNumber" formControlName="phoneNumber">
+            <div *ngIf="formControls['phoneNumber'].touched && formControls['phoneNumber'].errors" class="error-message">
+              {{ 'validation.phone_required' | transloco }}
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="password">{{ 'doctor_form.password' | transloco }} *</label>
+            <input type="password" id="password" formControlName="password">
+            <div *ngIf="formControls['password'].touched && formControls['password'].errors" class="error-message">
+              {{ 'validation.password_required' | transloco }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dateOfBirth">{{ 'doctor_form.dob' | transloco }} *</label>
+            <input type="date" id="dateOfBirth" formControlName="dateOfBirth">
+            <div *ngIf="formControls['dateOfBirth'].touched && formControls['dateOfBirth'].errors" class="error-message">
+              {{ 'validation.dob_required' | transloco }}
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="genderId">{{ 'doctor_form.gender' | transloco }} *</label>
+            <select id="genderId" formControlName="genderId">
+              <option value="">{{ 'doctor_form.select_gender' | transloco }}</option>
+              <option *ngFor="let gender of genders" [value]="gender.id">
+                {{ getTranslatedName(gender) }}
+              </option>
+            </select>
+            <div *ngIf="formControls['genderId'].touched && formControls['genderId'].errors" class="error-message">
+              {{ 'validation.gender_required' | transloco }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="clinicId">{{ 'doctor_form.clinic' | transloco }} *</label>
+            <select id="clinicId" formControlName="clinicId">
+              <option value="">{{ 'doctor_form.select_clinic' | transloco }}</option>
+              <option *ngFor="let clinic of clinics" [value]="clinic.id">
+                {{ clinic.name }}
+              </option>
+            </select>
+            <div *ngIf="formControls['clinicId'].touched && formControls['clinicId'].errors" class="error-message">
+              {{ 'validation.clinic_required' | transloco }}
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="specializationId">{{ 'doctor_form.specialization' | transloco }} *</label>
+            <select id="specializationId" formControlName="specializationId">
+              <option value="">{{ 'doctor_form.select_specialization' | transloco }}</option>
+              <option *ngFor="let spec of specializations" [value]="spec.id">
+                {{ getTranslatedName(spec) }}
+              </option>
+            </select>
+            <div *ngIf="formControls['specializationId'].touched && formControls['specializationId'].errors" class="error-message">
+              {{ 'validation.specialization_required' | transloco }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="brief">{{ 'doctor_form.brief' | transloco }} *</label>
+            <textarea id="brief" formControlName="brief" rows="3"></textarea>
+            <div *ngIf="formControls['brief'].touched && formControls['brief'].errors" class="error-message">
+              {{ 'validation.brief_required' | transloco }}
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="checkPrice">{{ 'doctor_form.check_price' | transloco }} *</label>
+            <input type="number" id="checkPrice" formControlName="checkPrice" min="0">
+            <div *ngIf="formControls['checkPrice'].touched && formControls['checkPrice'].errors" class="error-message">
+              {{ 'validation.valid_price' | transloco }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="profilePicture">{{ 'doctor_form.profile_picture' | transloco }}</label>
+          <input type="file" id="profilePicture" (change)="onFileChange($event)" accept="image/*">
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="doctorForm.invalid">
+            {{ 'doctor_form.register_button' | transloco }}
+          </button>
+          <!-- <button type="button" class="cancel" routerLink="/admin/users">
+            {{ 'common.cancel' | transloco }}
+          </button> -->
+        </div>
+      </form>
+    </div>
+</div>

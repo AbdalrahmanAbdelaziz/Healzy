@@ -1,0 +1,191 @@
+<div [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <app-p-header></app-p-header>
+
+  <div class="navbar-spacer"></div>
+
+  <app-side-navbar></app-side-navbar>
+
+  <div class="content">
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Appointments Section -->
+      <div class="appointment-container">
+        <h2>{{ 'pHome.appointments.title' | transloco }}</h2>
+
+        <!-- History Button -->
+        <button class="history-btn" (click)="openHistoryModal()">
+          {{ 'pHome.appointments.viewHistory' | transloco }}
+        </button>
+
+        <!-- No Appointments Message -->
+        <div *ngIf="filteredAppointments.length === 0" class="no-appointments">
+          <p>
+            {{ 'pHome.appointments.noAppointments' | transloco }}
+            <a routerLink="/choose-appointment" class="book-appointment-link">
+              {{ 'pHome.appointments.bookNow' | transloco }}
+            </a>
+          </p>
+        </div>
+
+        <!-- Appointments Grid -->
+        <div class="appointment-grid" *ngIf="filteredAppointments.length > 0">
+          <div *ngFor="let appointment of filteredAppointments" 
+               class="appointment-card"
+               [class.upcoming]="appointment.appointmentStatus_En === 'UpComing'"
+               [class.in-progress]="appointment.appointmentStatus_En === 'InProgress' || appointment.appointmentStatus_En === 'In Progress'"
+               [class.done]="appointment.appointmentStatus_En === 'Done' || appointment.appointmentStatus_En === 'Proccessed'"
+               [class.cancelled]="appointment.appointmentStatus_En === 'Cancelled'"
+               [class.arrived]="appointment.appointmentStatus_En === 'Arrived'"
+               [class.next]="appointment.appointmentStatus_En === 'NextInQueue'">
+               
+            <div class="card-header">
+              <img [src]="(BASE_URL + '/' + appointment.doctorProfilePicture) || 'default-avatar.jpg'" 
+              alt="Doctor profile picture"
+              title="Doctor profile picture" />
+              <div class="doctor-info">
+                <h3>{{ appointment.doctorName }}</h3>
+                <p>
+                  {{ (translocoService.getActiveLang() === 'ar' ? appointment.doctorSpecialization_Ar : appointment.doctorSpecialization_En) || 
+                     ('pHome.generalPractitioner' | transloco) }}
+                </p>
+                 <span class="clinic">{{ appointment.clinicName || ('pHome.unknownClinic' | transloco) }}</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <p><strong>{{ 'pHome.appointments.date' | transloco }}:</strong> {{ appointment.timeSlot.date }}</p>
+              <p><strong>{{ 'pHome.appointments.time' | transloco }}:</strong> 
+                {{ appointment.timeSlot.startTime }} - {{ appointment.timeSlot.endTime }}</p>
+              <p class="status" [ngClass]="{
+                'done': appointment.appointmentStatus_En === 'Done' || appointment.appointmentStatus_En === 'Proccessed',
+                'upcoming': appointment.appointmentStatus_En === 'UpComing',
+                'in-progress': appointment.appointmentStatus_En === 'InProgress' || appointment.appointmentStatus_En === 'In Progress',
+                'arrived': appointment.appointmentStatus_En === 'Arrived',
+                'cancelled': appointment.appointmentStatus_En === 'Cancelled'
+              }">
+                {{ 'pHome.status.' + (appointment.appointmentStatus_En === 'Proccessed' ? 'done' : appointment.appointmentStatus_En.toLowerCase()) | transloco }}
+              </p>
+            </div>
+
+            <div class="card-footer">
+              <button *ngIf="appointment.appointmentStatus_En === 'UpComing'" 
+                      class="cancel-btn" 
+                      (click)="openCancelModal(appointment.id)">
+                {{ 'pHome.appointments.cancel' | transloco }}
+              </button>
+              <button *ngIf="appointment.appointmentStatus_En === 'UpComing'" 
+                      class="reschedule-btn" 
+                      (click)="reschedule(appointment.id, appointment.doctorId)">
+                {{ 'pHome.appointments.reschedule' | transloco }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <app-most-chosen-doctors></app-most-chosen-doctors>
+    </div>
+  </div>
+
+  <!-- History Modal -->
+ <div class="modal-overlay" *ngIf="isHistoryModalOpen">
+  <div class="history-modal">
+    <div class="modal-header sticky-header">
+      <h2>{{ 'pHome.history.title' | transloco }}</h2>
+      <button class="close-btn" (click)="closeHistoryModal()">&times;</button>
+    </div>
+      <div class="modal-body">
+        <div *ngFor="let appointment of historyAppointments" class="history-card done">
+          <div class="card-header">
+            <img [src]="(BASE_URL + '/' + appointment.doctorProfilePicture) || 'default-avatar.jpg'" 
+            alt="Doctor profile picture"
+            title="Doctor profile picture" />
+            <div class="doctor-info">
+              <h3>{{ appointment.doctorName }}</h3>
+              <p>
+                {{ (translocoService.getActiveLang() === 'ar' ? appointment.doctorSpecialization_Ar : appointment.doctorSpecialization_En) || 
+                   ('pHome.generalPractitioner' | transloco) }}
+              </p>
+              <span class="clinic">{{ appointment.clinicName || ('pHome.unknownClinic' | transloco) }}</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p><strong>{{ 'pHome.appointments.date' | transloco }}:</strong> {{ appointment.timeSlot.date }}</p>
+            <p><strong>{{ 'pHome.appointments.time' | transloco }}:</strong> 
+              {{ appointment.timeSlot.startTime }} - {{ appointment.timeSlot.endTime }}</p>
+            <p class="status done">{{ 'pHome.status.done' | transloco }}</p>
+            
+            <button *ngIf="!appointment.hasRated" class="rate-btn" (click)="openFeedbackModal(appointment)">
+              {{ 'pHome.feedback.rateButton' | transloco }}
+            </button>
+            <div *ngIf="appointment.hasRated" class="rated-message">
+              <i class="fas fa-check-circle"></i> {{ 'pHome.feedback.rated' | transloco }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div class="modal-overlay" *ngIf="isCancelModalOpen">
+    <div class="confirmation-modal">
+      <div class="modal-header">
+        <h2>{{ 'pHome.cancelModal.title' | transloco }}</h2>
+        <button class="close-btn" (click)="closeCancelModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>{{ 'pHome.cancelModal.message' | transloco }}</p>
+      </div>
+      <div class="modal-footer">
+        <button class="confirm-btn" (click)="confirmCancel()">
+          {{ 'pHome.cancelModal.yes' | transloco }}
+        </button>
+        <button class="cancel-btn" (click)="closeCancelModal()">
+          {{ 'pHome.cancelModal.no' | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div class="modal-overlay" *ngIf="showInitialFeedbackModal || isFeedbackModalOpen">
+    <div class="feedback-modal">
+      <div class="modal-header">
+        <h2>{{ 'pHome.feedback.title' | transloco }}</h2>
+        <button class="close-btn" (click)="closeFeedbackModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          {{ 'pHome.feedback.question' | transloco:{doctor: currentFeedbackAppointment?.doctorName, date: currentFeedbackAppointment?.timeSlot.date} }}
+        </p>
+        
+        <div class="rating-container">
+          <div *ngFor="let star of [1,2,3,4,5]" 
+               (click)="setRating(star)"
+               [class.active]="star <= rating">
+            ★
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="feedbackComment">{{ 'pHome.feedback.comments' | transloco }}:</label>
+          <textarea id="feedbackComment" 
+                    [(ngModel)]="comment" 
+                    [placeholder]="'pHome.feedback.commentsPlaceholder' | transloco"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="submit-btn" (click)="submitFeedback()">
+          {{ 'pHome.feedback.submit' | transloco }}
+        </button>
+        <button *ngIf="showInitialFeedbackModal" class="skip-btn" (click)="closeFeedbackModal()">
+          {{ 'pHome.feedback.skip' | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+

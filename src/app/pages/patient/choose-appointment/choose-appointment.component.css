@@ -1,0 +1,347 @@
+/* General Page Styling */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+:root {
+  --primary: #24CC81;
+  --primary-dark: #165B40;
+  --secondary: #6c63ff;
+  --text: #2d3748;
+  --light: #f8f9fa;
+  --white: #ffffff;
+  --gray: #e2e8f0;
+  --error: #ef4444;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* Background Image */
+.bg-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.cover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.full-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+
+/* Content Layout */
+.content-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Filter Form Styling */
+.filter-form {
+  width: 100%;
+  max-width: 500px;
+  background: #24CC81;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.filter-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.form-header {
+  margin-bottom: 30px;
+}
+
+.form-header h2 {
+  /* color: #ffffff; */
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.form-header p {
+  /* color: #e2e8f0; */
+  margin: 8px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+/* Input Container */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-container i:first-child {
+  position: absolute;
+  left: 15px;
+  color: #165B40;
+  font-size: 18px;
+  z-index: 2;
+}
+
+.input-container i:last-child {
+  position: absolute;
+  right: 15px;
+  color: #165B40;
+  pointer-events: none;
+}
+
+/* Input Fields */
+select {
+  width: 100%;
+  padding: 15px 20px 15px 45px;
+  border: 2px solid var(--gray);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* color: var(--text); */
+  box-shadow: var(--shadow);
+}
+
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(36, 204, 129, 0.2);
+  outline: none;
+}
+
+/* Error Messages */
+.error {
+  color: var(--error);
+  font-size: 13px;
+  margin-top: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.error i {
+  font-size: 14px;
+}
+
+/* Search Button */
+button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background: #165B40;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(22, 91, 64, 0.2);
+}
+
+button:hover {
+  background: #1ea76b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(22, 91, 64, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  background: var(--gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+button i {
+  font-size: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filter-form {
+    padding: 30px 25px;
+    max-width: 90%;
+    border-radius: 16px;
+  }
+
+  .form-header h2 {
+    font-size: 24px;
+  }
+
+  .form-header p {
+    font-size: 14px;
+  }
+
+  select {
+    padding: 14px 20px 14px 40px;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .input-container i:first-child {
+    font-size: 16px;
+    left: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-form {
+    padding: 25px 20px;
+    max-width: 95%;
+  }
+
+  .form-header h2 {
+    font-size: 22px;
+  }
+
+  select {
+    padding: 12px 18px 12px 38px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 13px;
+  }
+}
+
+/* Add to your root or body CSS */
+[dir="rtl"] .filter-form {
+  text-align: right;
+}
+
+[dir="rtl"] .input-container i:first-child {
+  left: auto;
+  right: 15px;
+}
+
+[dir="rtl"] .input-container i:last-child {
+  right: auto;
+  left: 15px;
+}
+
+.filter-form {
+  overflow: hidden; /* Prevents text overflow */
+}
+
+select option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:root {
+  --arabic-font: 'Tahoma', 'Arial', sans-serif;
+}
+
+[dir="rtl"] body {
+  font-family: var(--arabic-font);
+}
+
+/* RTL-specific styles */
+[dir="rtl"] .input-container {
+  direction: rtl;
+}
+
+[dir="rtl"] .input-container i:first-child {
+  right: 15px;
+  left: auto;
+}
+
+[dir="rtl"] .input-container i:last-child {
+  left: 15px;
+  right: auto;
+}
+
+[dir="rtl"] select {
+  padding: 15px 45px 15px 20px;
+  text-align: right;
+}
+
+/* General select styling that works for both LTR and RTL */
+select {
+  background-position: left 15px center;
+  padding-left: 45px;
+  padding-right: 35px;
+}
+
+[dir="rtl"] select {
+  background-position: right 15px center;
+}

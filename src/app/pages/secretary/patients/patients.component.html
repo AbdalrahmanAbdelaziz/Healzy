@@ -1,0 +1,58 @@
+<app-s-header></app-s-header>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="content-wrapper">
+    <div class="container">
+      <h2 class="section-title">{{ 'patientsPage.title' | transloco }}</h2>
+
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <label for="searchQuery" class="visually-hidden">{{ 'patientsPage.searchPlaceholder' | transloco }}</label>
+        <input
+          type="text"
+          id="searchQuery"
+          [(ngModel)]="searchQuery"
+          (input)="filterPatients()"
+          [placeholder]="'patientsPage.searchPlaceholder' | transloco"
+        />
+      </div>
+      
+      
+
+      <!-- Table View for Large Screens -->
+      <div class="table-responsive desktop-table">
+        <table class="patients-table">
+          <thead>
+            <tr>
+              <th>{{ 'patientsPage.firstName' | transloco }}</th>
+              <th>{{ 'patientsPage.lastName' | transloco }}</th>
+              <th>{{ 'patientsPage.phoneNumber' | transloco }}</th>
+              <th>{{ 'patientsPage.lastAppointment' | transloco }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of filteredPatients">
+              <td>{{ patient.firstName }}</td>
+              <td>{{ patient.lastName }}</td>
+              <td>{{ patient.phoneNumber }}</td>
+              <td>{{ patient.lastAppointment | date: 'mediumDate' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card View for Small Screens -->
+      <div class="mobile-cards">
+        <div class="patient-card" *ngFor="let patient of filteredPatients">
+          <p><strong>{{ 'patientsPage.firstName' | transloco }}:</strong> {{ patient.firstName }}</p>
+          <p><strong>{{ 'patientsPage.lastName' | transloco }}:</strong> {{ patient.lastName }}</p>
+          <p><strong>{{ 'patientsPage.phoneNumber' | transloco }}:</strong> {{ patient.phoneNumber }}</p>
+          <p><strong>{{ 'patientsPage.lastAppointment' | transloco }}:</strong> {{ patient.lastAppointmentDate | date: 'mediumDate' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

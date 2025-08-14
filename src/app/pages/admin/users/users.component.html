@@ -1,0 +1,185 @@
+<app-admin-header></app-admin-header>
+
+<div class="admin-container" [dir]="getCurrentDirection()">
+    <div class="admin-card">
+        <div class="card-header">
+            <div class="header-content">
+                <h1>{{ 'doctors.title' | transloco }}</h1>
+                
+                <form [formGroup]="revenueForm" (ngSubmit)="loadDoctorsWithRevenue()" class="revenue-filter-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="month">{{ 'doctors.month' | transloco }}</label>
+                            <input 
+                                id="month"
+                                type="number" 
+                                formControlName="month"
+                                min="1"
+                                max="12"
+                                [placeholder]="'doctors.month_placeholder' | transloco"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="year">{{ 'doctors.year' | transloco }}</label>
+                            <input 
+                                id="year"
+                                type="number" 
+                                formControlName="year"
+                                min="2000"
+                                [placeholder]="'doctors.year_placeholder' | transloco"
+                            >
+                        </div>
+                        
+                        <button 
+                            type="submit"
+                            class="btn-submit"
+                            [disabled]="revenueForm.invalid || isLoading"
+                        >
+                            <span *ngIf="!isLoading">{{ 'doctors.get_revenue' | transloco }}</span>
+                            <span *ngIf="isLoading">{{ 'common.loading' | transloco }}</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <div class="search-input-group">
+                            <i class="fas fa-search search-icon"></i>
+                            <label for="doctor-search" class="visually-hidden">{{ 'doctors.search_placeholder' | transloco }}</label>
+                            <input 
+                                id="doctor-search"
+                                type="text" 
+                                class="search-input" 
+                                [placeholder]="'doctors.search_placeholder' | transloco"
+                                [attr.title]="'doctors.search_placeholder' | transloco"
+                                (input)="filterDoctors($event)"
+                                [disabled]="doctors.length === 0"
+                            >
+                            <button 
+                                type="button"
+                                class="btn-clear" 
+                                *ngIf="searchQuery" 
+                                (click)="clearSearch()"
+                                [attr.aria-label]="'common.clear_search' | transloco"
+                                title="Clear search"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+
+                    <button 
+                        class="btn-export"
+                        (click)="exportToPDF()"
+                        [disabled]="isGeneratingPDF || doctors.length === 0"
+                        [attr.aria-busy]="isGeneratingPDF"
+                    >
+                        <span class="btn-content">
+                            <i class="fas" [class.fa-file-pdf]="!isGeneratingPDF" [class.fa-spinner]="isGeneratingPDF" [class.fa-spin]="isGeneratingPDF"></i>
+                            <span class="btn-text">
+                                {{ isGeneratingPDF ? ('common.exporting' | transloco) : ('common.export_pdf' | transloco) }}
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+            <div *ngIf="errorMessage && !isLoading" class="error-state">
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>{{ errorMessage }}</span>
+                </div>
+                <button class="btn-retry" (click)="loadDoctorsWithRevenue()">
+                    {{ 'common.retry' | transloco }}
+                </button>
+            </div>
+
+            <div *ngIf="!isLoading && !errorMessage && doctors.length > 0">
+                <div *ngIf="filteredDoctors.length === 0" class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>{{ 'doctors.no_results_title' | transloco }}</h3>
+                    <p>{{ 'doctors.no_results_message' | transloco }}</p>
+                    <button class="btn-clear-search" (click)="clearSearch()">
+                        {{ 'common.clear_search' | transloco }}
+                    </button>
+                </div>
+
+                <div *ngIf="filteredDoctors.length > 0" class="table-responsive" #reportContent>
+                    <table class="doctors-table">
+                        <thead>
+                            <tr>
+                                <th>{{ 'doctors.name' | transloco }}</th>
+                                <th>{{ 'doctors.phone' | transloco }}</th>
+                                <th>{{ 'doctors.email' | transloco }}</th>
+                                <th>{{ 'doctors.location' | transloco }}</th>
+                                <th>{{ 'doctors.check_price' | transloco }}</th>
+                                <th>{{ 'doctors.our_revenue' | transloco }}</th>
+                                <th>{{ 'doctors.doctor_revenue' | transloco }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let doctor of filteredDoctors">
+                                <td [attr.data-label]="'doctors.name' | transloco">
+                                    {{ doctor.firstName }} {{ doctor.lastName }}
+                                </td>
+                                <td [attr.data-label]="'doctors.phone' | transloco">
+                                    {{ doctor.phoneNumber }}
+                                </td>
+                                <td [attr.data-label]="'doctors.email' | transloco">
+                                    {{ doctor.email }}
+                                </td>
+                                <td [attr.data-label]="'doctors.location' | transloco">
+                                    {{ getTranslatedName(doctor, 'country') }}، 
+                                    {{ getTranslatedName(doctor, 'governorate') }}، 
+                                    {{ getTranslatedName(doctor, 'district') }}
+                                </td>
+                                <td [attr.data-label]="'doctors.check_price' | transloco">
+                                    {{ doctor.checkPrice | currency }}
+                                </td>
+                                <td [attr.data-label]="'doctors.our_revenue' | transloco">
+                                    {{ doctor.ourCheckupTotalRevenu | currency }}
+                                </td>
+                                <td [attr.data-label]="'doctors.doctor_revenue' | transloco">
+                                    {{ doctor.drCheckupTotalRevenu | currency }} </td>
+                                <td class="arrow-cell">
+                                    <button 
+                                        class="btn-arrow"
+                                        (click)="navigateToDoctor(doctor.id)"
+                                        [attr.aria-label]="'doctors.view_details' | transloco"
+                                        [title]="'doctors.view_details' | transloco"
+                                    >
+                                        <span class="visually-hidden">{{ 'doctors.view_details' | transloco }}</span>
+                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot *ngIf="filteredDoctors.length > 0">
+                            <tr>
+                                <td colspan="4" class="total-label">{{ 'doctors.total_revenue' | transloco }}</td>
+                                <td class="total-value">{{ totalOurRevenue | currency }}</td>
+                                <!-- <td class="total-value">{{ totalDrRevenue | currency }}</td> -->
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div *ngIf="!isLoading && !errorMessage && doctors.length === 0" class="empty-state">
+                <i class="fas fa-chart-line"></i>
+                <h3>{{ 'doctors.no_data_title' | transloco }}</h3>
+                <p>{{ 'doctors.no_data_message' | transloco }}</p>
+            </div>
+        </div>
+    </div>
+</div>

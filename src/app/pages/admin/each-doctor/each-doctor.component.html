@@ -1,0 +1,125 @@
+<app-admin-header></app-admin-header>
+
+<div class="doctor-container" [dir]="getCurrentDirection()">
+  <div class="doctor-card">
+    <!-- Card Header -->
+    <div class="card-header">
+      <h1>{{ 'doctor_appointments.title' | transloco }}</h1>
+      <div class="header-actions">
+        <button 
+          class="btn-export"
+          (click)="exportToPDF()"
+          [disabled]="isGeneratingPDF || appointments.length === 0"
+          [attr.aria-busy]="isGeneratingPDF"
+        >
+          <span class="btn-content">
+            <i class="fas" [class.fa-file-pdf]="!isGeneratingPDF" [class.fa-spinner]="isGeneratingPDF" [class.fa-spin]="isGeneratingPDF"></i>
+            <span class="btn-text">
+              {{ isGeneratingPDF ? ('common.exporting' | transloco) : ('common.export_pdf' | transloco) }}
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+      <!-- Loading State -->
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+      <!-- Error State -->
+      <div *ngIf="errorMessage && !isLoading" class="error-state">
+        <div class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ errorMessage }}</span>
+        </div>
+        <button class="btn-retry" (click)="loadAppointments()">
+          {{ 'common.retry' | transloco }}
+        </button>
+      </div>
+
+      <!-- Success State -->
+      <div *ngIf="!isLoading && !errorMessage">
+        <!-- No Appointments -->
+        <div *ngIf="appointments.length === 0" class="no-appointments">
+          <div class="no-appointments-icon">
+            <i class="fas fa-calendar-times"></i>
+          </div>
+          <h3>{{ 'doctor_appointments.no_appointments_title' | transloco }}</h3>
+          <p>{{ 'doctor_appointments.no_appointments_message' | transloco }}</p>
+        </div>
+
+        <!-- Appointments Table -->
+        <div *ngIf="appointments.length > 0" class="table-responsive" #reportContent>
+          <table class="appointments-table">
+            <thead>
+              <tr>
+                
+                <th>#</th>
+                <th>{{ 'doctor_appointments.patient_name' | transloco }}</th>
+                <th>{{ 'doctor_appointments.date' | transloco }}</th>
+                <th>{{ 'doctor_appointments.time' | transloco }}</th>
+                <th>{{ 'doctor_appointments.check_price' | transloco }}</th>
+                <th>{{ 'doctor_appointments.our_revenue' | transloco }}</th>
+                <!-- <th>{{ 'doctor_appointments.status' | transloco }}</th> -->
+              </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let appointment of paginatedAppointments; let i = index">
+    <td [attr.data-label]="'#'">{{ getPatientNumber(i) }}</td>
+                <td [attr.data-label]="'doctor_appointments.patient_name' | transloco">
+                  <div class="patient-info">
+                    <span class="patient-name">{{ appointment.patientName }}</span>
+                    <span class="patient-id">{{ appointment.patientID }}</span>
+                  </div>
+                </td>
+                <td [attr.data-label]="'doctor_appointments.date' | transloco">
+                  <div class="date-cell">
+                    <span class="date-day">{{ formatDateDay(appointment.timeSlot.date) }}</span>
+                    <span class="date-full">{{ formatDateFull(appointment.timeSlot.date) }}</span>
+                  </div>
+                </td>
+                <td [attr.data-label]="'doctor_appointments.time' | transloco">
+                  <div class="time-slot">
+                    <span class="time">{{ formatTime(appointment.timeSlot.startTime) }}</span>
+                    <span class="time-separator">-</span>
+                    <span class="time">{{ formatTime(appointment.timeSlot.endTime) }}</span>
+                  </div>
+                </td>
+                <td [attr.data-label]="'doctor_appointments.check_price' | transloco">
+                  <span class="payment-amount">{{ formatCurrency(appointment.checkPrice) }}</span>
+                </td>
+                <td [attr.data-label]="'doctor_appointments.our_revenue' | transloco">
+                  <span class="payment-amount">{{ formatCurrency(appointment.ourRevenue) }}</span>
+                </td>
+                <!-- <td [attr.data-label]="'doctor_appointments.status' | transloco">
+                  <span class="status-badge {{ appointment.status }}">{{ getTranslatedStatus(appointment) }}</span>
+                </td> -->
+              </tr>
+              <!-- Totals row -->
+             <tr class="totals-row" *ngIf="paginatedAppointments.length > 0">
+  <td colspan="4" class="totals-label">{{ 'doctor_appointments.totals' | transloco }}</td>
+  <td class="totals-amount">{{ formatCurrency(getTotalCheckPrice()) }}</td>
+  <td class="totals-amount">{{ formatCurrency(getTotalOurRevenue()) }}</td>
+  <td></td>
+</tr>
+            </tbody>
+          </table>
+          
+          <!-- Pagination -->
+          <div class="pagination-container" *ngIf="totalPages > 1">
+            <button class="pagination-btn" [disabled]="currentPage === 1" (click)="previousPage()">
+              <i class="fas" [class.fa-chevron-left]="!isRTL" [class.fa-chevron-right]="isRTL"></i>
+            </button>
+            <span class="page-info">
+              {{ 'common.page' | transloco }} {{ currentPage }} {{ 'common.of' | transloco }} {{ totalPages }}
+            </span>
+            <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+              <i class="fas" [class.fa-chevron-right]="!isRTL" [class.fa-chevron-left]="isRTL"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

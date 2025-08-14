@@ -1,0 +1,1146 @@
+{
+    "landing": {
+      "logoAlt": "شعار هوغوزاتي",
+      "coverAlt": "صورة الغلاف",
+      "login": "تسجيل الدخول",
+      "register": "عضو جديد",
+      "title": "رفيقك الموثوق في الرعاية الصحية",
+      "subtitle": "احجز مواعيد مع أفضل الأطباء، واحصل على استشارات طبية، وادخل صحتك بسهولة. عافيتك على بعد ضغطة واحدة!",
+      "howItWorks": "كيف يعمل؟"
+    },
+    "info": {
+      "logoAlt": "شعار هوغوزاتي",
+      "login": "تسجيل الدخول",
+      "register": "عضو جديد",
+      "findDoctorsTitle": "ابحث عن أطباء موثوقين واحجز مواعيدك فوراً",
+      "findDoctorsSubtitle": "تخطى فترات الانتظار الطويلة واحجز استشارات مع أفضل الأطباء ببضع نقرات فقط.",
+      "bookAppointment": "حجز موعد",
+      "doctorConsultation": "استشارة طبية",
+      "whyChooseTitle": "لماذا تختار هيلزي؟",
+      "whyChooseText": "نوفر لك اتصالاً مع أطباء معتمدين، مع ضمان مواعيد خالية من المتاعب، وتتبع السجل الطبي، ووصول سهل إلى الرعاية الصحية.",
+      "learnMore": "معرفة المزيد",
+      "healthcareMission": "مهمة الرعاية الصحية",
+      "howItWorksTitle": "كيف يعمل",
+      "howItWorksSubtitle": "خطوات سهلة وسريعة للحصول على الرعاية التي تحتاجها",
+      "howItWorksText": "ابحث عن المتخصصين، اختر وقتًا يناسب جدولك، واحصل على استشارات طبية خبيرة من راحة منزلك.",
+      "startNow": "ابدأ الآن",
+      "howItWorksImage": "كيف يعمل",
+      "manageAppointmentsTitle": "إدارة مواعيدك",
+      "manageAppointmentsSubtitle": "تابع استشاراتك في أي وقت",
+      "manageAppointmentsText": "عرض زياراتك القادمة، تلقي التذكيرات، والوصول إلى سجل استشاراتك في مكان واحد.",
+      "viewAppointments": "عرض مواعيدك",
+      "trackAppointments": "تتبع المواعيد",
+      "already_assigned": "تم تعيين هذه الخدمة لك بالفعل."
+    },
+
+    "login": {
+       "errors": {
+      "errorTitle": "خطأ",
+      "generalError": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+      "connectionFailed": "فشل الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت أو المحاولة مرة أخرى لاحقًا.",
+      "unauthorized": "بيانات الاعتماد غير صالحة. يرجى التحقق من اسم المستخدم/البريد الإلكتروني وكلمة المرور.",
+      "notFound": "الخدمة غير متوفرة. يرجى الاتصال بالدعم الفني."
+    },
+        "coverImageAlt": "خلفية الرعاية الصحية",
+        "logoAlt": "شعار هوغوزاتي",
+          "emailPlaceholder": "البريد الإلكتروني أو اسم المستخدم أو الهاتف",
+          "passwordPlaceholder": "كلمة المرور",
+            "emailRequired": "البريد الإلكتروني مطلوب ويجب أن يكون صالحًا.",
+            "passwordRequired": "كلمة المرور مطلوبة.",
+            "incompleteFields": "يرجى استكمال جميع الحقول المطلوبة.",
+            "warning": "تحذير",
+          
+          "login": "تسجيل الدخول",
+          "forgotPassword": "نسيت كلمة المرور؟",
+          "signUp": "سجل الآن",
+          "noAccount": "ليس لديك حساب؟",
+          "loginFailed": "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك.",
+          "error": "خطأ"
+      },
+
+      "register": {
+        "coverImageAlt": "خلفية الرعاية الصحية",
+        "logoAlt": "شعار هوغوزاتي",
+        "form": {
+          "firstName": "الاسم الأول",
+          "firstNamePlaceholder": "أدخل اسمك الأول",
+          "lastName": "الاسم الأخير",
+          "lastNamePlaceholder": "أدخل اسمك الأخير",
+          "username": "اسم المستخدم",
+          "usernamePlaceholder": "أدخل اسم المستخدم",
+          "password": "كلمة المرور",
+          "passwordPlaceholder": "أدخل كلمة المرور",
+          "phoneNumber": "رقم الهاتف",
+          "phoneNumberPlaceholder": "أدخل رقم هاتفك",
+          "email": "البريد الإلكتروني",
+          "emailPlaceholder": "أدخل بريدك الإلكتروني",
+          "dateOfBirth": "تاريخ الميلاد",
+          "gender": "الجنس",
+          "selectGender": "اختر الجنس",
+          "country": "البلد",
+          "selectCountry": "اختر البلد",
+          "governorate": "المحافظة",
+          "selectGovernorate": "اختر المحافظة",
+          "district": "المنطقة",
+          "selectDistrict": "اختر المنطقة",
+          "profilePicture": "صورة الملف الشخصي",
+          "emergencyContactName": "اسم جهة الاتصال للطوارئ",
+          "emergencyContactPlaceholder": "أدخل اسم جهة الاتصال للطوارئ",
+          "emergencyContactPhone": "هاتف جهة الاتصال للطوارئ",
+          "emergencyContactPhonePlaceholder": "أدخل هاتف جهة الاتصال للطوارئ",
+          "bloodType": "فصيلة الدم",
+          "bloodTypePlaceholder": "أدخل فصيلة دمك",
+            "usernameHint": "يجب أن يكون 4 أحرف على الأقل (بالإنجليزية فقط)"
+        },
+        "formErrors": {
+          "firstNameRequired": "الاسم الأول مطلوب.",
+          "lastNameRequired": "الاسم الأخير مطلوب.",
+          "usernameRequired": "اسم المستخدم مطلوب.",
+          "usernameMinLength": "الحد الأدنى للطول هو {{length}} أحرف.",
+          "passwordRequired": "كلمة المرور مطلوبة.",
+          "passwordMinLength": "الحد الأدنى للطول هو {{length}} أحرف.",
+          "phoneNumberRequired": "رقم الهاتف مطلوب.",
+          "incompleteFields": "يرجى استكمال جميع الحقول المطلوبة.",
+          "warning": "بيانات غير مكتملة"
+        },
+        "buttons": {
+          "register": "تسجيل"
+        },
+        "links": {
+          "goToLogin": "الذهاب لتسجيل الدخول!"
+        },
+        "success": {
+          "message": "تم التسجيل بنجاح! يرجى تسجيل الدخول."
+        },
+        "errors": {
+          "loadGenders": "فشل تحميل الأجناس",
+          "loadCountries": "فشل تحميل البلدان",
+          "registrationFailed": "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+      "loadGovernorates": "فشل تحميل خيارات المحافظات",
+      "loadDistricts": "فشل تحميل خيارات المناطق",
+      "connectionFailed": "فشل الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت أو المحاولة مرة أخرى لاحقًا"
+        }
+      },
+      "header": {
+        "logoAlt": "شعار هوغوزاتي",
+        "darkModeToggle": "تبديل الوضع المظلم",
+        "home": "الرئيسية",
+        "appointments": "حجز جديد",
+        "appointments_sec": "الحجوزات",
+        "contactUs": "اتصل بنا",
+        "profile": "الملف الشخصي",
+        "logout": "تسجيل الخروج",
+        "toggleDarkMode": "تبديل الوضع المظلم",
+        "daybook": "التقرير اليومى",
+         "revenues": "الإيرادات"
+      },
+
+      "pHome": {
+    "doctorImageAlt": "صورة الطبيب",
+    "generalPractitioner": "طبيب عام",
+    "unknownClinic": "غير معروف",
+    "appointments": {
+      "title": "الحجوزات الحالية",
+      "viewHistory": "الحجوزات السابقة",
+      "noAppointments": "لا توجد مواعيد قادمة أو قيد التنفيذ.",
+      "bookNow": "احجز موعدًا",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "cancel": "إلغاء الحجز",
+      "reschedule": "تعديل حجز",
+      "cancelSuccess": "تم إلغاء الموعد بنجاح!",
+      "cancelError": "فشل إلغاء الموعد. يرجى المحاولة مرة أخرى."
+    },
+    "status": {
+      "done": "منتهي",
+      "upcoming": "حجز مستقبلى",
+      "inprogress": "قيد التنفيذ",
+      "proccessed": "معالج",
+      "nextinqueue": "التالى للدخول",
+      "arrived": "وصل"
+    },
+    "history": {
+      "title": "سجل المواعيد"
+    },
+    "cancelModal": {
+      "title": "إلغاء الموعد",
+      "message": "هل أنت متأكد أنك تريد إلغاء هذا الموعد؟",
+      "yes": "نعم",
+      "no": "لا"
+    },
+    "feedback": {
+      "title": "قيم موعدك",
+      "question": "كيف كان موعدك مع د. {{doctor}} في {{date}}؟",
+      "comments": "تعليقات (اختياري)",
+      "commentsPlaceholder": "شارك تجربتك...",
+      "submit": "إرسال التقييم",
+      "skip": "تخطي الآن",
+      "rateButton": "قيم هذا الموعد",
+      "rated": "تم التقييم",
+      "ratingRequired": "الرجاء اختيار تقييم",
+      "success": "شكرًا لك على تقييمك!",
+      "error": "فشل إرسال التقييم. يرجى المحاولة مرة أخرى."
+    }
+  },
+  "mostChosenDoctors": {
+    "title": "أكثر الأطباء اختياراً",
+    "general": "عام", 
+    "doctorAltText": "صورة شخصية للدكتور {name}، أخصائي {specialization}",
+    "unknownSpecialization": "تخصص غير معروف"
+  },
+  "chooseAppointment": {
+    "title": "ابحث عن طبيبك",
+    "subtitle": "اختر التفضيلات الخاصة بك للعثور على الاختصاصي المثالي",
+    "coverImageAlt": "صورة خلفية طبية",
+    "country": "البلد",
+    "governorate": "المحافظة",
+    "district": "المنطقة",
+    "specialization": "التخصص",
+    "selectCountry": "اختر البلد",
+    "selectGovernorate": "اختر المحافظة",
+    "selectDistrict": "اختر المنطقة",
+    "selectSpecialization": "اختر التخصص",
+    "searchButton": "ابحث عن الأطباء"
+  },
+  "errors": {
+    "countryRequired": "البلد مطلوب",
+    "governorateRequired": "المحافظة مطلوبة",
+    "districtRequired": "المنطقة مطلوبة",
+     "userNotFound": "المستخدم غير موجود. يرجى تسجيل الدخول مرة أخرى.",
+    "updateFailed": "فشل تحديث الملف الشخصي",
+    "noDoctorId": "لا يوجد معرّف طبيب للسكرتير.",
+    "fetchAppointments": "فشل في جلب المواعيد.",
+    "fetchAvailableDays": "فشل في جلب الأيام المتاحة.",
+    "fetchAppointmentError": "فشل جلب بيانات الموعد",
+    "paymentError": "فشل معالجة الدفع",
+    "pdfGenerationError": "فشل إنشاء ملف PDF",
+    "failed_load_genders": "فشل تحميل الأجناس",
+    "failed_load_clinics": "فشل تحميل العيادات",
+    "failed_load_specializations": "فشل تحميل التخصصات",
+    "failed_load_doctors": "فشل تحميل الأطباء",
+    "failed_load_countries": "فشل تحميل الدول",
+    "failed_load_governorates": "فشل تحميل المحافظات",
+    "failed_load_districts": "فشل تحميل المناطق",
+    "load_specializations_error": "حدث خطأ أثناء تحميل التخصصات",
+    "service_creation_error": "حدث خطأ أثناء إنشاء الخدمة",
+    "load_doctors_error": "حدث خطأ أثناء تحميل بيانات الأطباء"
+  },
+
+  "findDoctors": {
+    "title": "ابحث عن طبيبك",
+    "subtitle": "تصفح أفضل المتخصصين واحجز استشارتك",
+    "doctorAltText": "صورة الدكتور {{ name }}",
+    "unknownClinic": "عيادة غير معروفة",
+    "currency": "جنيه",
+    "noRatings": "لا توجد تقييمات",
+    "bookButton": "حجز موعد"
+  },
+
+  "doctorProfile": {
+    "doctorAltText": "صورة الدكتور {{ name }}",
+    "patientAltText": "صورة المريض {{ name }}",
+    "clinicImageAlt": "صورة العيادة",
+    "reviews": "تقييمات",
+    "specialization": "التخصص",
+    "location": "الموقع",
+    "price": "سعر الكشف",
+    "currency": "جنيه",
+    "bio": "السيرة الذاتية",
+    "noBio": "لا يوجد سيرة ذاتية متاحة",
+    "bookButton": "عرض المواعيد المتاحة",
+    "reviewsTab": "التقييمات",
+    "clinicTab": "العيادة",
+    "patientReviews": " تقييمات سابقة",
+    "noComment": "لا توجد تعليقات",
+    "noReviews": "لا توجد تقييمات بعد",
+    "loadingReviews": "جاري تحميل التقييمات...",
+    "clinicInfo": "معلومات العيادة",
+    "loadingClinic": "جاري تحميل معلومات العيادة...",
+    "clinicNameDefault": "اسم العيادة",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "notProvided": "غير متوفر",
+    "clinicGallery": "معرض الصور",
+    "locationNotSpecified": "الموقع غير محدد",
+    "noGallery": "لا توجد صور متاحة",
+    "mapLocation": "الموقع على الخريطة",
+    "mapPlaceholder": "سيتم عرض خريطة تفاعلية هنا",
+    "closeLightbox": "إغلاق معرض الصور",
+    "previousImage": "الصورة السابقة",
+    "nextImage": "الصورة التالية",
+    "imageCounter": "الصورة {{ current }} من {{ total }}"
+  },
+
+
+
+  "appointments": {
+    "reservedStatus": "محجوز",
+    "reserveButton": "حجز",
+    "noSlotsMessage": "لا توجد مواعيد متاحة اليوم.",
+    "selectDateTitle": "اختر تاريخ الموعد",
+    "noAppointmentsMessage": "لا توجد مواعيد متاحة حالياً.",
+    "statusArrived": "تم تحديث حالة الموعد إلى وصل",
+    "statusNextInQueue": "تم تحديث حالة الموعد إلى التالي في الطابور",
+    "statusProcessed": "تم تحديث حالة الموعد إلى معالج",
+    "failedStatusUpdate": "فشل في تحديث حالة الموعد",
+    "cancelSuccess": "تم إلغاء الموعد بنجاح!",
+    "failedCancel": "فشل في إلغاء الموعد، يرجى المحاولة مرة أخرى.",
+    "invalidAppointment": "موعد غير صالح",
+    "receiptFetched": "تم جلب الإيصال بنجاح",
+    "failedReceiptFetch": "فشل في جلب الإيصال",
+    "doctor_appointments": "مواعيد الطبيب",
+    "select_date": "اختر التاريخ",
+    "patient_name": "اسم المريض",
+    "time_slot": "الفترة الزمنية",
+    "status": "الحالة",
+    "booking_way": "طريقة الحجز",
+     "arrival_time": "وقت الوصول",
+    "actions": "الإجراءات",
+    "in_progress": "قيد التنفيذ",
+    "no_patients": "لا يوجد مريض تالي.",
+    "reschedule": "تعديل الحجز ",
+    "no_patients_today": "لا يوجد مرضى اليوم بعد",
+    "onlyOneNextInQueue": "هناك موعد محدد بالفعل كالتالي في الانتظار. لا يمكن أن يكون هناك سوى موعد واحد فقط كالتالي في الانتظار في نفس الوقت.",
+    "statusUpdated": "تم تحديث حالة الموعد إلى قيد التنفيذ",
+    "statusUpdateFailed": "فشل تحديث حالة الموعد",
+    "invalidCheckPrice": "الرجاء إدخال سعر فحص صالح (أكبر من الصفر)",
+    "setCheckPriceError": "فشل تعيين سعر الفحص",
+    "checkPriceSet": "تم تعيين سعر الفحص بنجاح"
+
+  },
+  "booking": {
+    "confirmTitle": "تأكيد الحجز",
+    "doctorAltText": "صورة الدكتور {{ name }}",
+    "specialization": "التخصص",
+    "price": "سعر الكشف",
+    "currency": "جنيه",
+    "patientInfo": "معلومات المريض",
+    "name": "الاسم",
+    "phone": "رقم الهاتف",
+    "appointmentDetails": "تفاصيل الموعد",
+    "date": "التاريخ",
+    "from": "من",
+    "to": "إلى",
+    "location": "موقع العيادة",
+    "notesTitle": "ملاحظات إضافية",
+    "notesPlaceholder": "أدخل أي ملاحظات إضافية...",
+    "confirmButton": "تأكيد الحجز",
+    "successMessage": "تم حجز موعدك بنجاح!",
+    "errorMessage": "حدث خطأ أثناء الحجز. يرجى المحاولة مرة أخرى.",
+    "missingInfoError": "معلومات الحجز المطلوبة مفقودة.",
+    "invalidDetailsError": "تفاصيل الموعد غير صالحة. يرجى المحاولة مرة أخرى.",
+    "title": "حجز موعد",
+    "firstNameLabel": "الاسم الأول",
+    "firstNamePlaceholder": "أدخل اسمك الأول",
+    "lastNameLabel": "الاسم الأخير",
+    "lastNamePlaceholder": "أدخل اسمك الأخير",
+    "phoneLabel": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "submitButton": "حجز الموعد",
+    "bookingWayError": "فشل تحميل طريقة الحجز. يرجى المحاولة مرة أخرى.",
+    "bookingWayMissingError": "معلومات طريقة الحجز مفقودة. يرجى المحاولة مرة أخرى."
+  },
+
+
+
+  "timeSlots": {
+    "reservedStatus": "محجوز",
+    "reserveButton": "حجز",
+    "noSlotsMessage": "لا توجد مواعيد متاحة اليوم",
+    "noSlotsAlt": "رسم توضيحي لعدم وجود مواعيد"
+  },
+
+  "reschedule": {
+    "confirmTitle": "تأكيد تعديل الحجز  ",
+    "doctorAltText": "صورة الدكتور {{ name }}",
+    "specialization": "التخصص",
+    "price": "سعر الكشف",
+    "currency": "جنيه",
+    "patientInfo": "معلومات المريض",
+    "name": "الاسم",
+    "phone": "رقم الهاتف",
+    "appointmentDetails": "تفاصيل الموعد",
+    "date": "التاريخ",
+    "from": "من",
+    "to": "إلى",
+    "location": "موقع العيادة",
+    "notes": "ملاحظات إضافية",
+    "notesPlaceholder": "أدخل أي ملاحظات إضافية...",
+    "confirmButton": "تأكيد تعديل الحجز",
+    "successMessage": "تم إعادة جدولة موعدك بنجاح!",
+    "errorMessage": "فشلت إعادة جدولة الموعد. يرجى المحاولة مرة أخرى."
+    
+  },
+
+  "profile": {
+    "changePicture": "تغيير الصورة",
+    "firstName": "الاسم الأول",
+    "enterFirstName": "أدخل اسمك الأول",
+    "lastName": "الاسم الأخير",
+    "enterLastName": "أدخل اسمك الأخير",
+    "username": "اسم المستخدم",
+    "enterUsername": "أدخل اسم المستخدم",
+    "phoneNumber": "رقم الهاتف",
+    "enterPhoneNumber": "أدخل رقم هاتفك",
+    "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "updateButton": "تحديث الملف الشخصي",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+    "picture_alt": "صورة الملف الشخصي",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "phone_number": "رقم الهاتف"
+  },
+  "validation": {
+    "firstNameRequired": "الاسم الأول مطلوب",
+    "lastNameRequired": "الاسم الأخير مطلوب",
+    "usernameRequired": "اسم المستخدم مطلوب",
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "minLength": "الحد الأدنى للأحرف هو {{value}}",
+    "selectPaymentMethod": "الرجاء اختيار طريقة الدفع",
+    "enterValidAmount": "الرجاء إدخال مبلغ دفع صحيح",
+    "amountExceedsRemaining": "لا يمكن أن يتجاوز المبلغ المدفوع المبلغ المتبقي",
+    "first_name_required": "الاسم الأول مطلوب",
+    "last_name_required": "الاسم الأخير مطلوب",
+    "username_required": "اسم المستخدم مطلوب (4 أحرف على الأقل)",
+    "valid_email": "بريد إلكتروني صالح مطلوب",
+    "phone_required": "رقم الهاتف مطلوب",
+    "password_required": "كلمة المرور مطلوبة (6 أحرف على الأقل)",
+    "dob_required": "تاريخ الميلاد مطلوب",
+    "gender_required": "الجنس مطلوب",
+    "clinic_required": "العيادة مطلوبة",
+    "specialization_required": "التخصص مطلوب",
+    "brief_required": "النبذة مطلوبة",
+    "valid_price": "سعر صالح مطلوب",
+    "doctor_required": "تعيين الطبيب مطلوب",
+    "hire_date_required": "تاريخ التعيين مطلوب",
+    "name_required": "اسم العيادة مطلوب",
+    "country_required": "الدولة مطلوبة",
+    "governorate_required": "المحافظة مطلوبة",
+    "district_required": "المنطقة مطلوبة",
+    "service_name_required": "اسم الخدمة مطلوب",
+    "duration_positive": "يجب أن تكون المدة أكبر من الصفر",
+    "english_name_required": "الاسم بالإنجليزية مطلوب",
+    "arabic_name_required": "الاسم بالعربية مطلوب",
+    "max_length_50": "الحد الأقصى 50 حرفًا مسموح به"
+  },
+
+  "auth": {
+    "welcome": "مرحباً {{name}}!",
+    "loginFailed": "فشل تسجيل الدخول",
+    "resetLinkSent": "تم إرسال رابط إعادة تعيين كلمة المرور!",
+    "resetLinkFailed": "فشل إرسال رابط الإعادة",
+    "resetSuccess": "تم إعادة تعيين كلمة المرور بنجاح",
+    "resetFailed": "فشل إعادة تعيين كلمة المرور",
+    "patientRegistrationSuccess": "تم تسجيل المريض بنجاح!",
+    "patientRegistrationError": "فشل تسجيل المريض، يرجى المحاولة مرة أخرى."
+  },
+
+  
+    "dashboard": {
+      "appointmentStatus": "حجوزاتى",
+      "noAppointmentsTitle": "لا توجد مواعيد اليوم",
+      "noAppointmentsMessage": "ليس لديك أي مواعيد مجدولة حالياً",
+      "createNewAppointment": "إنشاء موعد جديد",
+      "quickActions": "الإجراءات",
+      "phoneReserve": "حجز بالتلفون",
+      "walkinReserve": "حجز بالحضور",
+      "serviceSettings": " الخدمات",
+      "timeslotManagement": "إدارة المواعيد",
+      "patients": "المرضى",
+      "appointmentStatuses": {
+        "upcoming": "حجز قادم",
+        "processed": "حجز انتهى ",
+        "cancelled": "حجز ملغى",
+        "inProgress": "قيد التنفيذ",
+        "nextInQueue": "التالية في الانتظار",
+        "arrived": "وصل"
+      }
+    },
+
+   "patientCheck": {
+  "title": "التحقق من تسجيل المريض",
+  "phoneLabel": "رقم الهاتف",  
+  "phonePlaceholder": "أدخل رقم الهاتف",
+  "checkButton": "تحقق",
+  "notRegistered": "المريض غير مسجل.",
+  "addPatientButton": "إضافة مريض جديد",
+  "registeredMessage": "المريض مسجل! رقم المريض: {{patientId}}",
+  "goToAppointments": "الذهاب إلى مواعيد الطبيب"
+},
+
+"confirmReschedule": {
+  "title": "هل أنت متأكد أنك تريد إعادة الجدولة لهذا الوقت؟",
+  "yesButton": "نعم",
+  "noButton": "لا"
+},
+
+"manageServices": {
+  "title": "إدارة الخدمات",
+  "serviceName": "اسم الخدمة",
+  "price": "السعر",
+  "description": "الوصف",
+  "duration": "المدة",
+  "addServiceButton": "أضف خدمة",
+  "selectServicesTitle": "اختر الخدمات للإضافة",
+  "priceInputLabel": "السعر (جنيه)",
+  "durationInputLabel": "المدة (دقائق)",
+  "cancelButton": "إلغاء"
+},
+"success": {
+  "service_added": "تم إضافة الخدمة بنجاح.",
+  "paymentSuccess": "تمت معالجة الدفع بنجاح",
+   "pdfSavedAndShared": "تم حفظ الإيصال وهو جاهز للمشاركة!",
+  "pdfSavedOnly": "تم حفظ الإيصال بنجاح!"
+},
+"warning": {
+  "fill_all_fields": "يرجى ملء جميع الحقول."
+},
+"error": {
+  "fetch_services_failed": "فشل في جلب الخدمات.",
+  "specialization_missing": "رقم التخصص مفقود."
+},
+
+"manageTimeSlots": {
+  "title": "إدارة الفترات الزمنية",
+  "selectDayLabel": "اختر اليوم",
+  "workingFromLabel": "العمل من",
+  "workingToLabel": "العمل إلى",
+  "slotIntervalLabel": "فترة الفاصل الزمني (دقائق)",
+  "repeatWeeksLabel": "كرر لمدة كم أسبوع",
+  "submitButton": "إرسال"
+},
+
+"days": {
+  "monday": "الاثنين",
+  "tuesday": "الثلاثاء",
+  "wednesday": "الأربعاء",
+  "thursday": "الخميس",
+  "friday": "الجمعة",
+  "saturday": "السبت",
+  "sunday": "الأحد"
+},
+
+"toast": {
+  "timeSlotsCreated": "تم إنشاء الفترات الزمنية بنجاح!",
+  "timeSlotsError": "فشل في إنشاء الفترات الزمنية. يرجى المحاولة مرة أخرى.",
+  "timeSlotsWarning": "يرجى تعبئة جميع الحقول والتأكد من وجود معرّف طبيب صالح."
+},
+
+"patientsPage": {
+  "title": "المرضى",
+  "searchPlaceholder": "ابحث بالاسم أو رقم الهاتف",
+  "firstName": "الاسم الأول",
+  "lastName": "الاسم الأخير",
+  "phoneNumber": "رقم الهاتف",
+  "lastAppointment": "آخر موعد"
+},
+
+"myAppointments": {
+  "title": "مواعيد الطبيب",
+  "selectDate": "حدد التاريخ",
+  "patientName": "اسم المريض",
+  "timeSlot": "الوقت المحدد",
+  "actions": "الإجراءات",
+  "arrived": "وصل",
+  "reschedule": "إعادة الجدولة",
+  "cancel": "إلغاء",
+  "nextInQueue": "التالي في القائمة",
+  "inProgress": "قيد المعالجة",
+  "enter": "دخول",
+  "processed": " انهاء الزيارة ",
+  "noAppointmentsScheduled": "لا توجد مواعيد مجدولة",
+  "noAppointmentsMessage": "لا توجد مواعيد محجوزة للتاريخ المحدد. الرجاء التحقق من يوم آخر أو الاستمتاع بوقت فراغك!",
+  "arrivalTime": "زمن الوصول",
+     "bookingWay": " الحجز",
+    "notes": "ملاحظات",
+    "status": "الحالة"
+},
+
+"confirmationModal": {
+    "areYouSure": "هل أنت متأكد؟",
+    "yes": "نعم",
+    "no": "لا"
+  },
+
+  "general": {
+    "loading": "جاري معالجة طلبك...",
+    "minutes": "دقيقة",
+    "currency": "جنيه",
+    "cancel": "إلغاء",
+    "processing": "جاري المعالجة...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "english": "English",
+    "arabic": "العربية",
+    "close": "إغلاق"
+  },
+
+ 
+
+  "paymentMethods": {
+    "cash": "نقدي",
+    "instapay": "إنستاباي",
+    "wallet": "محفظة",
+    "visa": "فيزا"
+  },
+  "receipt": {
+    "title": "الفاتورة",
+    "transaction": " رقم {{id}}",
+    "appointmentDetails": "تفاصيل الموعد",
+    "patient": "المريض",
+    "doctor": "الطبيب",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "servicesRendered": "الخدمات المقدمة",
+    "service": "الخدمة",
+    "description": "الوصف",
+    "duration": "المدة",
+    "price": "السعر",
+    "noDescription": "لا يوجد وصف",
+    "consultationFee": "سعر الكشف",
+    "totalAmountDue": "إجمالي المبلغ المستحق",
+    "paymentSummary": "ملخص الدفع",
+    "totalPrice": "السعر الإجمالي",
+    "amountPaid": "المبلغ المدفوع",
+    "remainingBalance": "الرصيد المتبقي",
+    "thankYou": "شكراً لاختيارك عيادتنا",
+    "noServices": "لم يتم تسجيل أي خدمات لهذا الموعد",
+    "paymentDetails": "تفاصيل الدفع",
+    "method": "طريقة الدفع",
+    "amount": "المبلغ",
+    "filename": "إيصال_{{id}}_{{date}}",
+    "quantity": "الكمية",
+     "unitPrice": "سعر الوحدة",
+    "total": "الإجمالي"
+  },
+  "payment": {
+    "completePayment": "إتمام الدفع",
+    "selectMethod": "اختر طريقة الدفع",
+    "paymentAmount": "مبلغ الدفع",
+    "amountPlaceholder": "0.00",
+    "maxAmount": "أقصى مبلغ قابل للدفع",
+    "confirmPayment": "تأكيد الدفع"
+  },
+
+  "revenue": {
+    "title": "الإيرادات",
+    "select_date": "اختر التاريخ",
+    "patient_name": "اسم المريض",
+    "total": "المجموع",
+    "paid": "المدفوع",
+    "remaining": "المتبقي",
+    "actions": "الإجراءات",
+    "cash": "نقداً",
+    "wallet": "محفظة",
+    "insta": "إنستا",
+    "visa": "فيزا",
+    "no_data": "لا توجد بيانات إيرادات للتاريخ المحدد.",
+    "pay_remaining": "دفع المتبقي",
+    "export_pdf": "تصدير PDF",
+    "exporting": "جار التصدير...",
+    "export_tooltip": "تصدير هذا التقرير كملف PDF"
+  },
+
+  "quick_actions": {
+    "next": "التالي",
+    "my_appointments": "مواعيدي",
+    "service_settings": "إعدادات الخدمة",
+    "timeslot_management": "إدارة الفترات الزمنية",
+    "patients": "المرضى"
+  },
+
+  "toastr": {
+    "no_doctor_id": "لم يتم العثور على معرف المستخدم للطبيب",
+    "fetch_appointments_failed": "فشل جلب المواعيد",
+    "fetch_days_failed": "فشل جلب الأيام المتاحة",
+    "status_updated": "تم تحديث حالة الموعد إلى قيد التنفيذ",
+    "status_update_failed": "فشل تحديث حالة الموعد",
+    "missing_parameters": "معرف الطبيب أو التاريخ مفقود من معلمات المسار",
+    "no_doctor_found": "لا يوجد طبيب بالاختصاص المحدد",
+    "doctor_details_error": "خطأ في جلب بيانات الطبيب",
+    "timeslots_error": "خطأ في تحميل الفترات الزمنية المتاحة",
+    "missing_reschedule_info": "معلومات إعادة الجدولة المطلوبة مفقودة",
+    "reschedule_success": "تم إعادة جدولة موعدك بنجاح!",
+    "reschedule_error": "حدث خطأ أثناء إعادة الجدولة",
+    "success": "نجاح",
+    "error": "خطأ",
+    "warning": "تحذير",
+    "info": "معلومة",
+    "no_appointment_id": "لم يتم تقديم معرف الموعد",
+    "load_services_error": "فشل تحميل خدمات الطبيب",
+    "visit_completed": "تمت معالجة المريض بنجاح",
+    "load_appointment_error": "فشل في تحميل تفاصيل الموعد",
+    "load_patient_error": "فشل في تحميل تفاصيل المريض",
+    "load_medical_history_error": "فشل في تحميل السجل الطبي",
+    "load_visit_history_error": "فشل في تحميل سجل الزيارات",
+    "file_too_large": "الملف {0} كبير جدًا (الحد الأقصى 5 ميجابايت)",
+    "unsupported_file_type": "نوع الملف غير مدعوم: {0}",
+    "draft_saved": "تم حفظ المسودة محليًا",
+    "missing_diagnosis": "يرجى إضافة التشخيص أو رفع ملفات على الأقل",
+    "upload_error": "حدث خطأ أثناء رفع الملفات",
+    "diagnosis_submitted": "تم إرسال تفاصيل الزيارة بنجاح",
+    "diagnosis_error": "خطأ في إرسال تفاصيل التشخيص",
+    "service_exists": "الخدمة مضافة مسبقًا",
+    "service_added": "تمت إضافة الخدمة بنجاح",
+    "add_service_error": "فشل في إضافة الخدمة",
+      "missing_details": "يرجى إضافة تفصيل واحد على الأقل (التشخيص، العلامات، الوصفة الطبية) أو تحميل ملفات",
+  "medical_record_added": "تمت إضافة السجل الطبي بنجاح",
+  "medical_record_error": "حدث خطأ أثناء إضافة السجل الطبي",
+  "check_price_included": "تم إضافة سعر الكشف إلى الفاتورة",
+    "check_price_excluded": "تم إزالة سعر الكشف من الفاتورة",
+    "check_price_update_failed": "فشل تحديث حالة سعر الكشف"
+  },
+
+   "daily_report": {
+    "title": "التقرير اليومي",
+    "select_date": "اختر التاريخ",
+    "total": "المجموع",
+    "paid": "المدفوع",
+    "remaining": "المتبقي",
+    "cash": "نقداً",
+    "visa": "فيزا",
+    "wallet": "المحفظة",
+    "instapay": "إنستاباي",
+    "no_data": "لا توجد بيانات إيرادات للتاريخ المحدد."
+  },
+
+  "patient_profile": {
+    "title": "ملف المريض",
+    "appointment_time": "وقت الموعد",
+    "id": "المعرف",
+    "gender": "الجنس",
+    "age": "العمر",
+    "blood_type": "فصيلة الدم",
+    "not_specified": "غير محدد",
+    "years": " سنوات",
+     "doctor_check_price": "سعر الفحص الطبي",
+    "apply_discount": "تطبيق الخصم",
+    "discount_applied": "تم تطبيق الخصم",
+    "tabs": {
+      "personal": "المعلومات الشخصية",
+      "history": "سجل الزيارات",
+      "current": "الزيارة الحالية",
+      "diagnosis": "تفاصيل الزيارة"
+    },
+    "contact_info": "معلومات الاتصال",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "demographics": "البيانات الديموغرافية",
+    "dob": "تاريخ الميلاد",
+    "nationality": "الجنسية",
+    "emergency_contact": "جهة الاتصال في حالات الطوارئ",
+    "name": "الاسم",
+    "visit_history": "سجل زيارات المريض",
+    "search_visits": "ابحث في الزيارات...",
+    "sort_history": "ترتيب سجل الزيارات حسب التاريخ",
+    "newest_first": "الأحدث أولاً",
+    "oldest_first": "الأقدم أولاً",
+    "no_history": "لا يوجد سجل زيارات لهذا المريض",
+    "loading": "جارٍ تحميل معلومات المريض...",
+    "diagnosis": "التشخيص",
+    "services": "الخدمات المقدمة",
+    "attachments": "المرفقات",
+    "receipt": "إيصال الخدمات الطبية",
+    "appointment_num": "رقم الموعد",
+    "date": "التاريخ",
+    "available_services": "الخدمات المتاحة",
+    "off": "خصم",
+    "discount_placeholder": "نسبة الخصم %",
+    "add": "إضافة",
+    "added": "تمت الإضافة",
+    "selected_services": "الخدمات المختارة",
+    "remove": "إزالة",
+    "subtotal": "الإجمالي الفرعي",
+    "total_discount": "إجمالي الخصم",
+    "total_amount": "المبلغ الإجمالي",
+    "complete_visit": "إنهاء الزيارة",
+    "visit_details": "تفاصيل الزيارة",
+    "prescription": "الوصفة الطبية",
+    "upload_files": "رفع الملفات",
+    "diagnosis_placeholder": "أدخل تفاصيل التشخيص...",
+    "prescription_placeholder": "أدخل تفاصيل الوصفة الطبية...",
+    "upload_instructions": "اسحب الملفات هنا أو اضغط لاستعراض الملفات",
+    "upload_restrictions": "يدعم الصور وملفات PDF والتقارير الطبية (بحد أقصى 5 ميجابايت لكل ملف)",
+    "remove_file": "حذف الملف",
+    "save_draft": "حفظ كمسودة",
+    "submitting": "جارٍ الإرسال...",
+    "submit_details": "إرسال تفاصيل الزيارة",
+    "signs": "العلامات",
+    "signs_description": "العلامات السريرية",
+    "signs_placeholder": "أدخل العلامات والأعراض السريرية الملاحظة...",
+    "include_check_price": "تضمين سعر الكشف",
+    "setting_price": "جاري تعيين السعر...",
+    "check_price": "سعر الكشف",
+    "check_price_amount": "قيمة الكشف",
+    "enter_check_price": "أدخل سعر الكشف",
+    "set_price": "تعيين السعر",
+    "price_set": "تم تعيين السعر",
+    "services_total": "إجمالي تكلفة الخدمات",
+    "choose_service": "اختر الخدمات",
+    "select_service": "اختر خدمة...",
+    "add_service": "إضافة خدمة",
+    "each": "لكل",
+    "search_history": "ابحث في السجل...",
+    "treatment": "العلاج",
+    "services_provided": "الخدمات المقدمة",
+    "service_name": "اسم الخدمة",
+    "quantity": "الكمية",
+    "price": "السعر",
+    "total": "الإجمالي",
+    "paid_cash": "المدفوع نقداً",
+    "paid_visa": "المدفوع بفيزا",
+    "paid_wallet": "المدفوع بالمحفظة",
+    "paid_instapay": "المدفوع بإنستاباي",
+    "remaining": "المتبقي",
+    "view_file": "عرض الملف",
+    "service_price": "سعر الخدمة",
+    "services_subtotal": "المجموع الفرعي للخدمات",
+    "included": "مشمول",
+    "excluded": "غير مشمول",
+    "will_be_included": "سيتم إضافته للمجموع",
+    "will_not_be_included": "لن يتم إضافته للمجموع",
+    "processing": "جاري المعالجة...",
+    "check_price_excluded": "تم استبعاد سعر الكشف من الإجمالي",
+    "check_price_set": "تم تطبيق سعر الكشف بنجاح",
+    "invalid_check_price": "مبلغ سعر الكشف غير صالح",
+    "using_original_price": "السعر المطبق هو السعر الأصلي",
+     "using_custom_price": " السعر الحالي معدّل ",
+      "reset": "إعادة تعيين",
+      "custom_price": "سعر مخصص",
+      "original_price": "السعر الأصلي"
+    
+  
+  },
+
+ "admin_dashboard": {
+    "title": "لوحة تحكم المدير",
+    "subtitle": "إدارة نظام الرعاية الصحية بكفاءة",
+    "go_to": "انتقل إلى",
+    "cards": {
+      "all_users": {
+        "title": "جميع المستخدمين",
+        "description": "عرض وإدارة جميع مستخدمي النظام"
+      },
+      "rev": {
+        "title": "الإيرادات",
+        "description": "إدارة جميع مستخدمي النظام"
+      },
+      "new_user": {
+        "title": "مستخدم جديد",
+        "description": "إنشاء مستخدم جديد"
+      },
+      "clinics": {
+        "title": "العيادات",
+        "description": "عرض وإدارة جميع العيادات"
+      },
+      "new_clinic": {
+        "title": "عيادة جديدة",
+        "description": "تسجيل عيادة جديدة"
+      },
+      "specializations": {
+        "title": "التخصصات",
+        "description": "إدارة جميع التخصصات الطبية"
+      },
+      "new_specialization": {
+        "title": "تخصص جديد",
+        "description": "إضافة تخصص طبي جديد"
+      },
+      "services": {
+        "title": "الخدمات",
+        "description": "إدارة جميع خدمات الرعاية الصحية"
+      },
+      "new_service": {
+        "title": "خدمة جديدة",
+        "description": "إضافة خدمة رعاية صحية جديدة"
+      }
+    },
+    "create_user": "إنشاء مستخدم جديد",
+    "select_user_type": "حدد نوع المستخدم الذي تريد إنشاءه",
+    "user_types": {
+      "doctor": "طبيب",
+      "doctor_description": "إنشاء حساب طبيب جديد",
+      "secretary": "سكرتير",
+      "secretary_description": "إنشاء حساب سكرتير جديد"
+    }
+  },
+
+  "common": {
+    "cancel": "إلغاء",
+     "reset": "إعادة تعيين",
+    "creating": "جاري الإنشاء...",
+    "retry": "إعادة المحاولة",
+    "loading": "جاري التحميل...",
+    "refresh": "تحديث",
+    "clear_search": "مسح البحث",
+    "page": "صفحة",
+    "of": "من",
+     "exporting": "جاري التصدير...",
+    "export_pdf": "تصدير PDF"
+  },
+
+  "doctor_form": {
+    "register_title": "تسجيل طبيب جديد",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "dob": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "select_gender": "اختر الجنس",
+    "clinic": "العيادة",
+    "select_clinic": "اختر العيادة",
+    "specialization": "التخصص",
+    "select_specialization": "اختر التخصص",
+    "brief": "نبذة",
+    "check_price": "سعر الكشف",
+    "profile_picture": "صورة الملف الشخصي",
+    "register_button": "تسجيل الطبيب",
+    "incomplete_fields_title": "بيانات غير مكتملة",
+    "incomplete_fields_message": "يرجى استكمال جميع الحقول المطلوبة.",
+    "create_success": "تم إنشاء الطبيب بنجاح!",
+    "create_error": "فشل إنشاء الطبيب. يرجى المحاولة مرة أخرى."
+  },
+
+  "secretary_form": {
+    "register_title": "تسجيل سكرتير جديد",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "dob": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "select_gender": "اختر الجنس",
+    "assigned_doctor": "الطبيب المعين",
+    "select_doctor": "اختر الطبيب",
+    "doctor_display": "د. {firstName} {lastName} ({specialization})",
+    "hire_date": "تاريخ التعيين",
+    "profile_picture": "صورة الملف الشخصي",
+    "register_button": "تسجيل السكرتير",
+    "incomplete_fields_title": "بيانات غير مكتملة",
+    "incomplete_fields_message": "يرجى استكمال جميع الحقول المطلوبة.",
+    "create_success": "تم إنشاء السكرتير بنجاح!",
+    "create_error": "فشل إنشاء السكرتير. يرجى المحاولة مرة أخرى."
+  },
+
+  "clinics": {
+    "management": "إدارة العيادات",
+    "search_label": "بحث العيادات",
+    "search_placeholder": "ابحث بالاسم، البريد الإلكتروني أو الهاتف",
+    "country_label": "الدولة",
+    "governorate_label": "المحافظة",
+    "all_countries": "كل الدول",
+    "all_governorates": "كل المحافظات",
+    "reset_filters": "إعادة تعيين الفلاتر",
+    "loading": "جاري تحميل العيادات...",
+    "no_results_title": "لا توجد عيادات",
+    "no_results_message": "حاول تعديل بحثك أو الفلاتر",
+    "clinic_image_alt": "صورة العيادة",
+    "more_images": "المزيد",
+    "view_details": "عرض التفاصيل",
+    "edit": "تعديل"
+  },
+
+
+  "clinic_form": {
+    "register_title": "إنشاء عيادة جديدة",
+    "register_subtitle": "املأ التفاصيل لتسجيل عيادة جديدة",
+    "name": "اسم العيادة",
+    "name_placeholder": "أدخل اسم العيادة",
+    "country": "الدولة",
+    "select_country": "اختر الدولة",
+    "governorate": "المحافظة",
+    "select_governorate": "اختر المحافظة",
+    "district": "المنطقة",
+    "select_district": "اختر المنطقة",
+    "phone": "الهاتف",
+    "phone_placeholder": "أدخل رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "email_placeholder": "أدخل البريد الإلكتروني",
+    "gallery_label": "معرض العيادة (يسمح بصور متعددة)",
+    "select_images": "اختر الصور",
+    "create_button": "إنشاء العيادة",
+    "incomplete_fields_title": "بيانات غير مكتملة",
+    "incomplete_fields_message": "يرجى استكمال جميع الحقول المطلوبة.",
+    "create_success": "تم إنشاء العيادة بنجاح!",
+    "create_error": "فشل إنشاء العيادة. يرجى المحاولة مرة أخرى."
+  },
+
+
+  "services": {
+    "title": "الخدمات الطبية",
+    "services_count": "خدمة",
+    "all_specializations": "جميع التخصصات",
+    "no_services_found": "لا توجد خدمات مطابقة للتصفية المحددة",
+    "errors": {
+      "load_failed": "فشل تحميل البيانات",
+      "generic": "حدث خطأ أثناء تحميل البيانات. يرجى المحاولة مرة أخرى لاحقًا."
+    },
+    "table": {
+      "id": "الرقم",
+      "service_name": "اسم الخدمة",
+      "description": "الوصف",
+      "duration": "المدة",
+      "specialization": "التخصص"
+    }
+  },
+
+  "service_form": {
+    "title": "إنشاء خدمة طبية جديدة",
+    "service_name": "اسم الخدمة",
+    "service_name_placeholder": "أدخل اسم الخدمة",
+    "description": "الوصف",
+    "description_placeholder": "أدخل وصف الخدمة",
+    "duration": "المدة (بالدقائق)",
+    "duration_placeholder": "30",
+    "specialization": "التخصص",
+    "select_specialization": "اختر تخصصًا...",
+    "create_button": "إنشاء الخدمة",
+    "create_success": "تم إنشاء الخدمة بنجاح!",
+    "create_error": "فشل إنشاء الخدمة"
+  },
+
+  "specialization_form": {
+    "title": "إضافة تخصص جديد",
+    "english_name": "الاسم بالإنجليزية",
+    "arabic_name": "الاسم بالعربية",
+    "create_button": "إنشاء التخصص",
+    "create_success": "تم إنشاء التخصص بنجاح!",
+    "create_error": "فشل إنشاء التخصص"
+  },
+
+  "specializations": {
+    "title": "التخصصات الطبية",
+    "search_placeholder": "ابحث عن التخصصات...",
+    "no_results_title": "لم يتم العثور على تخصصات",
+    "no_results_message": "حاول تعديل استعلام البحث",
+    "view_details": "عرض التفاصيل"
+  },
+
+  "doctors": {
+    "title": "إدارة الأطباء",
+    "search_placeholder": "ابحث عن الأطباء...",
+    "no_results_title": "لا توجد نتائج",
+    "no_results_message": "حاول تعديل استعلام البحث",
+    "name": "الاسم",
+    "specialization": "التخصص",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "location": "الموقع",
+    "check_price": "سعر الكشف",
+    "revenue": "الإيراد (10%)",
+     "month": "الشهر",
+    "year": "السنة",
+    "month_placeholder": "أدخل الشهر (1-12)",
+    "year_placeholder": "أدخل السنة",
+    "get_revenue": "الحصول على تقرير الإيرادات",
+    "our_revenue": "إيراداتنا",
+    "dr_revenue": "إيرادات الطبيب",
+    "total_revenue": "إجمالي الإيرادات",
+    "no_data_title": "لا توجد بيانات",
+    "no_data_message": "الرجاء تحديد الشهر والسنة لعرض بيانات الإيرادات",
+    "doctor_revenue": "إيرادات الطبيب"
+  },
+
+   "doctor_appointments": {
+    "title": " مواعيد الطبيب فى الشهر",
+    "month_year": "المواعيد لشهر {month} سنة {year}",
+    "patient_name": "اسم المريض",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "status": "الحالة",
+    "total_price": "السعر الكلي",
+    "payment_method": "طريقة الدفع",
+    "no_appointments_title": "لا توجد مواعيد",
+    "no_appointments_message": "لا توجد مواعيد للشهر والسنة المحددين.",
+    "total_payment": "إجمالي الدفع",
+     "check_price": " سعر الكشف ",
+     "our_revenue": "إيراداتنا",
+      "totals": "الإجماليات"
+  },
+
+    "footer": {
+    "companyDescription": "نقدم خدمات رعاية صحية استثنائية بروح التعاطف والتميز منذ عام 2025.",
+    "quickLinks": "روابط سريعة",
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "services": "الخدمات",
+    "doctors": "أطباؤنا",
+    "contact": "اتصل بنا",
+    "emergencyCare": "الرعاية الطارئة",
+    "primaryCare": "الرعاية الأولية",
+    "dentalCare": "العناية بالأسنان",
+    "laboratory": "المختبر",
+    "radiology": "الأشعة",
+    "contactUs": "اتصل بنا",
+    "workingHours": "ساعات العمل",
+    "copyright": "HEALZY",
+    "allRightsReserved": "جميع الحقوق محفوظة",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "sitemap": "خريطة الموقع",
+      "aboutCompany": "عن شركتنا",
+    "connectWithUs": "تواصل معنا",
+    "address": "العنوان",
+    "phone": "الهاتف",
+    "availableHours": "متاح 24/7 للطوارئ",
+    "email": "البريد الإلكتروني",
+    "responseTime": "رد خلال 24 ساعة",
+    "sendMessage": "أرسل لنا رسالة",
+    "yourName": "اسمك",
+    "yourEmail": "بريدك الإلكتروني",
+    "subject": "الموضوع",
+    "yourMessage": "رسالتك",
+    "send": "إرسال"
+  },
+
+  "users": {
+    "all_users": "جميع المستخدمين",
+    "search_placeholder": "ابحث عن مستخدمين...",
+    "no_results_title": "لا توجد نتائج",
+    "no_results_message": "لا توجد مستخدمين تطابق معايير البحث الخاصة بك. حاول استخدام مصطلح بحث مختلف.",
+    "no_data_title": "لا توجد مستخدمين متاحة",
+    "no_data_message": "لا يوجد حاليا أي مستخدمين في النظام.",
+    "profile": "الصورة",
+    "name": "الاسم",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "location": "الموقع",
+    "status": "الحالة",
+    "role": "الدور",
+    "view_details": "عرض التفاصيل",
+    "not_specified": "غير محدد",
+    "doctors": "الأطباء",
+    "patients": "المرضى",
+    "no_doctors_title": "لا يوجد أطباء",
+    "no_doctors_message": "لا يوجد أطباء مسجلين في النظام حالياً.",
+    "no_patients_title": "لا يوجد مرضى",
+    "no_patients_message": "لا يوجد مرضى مسجلين في النظام حالياً.",
+    "last_visit": "آخر زيارة",
+    "no_visits": "لا يوجد زيارات بعد"
+  }
+
+    
+  }
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+
+
+
+ 
+ 

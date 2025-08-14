@@ -1,0 +1,9 @@
+<div class="modal-overlay" *ngIf="isVisible" @fadeInOut>
+  <div class="modal-content" @slideInOut>
+    <h2 class="modal-title">{{ 'confirmReschedule.title' | transloco }}</h2>
+    <div class="modal-actions">
+      <button (click)="onConfirm()" class="btn btn-primary">{{ 'confirmReschedule.yesButton' | transloco }}</button>
+      <button (click)="onCancel()" class="btn btn-secondary">{{ 'confirmReschedule.noButton' | transloco }}</button>
+    </div>
+  </div>
+</div>

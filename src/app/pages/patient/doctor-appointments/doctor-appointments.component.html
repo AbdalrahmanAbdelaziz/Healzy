@@ -1,0 +1,31 @@
+<div [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <app-p-header></app-p-header>
+
+  <div class="navbar-spacer"></div>
+
+  <app-side-navbar></app-side-navbar>
+
+  <div class="content">
+    <div class="days-wrapper">
+      <h2 class="title">{{ 'appointments.selectDateTitle' | transloco }}</h2>
+
+      <!-- Show when there are available dates -->
+      <div *ngIf="availableDays.length > 0; else noAppointments" class="days-grid">
+        <button 
+          *ngFor="let day of availableDays" 
+          (click)="goToDayAppointments(day)" 
+          class="day-card">
+          <span class="date">{{ day | date: 'dd MMM yyyy' }}</span>
+          <span class="day-name">{{ day | date: 'EEEE' }}</span>
+        </button>
+      </div>
+
+      <!-- No Available Appointments Message -->
+      <ng-template #noAppointments>
+        <div class="no-appointments">
+          <p>{{ 'appointments.noAppointmentsMessage' | transloco }}</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

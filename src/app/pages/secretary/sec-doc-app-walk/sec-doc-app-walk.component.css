@@ -1,0 +1,179 @@
+/* ====== General Page Styling ====== */
+body {
+    background-color: #F4F9F4; /* Light neutral background */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Main Content Layout */
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Appointment Wrapper */
+  .days-wrapper {
+    text-align: center;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: #24CC81;
+  }
+  
+  /* ====== Title Styling ====== */
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* ====== Grid Layout for Dates ====== */
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    padding: 10px;
+    
+  }
+  
+  /* ====== Appointment Cards ====== */
+  .day-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #165B40;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  /* Hover Effect */
+  .day-card:hover {
+    background: #165B40;
+    color: white;
+    transform: translateY(-5px);
+  }
+  
+  /* Date Styling */
+  .date {
+    font-size: 1.4rem;
+  }
+  
+  /* Day Name Styling */
+  .day-name {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  /* Hover Effect for Day Name */
+  .day-card:hover .day-name {
+    color: #FFF;
+  }
+  
+  /* ====== No Appointments Message ====== */
+  .no-appointments {
+    text-align: center;
+    padding: 2rem;
+    color: white;
+    font-size: 1.3rem;
+  }
+  
+  .no-appointments img {
+    width: 120px;
+    margin-bottom: 15px;
+    opacity: 0.8;
+  }
+  
+  /* ====== Responsive Design ====== */
+  @media (max-width: 1024px) {
+    .days-wrapper {
+      width: 95%;
+      padding: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .title {
+      font-size: 1.8rem;
+    }
+  
+    .day-card {
+      font-size: 1rem;
+      padding: 12px;
+    }
+  
+    .date {
+      font-size: 1.2rem;
+    }
+  
+    .day-name {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .days-wrapper {
+      padding: 1.5rem;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .day-card {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  
+    .date {
+      font-size: 1rem;
+    }
+  
+    .day-name {
+      font-size: 0.8rem;
+    }
+  }
+  /* RTL specific styles */
+  [dir="rtl"] .days-wrapper {
+    /* text-align: right; */
+  }
+  
+  [dir="rtl"] .days-grid {
+    justify-content: flex-end;
+  }
+  
+  [dir="rtl"] .day-card {
+    margin-right: 0;
+    margin-left: 15px;
+  }
+  
+  /* Date formatting for Arabic */
+  [dir="rtl"] .date {
+    font-family: 'Tajawal', sans-serif; /* Use an Arabic-friendly font */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    [dir="rtl"] .days-grid {
+      justify-content: center;
+    }
+  }
+  

@@ -1,0 +1,241 @@
+/* revenue.component.css */
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* color: #333; */
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  padding: 40px;
+  /* color: #888; */
+  font-style: italic;
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.no-data-message i {
+  font-size: 2.5rem;
+  color: #24CC81;
+}
+
+.no-data-message p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.main-content {
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px #24CC81;
+  border-radius: 8px;
+}
+
+.revenue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  gap: 15px; /* Space between items when wrapped */
+}
+
+.revenue-header h2 {
+  margin: 0; /* Remove default margin for h2 */
+  font-size: 2.5rem;
+  text-align: center;
+  flex-grow: 1; /* Allows the title to take available space */
+}
+
+/* Export PDF Button Styles */
+.btn-export {
+  background-color: #d32f2f; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+}
+
+.btn-export:hover:not([disabled]) {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+}
+
+.btn-export:active:not([disabled]) {
+  transform: translateY(0);
+}
+
+.btn-export[disabled] {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-export .btn-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+
+.dropdown-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dropdown-container label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.dropdown-container select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1rem;
+  width: 200px;
+  text-align: center;
+}
+
+.table-container {
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.revenue-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1rem;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  color: black;
+}
+
+.revenue-table th,
+.revenue-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.revenue-table th {
+  background-color: #24CC81;
+  color: #fff;
+  font-weight: bold;
+}
+
+.revenue-table th[rowspan] {
+  vertical-align: middle;
+}
+
+.revenue-table tbody tr:hover {
+  background-color: rgba(22, 91, 64, 0.1);
+}
+
+.revenue-table tbody tr:nth-child(even) {
+  background-color: #f4f4f4;
+}
+
+/* Pay Remaining Button */
+.btn-pay-remaining {
+  background-color: #673AB7;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.btn-pay-remaining:hover {
+  background-color: #5E35B1;
+}
+
+.revenue-table td:last-child {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .revenue-table {
+    font-size: 0.9rem;
+  }
+
+  .revenue-table th,
+  .revenue-table td {
+    padding: 8px;
+  }
+
+  .table-container {
+    padding: 10px;
+  }
+
+  .btn-pay-remaining {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .revenue-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .revenue-header h2 {
+    font-size: 2rem;
+  }
+
+  .btn-export {
+    width: 100%; /* Full width button on small screens */
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .revenue-table {
+    font-size: 0.8rem;
+  }
+
+  .revenue-table th,
+  .revenue-table td {
+    padding: 6px;
+  }
+
+  .revenue-header h2 {
+    font-size: 1.8rem;
+  }
+}

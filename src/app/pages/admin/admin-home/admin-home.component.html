@@ -1,0 +1,37 @@
+<app-admin-header></app-admin-header>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">{{ 'admin_dashboard.title' | transloco }}</h1>
+    <p class="dashboard-subtitle">{{ 'admin_dashboard.subtitle' | transloco }}</p>
+  </div>
+  
+  <div class="cards-container">
+    <mat-grid-list [cols]="gridColumns" [rowHeight]="rowHeight" [gutterSize]="gutterSize">
+      <mat-grid-tile *ngFor="let card of cards">
+        <mat-card 
+          class="dashboard-card" 
+          [style.background]="card.color"
+          (click)="cardAction(card)"
+        >
+          <div class="card-overlay"></div>
+          <mat-card-header>
+            <div mat-card-avatar class="card-icon">
+              <mat-icon>{{card.icon}}</mat-icon>
+            </div>
+            <mat-card-title>{{ card.title | transloco }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ card.description | transloco }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button class="action-button">
+              <span>{{ 'admin_dashboard.go_to' | transloco }} {{ card.title | transloco }}</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

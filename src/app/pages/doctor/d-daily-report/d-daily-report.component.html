@@ -1,0 +1,83 @@
+<app-d-header></app-d-header>
+<app-d-sidenavbar></app-d-sidenavbar>
+
+<!-- Main Content Wrapper -->
+<div class="main-content-wrapper">
+  <div class="report-container">
+    <div class="report-header">
+      <h1 class="report-title">{{ 'revenue.title' | transloco }}</h1>
+      
+      <div class="header-actions">
+        <div class="date-selector">
+          <label for="dateDropdown" class="date-label">{{ 'daily_report.select_date' | transloco }}</label>
+          <select
+            id="dateDropdown"
+            [(ngModel)]="selectedDate"
+            (change)="onDateSelect($event)"
+            class="date-dropdown"
+          >
+            <option *ngFor="let day of availableDays" [value]="day.date">
+              {{ day.date }} ({{ day.dayOfWeek }})
+            </option>
+          </select>
+        </div>
+        
+        <button 
+          class="btn-export"
+          (click)="exportToPDF()"
+          [disabled]="isGeneratingPDF || calculateTotalPaid() === 0"
+          [attr.aria-busy]="isGeneratingPDF"
+        >
+          <span class="btn-content">
+            <i class="fas" [class.fa-file-pdf]="!isGeneratingPDF" [class.fa-spinner]="isGeneratingPDF" [class.fa-spin]="isGeneratingPDF"></i>
+            <span class="btn-text">
+              {{ isGeneratingPDF ? ('revenue.exporting' | transloco) : ('revenue.export_pdf' | transloco) }}
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Report Content -->
+    <div class="report-content" #reportContent>
+      <div class="report-card">
+        <div class="table-responsive">
+          <table class="revenue-table" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+            <thead>
+              <tr>
+                <th rowspan="2" class="total-header">{{ 'daily_report.total' | transloco }}</th>
+                <th colspan="4" class="paid-header">{{ 'daily_report.paid' | transloco }}</th>
+                <th rowspan="2" class="remaining-header">{{ 'daily_report.remaining' | transloco }}</th>
+              </tr>
+              <tr>
+                <th class="payment-method">{{ 'daily_report.cash' | transloco }}</th>
+                <th class="payment-method">{{ 'daily_report.visa' | transloco }}</th>
+                <th class="payment-method">{{ 'daily_report.wallet' | transloco }}</th>
+                <th class="payment-method">{{ 'daily_report.instapay' | transloco }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="total-value">{{ calculateTotalPaid() | number:'1.2-2' }}</td>
+                <td class="payment-value">{{ revenueData.paidCash | number:'1.2-2' }}</td>
+                <td class="payment-value">{{ revenueData.paidVisa | number:'1.2-2' }}</td>
+                <td class="payment-value">{{ revenueData.paidWallet | number:'1.2-2' }}</td>
+                <td class="payment-value">{{ revenueData.paidInstapay | number:'1.2-2' }}</td>
+                <td class="remaining-value">{{ revenueData.remainingToPay | number:'1.2-2' }}</td>
+              </tr>
+              
+              <tr *ngIf="calculateTotalPaid() === 0 && revenueData.remainingToPay === 0">
+                <td colspan="6" class="no-data">
+                  <div class="no-data-message">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>{{ 'daily_report.no_data' | transloco }}</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
