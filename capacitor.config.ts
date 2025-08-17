@@ -1,11 +1,10 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.example.app',
+  appId: 'com.healzy.app',
   appName: 'Healzy',
-  webDir: 'dist/hogozaty_',
+  webDir: 'dist/hogozaty_/browser',
   server: {
-    url: 'https://healzy.rossodirect.com:4321',
     cleartext: false
   }
 };
