@@ -1,11 +1,14 @@
+/* All CSS styles from the user's previous code, with key modifications below */
+
 html, body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    background-color: #ffffff;
-    padding-top: env(safe-area-inset-top);
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background-color: #ffffff;
+  /* This padding is not needed if the fixed navbar has a spacer below it */
+  /* padding-top: env(safe-area-inset-top); */
 }
 
 /* Full-width background container */
@@ -37,13 +40,13 @@ html, body {
     transform: scale(1.05);
 }
 
+/* --- REFINED NAVBAR STYLES --- */
 .navbar {
     background-color: #165B40;
     color: #333;
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centered to allow the inner container to control width */
     align-items: center;
-    padding: calc(15px + env(safe-area-inset-top)) 30px 15px 30px;
     position: fixed;
     top: 0;
     left: 0;
@@ -52,6 +55,19 @@ html, body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
     box-sizing: border-box;
+
+    /* THIS IS THE KEY CHANGE. This padding pushes the entire fixed navbar below the notch. */
+    padding-top: env(safe-area-inset-top);
+}
+
+.navbar-content {
+    /* This inner container now holds the actual content and its padding. */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Optional: Keep content centered on very wide screens */
+    padding: 15px 30px; /* The standard padding for your content */
 }
 
 .app-name {
@@ -88,8 +104,10 @@ button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* --- REFINED NAVBAR SPACER --- */
 .navbar-spacer {
-    height: 100px; /* This already handles spacing under fixed navbar */
+    /* Dynamic height to match the fixed navbar */
+    height: calc(80px + env(safe-area-inset-top, 0px));
 }
 
 .landing-page {
@@ -242,9 +260,13 @@ button:hover {
 
 @media (max-width: 768px) {
     .navbar {
-        padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px;
-        flex-direction: column;
-        align-items: center;
+        /* This padding will be added to the top safe area inset */
+        padding: 0; 
+    }
+    
+    .navbar-content {
+      padding: 15px 20px;
+      flex-direction: column;
     }
 
     .logo-container {

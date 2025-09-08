@@ -9,12 +9,19 @@
     </div>
   </div>
 
-  <!-- Complete Visit Button - Moved here to be always visible -->
-  <div class="complete-visit-container">
-    <button class="btn btn-complete" (click)="navigateToDoctorHome()">
-       {{ 'patient_profile.complete_visit' | transloco }}
-    </button>
-  </div>
+<div class="complete-visit-container">
+  <!-- Button for when visit details haven't been submitted -->
+  <button *ngIf="!visitDetailsSubmitted" class="btn btn-complete" (click)="handleCompleteVisit()" [disabled]="isSubmitting">
+    <i class="fas fa-check-circle"></i>
+    {{ 'patient_profile.complete_visit' | transloco }}
+  </button>
+  
+  <!-- Button for when visit details have been submitted -->
+  <button *ngIf="visitDetailsSubmitted" class="btn btn-complete" (click)="completeVisitNavigationOnly()">
+    <i class="fas fa-check-circle"></i>
+    {{ 'patient_profile.complete_visit' | transloco }}
+  </button>
+</div>
 
   <div class="profile-content" *ngIf="!isLoading;">
     <div class="patient-overview">
@@ -449,38 +456,73 @@
 
           
 
-          <div class="form-section">
-            <h4>{{ 'patient_profile.upload_files' | transloco }}</h4>
-            <div class="upload-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)"
-                  (click)="fileInput.click()" [class.drag-over]="isDragOver">
-              <input type="file" #fileInput (change)="onFilesSelected($event)" multiple hidden>
-              <i class="fas fa-cloud-upload-alt"></i>
-              <p>{{ 'patient_profile.upload_instructions' | transloco }}</p>
-              <small>{{ 'patient_profile.upload_restrictions' | transloco }}</small>
-            </div>
+        <!-- Update the upload section in your HTML template -->
+<div class="form-section">
+  <h4>{{ 'patient_profile.upload_files' | transloco }}</h4>
+  
+  <div class="upload-instructions">
+    <p>{{ 'patient_profile.allowed_formats' | transloco: { formats: 'PDF, JPG, JPEG, PNG' } }}</p>
+    <small>{{ 'patient_profile.max_file_size' | transloco: { size: '5MB' } }}</small>
+  </div>
+  
+  <div class="upload-area" 
+       (dragover)="onDragOver($event)" 
+       (dragleave)="onDragLeave($event)"
+       (drop)="onDrop($event)"
+       (click)="fileInput.click()" 
+       [class.drag-over]="isDragOver"
+       [class.has-files]="uploadedFiles.length > 0">
+    
+    <input type="file" #fileInput (change)="onFilesSelected($event)" multiple hidden 
+           accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/jpg,image/png">
+    
+    <div class="upload-content">
+      <i class="fas fa-cloud-upload-alt upload-icon"></i>
+      <h5>{{ 'patient_profile.upload_title' | transloco }}</h5>
+      <p>{{ 'patient_profile.upload_instructions' | transloco }}</p>
+      <button type="button" class="btn-browse">
+        {{ 'patient_profile.browse_files' | transloco }}
+      </button>
+    </div>
+    
+    <div class="upload-progress" *ngIf="isSubmitting">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <span>{{ 'patient_profile.uploading' | transloco }}</span>
+    </div>
+  </div>
 
-            <div class="uploaded-files" *ngIf="uploadedFiles.length > 0">
-              <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
-                <div class="file-info" 
-                     [class.clickable-file-info]="file.type.includes('image') || file.type.includes('pdf')"
-                     (click)="file.type.includes('image') || file.type.includes('pdf') ? viewOrDownloadFile(file) : null">
-                  
-                  <img *ngIf="file.type.includes('image')" [src]="file.url" alt="{{file.name}}" class="uploaded-image-thumbnail">
-                  
-                  <i *ngIf="file.type.includes('pdf')" class="fas fa-file-pdf uploaded-file-icon"></i>
-                  
-                  <i *ngIf="!file.type.includes('image') && !file.type.includes('pdf')" class="fas fa-file-alt uploaded-file-icon"></i>
-                  
-                  <span class="file-name">{{file.name}}</span>
-                  <span class="file-size">{{file.size | fileSize}}</span>
-                </div>
-                <button class="remove-file" (click)="removeFile(i)" [attr.aria-label]="'patient_profile.remove_file' | transloco">
-                  <i class="fas fa-times"></i>
-                  <span class="sr-only">{{ 'patient_profile.remove_file' | transloco }}</span>
-                </button>
-              </div>
-            </div>
+  <div class="uploaded-files" *ngIf="uploadedFiles.length > 0">
+    <h6>{{ 'patient_profile.uploaded_files' | transloco }} ({{ uploadedFiles.length }})</h6>
+    
+    <div class="file-list">
+      <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
+        <div class="file-info" 
+             [class.clickable-file-info]="file.type.includes('image') || file.type.includes('pdf')"
+             (click)="file.type.includes('image') || file.type.includes('pdf') ? viewOrDownloadFile(file) : null">
+          
+          <div class="file-icon">
+            <i *ngIf="file.type.includes('image')" class="fas fa-file-image"></i>
+            <i *ngIf="file.type.includes('pdf')" class="fas fa-file-pdf"></i>
           </div>
+          
+          <div class="file-details">
+            <span class="file-name" [title]="file.name">{{ file.name }}</span>
+            <span class="file-size">{{ file.size | fileSize }}</span>
+            <span class="file-type">{{ file.type.split('/')[1] | uppercase }}</span>
+          </div>
+        </div>
+        
+        <button class="remove-file" (click)="removeFile(i)" 
+                [attr.aria-label]="'patient_profile.remove_file' | transloco"
+                [title]="'patient_profile.remove_file' | transloco">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
           <div class="form-actions">
             <button class="btn btn-submit" (click)="submitVisitDetails()" [disabled]="isSubmitting">

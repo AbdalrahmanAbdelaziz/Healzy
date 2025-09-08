@@ -3,17 +3,6 @@ import { importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 
@@ -24,27 +13,55 @@ import {
   TranslocoModule
 } from '@ngneat/transloco';
 import { provideTranslocoLocale } from '@ngneat/transloco-locale';
-import { getBrowserLang } from '@ngneat/transloco';
+
+// Toastr imports
+import { provideToastr } from 'ngx-toastr';
+
+// Angular Material imports - استيراد الوحدات بدلاً من دوال provide
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+
+// Forms imports
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// NgxCharts imports
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+// NgbModule imports
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
     provideAnimations(),
+    
+    // Toastr configuration
+    provideToastr({
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000,
+    }),
+    
+    // استيراد وحدات Angular Material باستخدام importProvidersFrom
     importProvidersFrom(
-      ToastrModule.forRoot({
-        positionClass: 'toast-bottom-right',
-        timeOut: 3000,
-      })
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      MatDialogModule,
+      MatCardModule,
+      MatIconModule,
+      MatGridListModule
     ),
-    importProvidersFrom(MatFormFieldModule),
-    importProvidersFrom(MatInputModule),
-    importProvidersFrom(MatButtonModule),
-    importProvidersFrom(MatDialogModule),
-    importProvidersFrom(MatCardModule),
-    importProvidersFrom(MatIconModule),
-    importProvidersFrom(MatGridListModule),
-    importProvidersFrom(FormsModule),
+    
+    // استيراد وحدات Forms
+    importProvidersFrom(FormsModule, ReactiveFormsModule),
+    
+    // استيراد وحدات أخرى
     importProvidersFrom(NgxChartsModule),
     importProvidersFrom(NgbModule),
     

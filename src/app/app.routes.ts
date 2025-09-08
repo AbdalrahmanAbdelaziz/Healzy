@@ -63,6 +63,12 @@ import { SecConfirmAppWalkComponent } from './pages/secretary/sec-confirm-app-wa
 import { DPatientProfileComponent } from './pages/doctor/d-patient-profile/d-patient-profile.component';
 import { AllUsersComponent } from './pages/admin/all-users/all-users.component';
 import { NewPatientAddWalkinComponent } from './pages/secretary/new-patient-add-walkin/new-patient-add-walkin.component';
+import { CountriesComponent } from './pages/admin/countries/countries.component';
+import { NewCountryComponent } from './pages/admin/new-country/new-country.component';
+import { GovernoratesComponent } from './pages/admin/governorates/governorates.component';
+import { NewGovernorateComponent } from './pages/admin/new-governorate/new-governorate.component';
+import { DistrictsComponent } from './pages/admin/districts/districts.component';
+import { NewDistrictComponent } from './pages/admin/new-district/new-district.component';
 
 
 
@@ -154,7 +160,15 @@ export const routes: Routes = [
   {path: 'd-contact-us', component: DContactUsPageComponent, canActivate:[AuthGuard]},
   {path: 'p-contact-us', component: PContactUsPageComponent, canActivate:[AuthGuard]},
   { path: 'patient/:id', component: DPatientProfileComponent, canActivate:[AuthGuard]},
-  { path: 'all-users', component: AllUsersComponent, canActivate:[AuthGuard]}
+  { path: 'all-users', component: AllUsersComponent, canActivate:[AuthGuard]},
+
+
+  { path: 'countries', component: CountriesComponent,canActivate:[AuthGuard] },
+  { path: 'new-country', component: NewCountryComponent ,canActivate:[AuthGuard]},
+  { path: 'governorates', component: GovernoratesComponent ,canActivate:[AuthGuard]},
+  { path: 'new-governorate', component: NewGovernorateComponent ,canActivate:[AuthGuard]},
+  { path: 'districts', component: DistrictsComponent ,canActivate:[AuthGuard]},
+  { path: 'new-district', component: NewDistrictComponent ,canActivate:[AuthGuard]},
   
 
 

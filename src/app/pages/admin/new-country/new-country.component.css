@@ -1,0 +1,223 @@
+/* new-country.component.css */
+.new-country-container {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: calc(100vh - 64px);
+}
+
+.header-section {
+  margin-bottom: 32px;
+  position: relative;
+  text-align: center;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #666;
+}
+
+.header-section h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #24CC81;
+  margin: 8px 0;
+}
+
+.header-section p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+.new-country-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.new-country-card mat-card-header {
+  background-color: #24CC81;
+  color: white;
+  padding: 20px;
+}
+
+.new-country-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.new-country-card mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+}
+
+.mat-card-content {
+  padding: 50px;
+}
+
+.country-form {
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.form-field input[dir="rtl"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.cancel-button {
+  border-radius: 6px;
+  padding: 0 20px;
+}
+
+.submit-button {
+  border-radius: 6px;
+  padding: 0 24px;
+  min-width: 120px;
+}
+
+.submit-button mat-spinner {
+  margin: 0 auto;
+}
+
+
+.info-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #ff9800;
+}
+
+.info-card mat-card-header {
+  padding: 16px 20px 0;
+}
+
+.info-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ff9800;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.info-card .mat-card-content {
+  padding: 16px 20px 20px;
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 20px;
+  color: #666;
+}
+
+.info-list li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.info-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Error states */
+.form-field.error .mdc-text-field__input {
+  color: #f44336;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .new-country-container {
+    padding: 16px;
+  }
+  
+  .header-section h1 {
+    font-size: 2rem;
+    margin-top: 40px;
+  }
+  
+  .back-button {
+    position: static;
+    margin-bottom: 16px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .cancel-button, .submit-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-section h1 {
+    font-size: 1.75rem;
+  }
+  
+  .new-country-card mat-card-title {
+    font-size: 1.25rem;
+  }
+  
+  .mat-card-content {
+    padding: 16px;
+  }
+}
+
+/* Snackbar styles */
+::ng-deep .success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+::ng-deep .error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+::ng-deep .success-snackbar .mat-simple-snackbar-action,
+::ng-deep .error-snackbar .mat-simple-snackbar-action {
+  color: white !important;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+

@@ -1,0 +1,73 @@
+<!-- countries.component.html -->
+<app-admin-header></app-admin-header>
+
+<div class="countries-container">
+  <div class="header-section">
+    <h1>{{ 'countries.title' | transloco }}</h1>
+    <p>{{ 'countries.subtitle' | transloco }}</p>
+  </div>
+
+  <mat-card class="countries-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>public</mat-icon>
+        {{ 'countries.management' | transloco }}
+      </mat-card-title>
+      <!-- <button mat-flat-button color="primary" (click)="toggleAddForm()" class="add-button">
+        <mat-icon>{{ isAdding ? 'close' : 'add' }}</mat-icon>
+        {{ isAdding ? ('countries.cancel' | transloco) : ('countries.add_country' | transloco) }}
+      </button> -->
+    </mat-card-header>
+
+    <mat-card-content>
+     
+
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-section">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>{{ 'countries.loading' | transloco }}</p>
+      </div>
+
+      <!-- Countries Table -->
+      <div *ngIf="!loading && countries.length > 0" class="table-section">
+        <table mat-table [dataSource]="paginatedCountries" class="countries-table">
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>{{ 'countries.id' | transloco }}</th>
+            <td mat-cell *matCellDef="let country">{{ country.id }}</td>
+          </ng-container>
+
+          <!-- English Name Column -->
+          <ng-container matColumnDef="name_En">
+            <th mat-header-cell *matHeaderCellDef>{{ 'countries.name_en' | transloco }}</th>
+            <td mat-cell *matCellDef="let country">{{ country.name_En }}</td>
+          </ng-container>
+
+          <!-- Arabic Name Column -->
+          <ng-container matColumnDef="name_Ar">
+            <th mat-header-cell *matHeaderCellDef>{{ 'countries.name_ar' | transloco }}</th>
+            <td mat-cell *matCellDef="let country" class="arabic-text">{{ country.name_Ar }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator 
+          [length]="totalItems"
+          [pageSize]="pageSize"
+
+          (page)="onPageChange($event)"
+          aria-label="Select page of countries">
+        </mat-paginator>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="!loading && countries.length === 0" class="empty-state">
+        <mat-icon>public_off</mat-icon>
+        <h3>{{ 'countries.empty_title' | transloco }}</h3>
+        <p>{{ 'countries.empty_message' | transloco }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

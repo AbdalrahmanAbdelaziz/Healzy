@@ -1,0 +1,66 @@
+<!-- districts.component.html -->
+<app-admin-header></app-admin-header>
+
+<div class="districts-container">
+  <div class="header-section">
+    <h1>{{ 'districts.title' | transloco }}</h1>
+    <p>{{ 'districts.subtitle' | transloco }}</p>
+  </div>
+
+  <mat-card class="districts-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>location_city</mat-icon>
+        {{ 'districts.management' | transloco }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-section">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>{{ 'districts.loading' | transloco }}</p>
+      </div>
+
+      <!-- Districts Table -->
+      <div *ngIf="!loading && districts.length > 0" class="table-section">
+        <table mat-table [dataSource]="paginatedDistricts" class="districts-table">
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>{{ 'districts.id' | transloco }}</th>
+            <td mat-cell *matCellDef="let district">{{ district.id }}</td>
+          </ng-container>
+
+          <!-- English Name Column -->
+          <ng-container matColumnDef="name_En">
+            <th mat-header-cell *matHeaderCellDef>{{ 'districts.name_en' | transloco }}</th>
+            <td mat-cell *matCellDef="let district">{{ district.name_En }}</td>
+          </ng-container>
+
+          <!-- Arabic Name Column -->
+          <ng-container matColumnDef="name_Ar">
+            <th mat-header-cell *matHeaderCellDef>{{ 'districts.name_ar' | transloco }}</th>
+            <td mat-cell *matCellDef="let district" class="arabic-text">{{ district.name_Ar }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator 
+          [length]="totalItems"
+          [pageSize]="pageSize"
+          (page)="onPageChange($event)"
+          aria-label="Select page of districts">
+        </mat-paginator>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="!loading && districts.length === 0" class="empty-state">
+        <mat-icon>location_off</mat-icon>
+        <h3>{{ 'districts.empty_title' | transloco }}</h3>
+        <p>{{ 'districts.empty_message' | transloco }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

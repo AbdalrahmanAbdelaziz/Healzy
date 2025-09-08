@@ -1,3 +1,4 @@
+// appointments-list.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,11 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../services/user.service';
 import { ConfirmationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
 import { DHeaderComponent } from '../d-header/d-header.component';
-import { DSidenavbarComponent } from '../d-sidenavbar/d-sidenavbar.component';
-import { Observable, interval, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
+import { interval, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-appointments-list',
@@ -81,11 +80,7 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: any) => {
           const newAppointments = (response.data || []).filter((appointment: any) => {
-            return (
-              appointment.timeSlot?.date === this.selectedDate &&
-              appointment.appointmentStatus_En !== 'Cancelled' &&
-              appointment.appointmentStatus_En !== 'Proccessed'
-            );
+            return appointment.timeSlot?.date === this.selectedDate;
           });
 
           // Check for new NextInQueue appointments
@@ -156,11 +151,7 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
     this.appointmentService.searchAppointmentsByOptionalParams(this.userId).subscribe({
       next: (response: any) => {
         const newAppointments = (response.data || []).filter((appointment: any) => {
-          return (
-            appointment.timeSlot?.date === date &&
-            appointment.appointmentStatus_En !== 'Cancelled' &&
-            appointment.appointmentStatus_En !== 'Proccessed'
-          );
+          return appointment.timeSlot?.date === date;
         });
 
         // Check for new NextInQueue appointments
@@ -201,7 +192,7 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
       this.appointmentService.cancelAppointment(this.selectedAppointmentId).subscribe({
         next: () => {
           this.toastr.success(this.getTranslation('appointments.cancelSuccess'));
-          this.appointments = this.appointments.filter((appt) => appt.id !== this.selectedAppointmentId);
+          this.fetchAppointmentsForDate(this.selectedDate); // Refresh the list
           this.closeCancelModal();
         },
         error: (err) => {
@@ -234,16 +225,16 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
     });
   }
 
- navigateToPatientProfile(appointment: any): void {
-  if (appointment.appointmentStatus_En === 'InProgress' || appointment.appointmentStatus_En === 'NextInQueue') {
-    this.router.navigate(['/d-view-pp'], {
-      queryParams: { 
-        appointmentId: appointment.id,
-        doctorId: this.userId // Add doctorId to query params
-      }
-    });
+  navigateToPatientProfile(appointment: any): void {
+    if (appointment.appointmentStatus_En === 'InProgress' || appointment.appointmentStatus_En === 'NextInQueue') {
+      this.router.navigate(['/d-view-pp'], {
+        queryParams: { 
+          appointmentId: appointment.id,
+          doctorId: this.userId // Add doctorId to query params
+        }
+      });
+    }
   }
-}
 
   private showTranslatedToastr(type: 'success' | 'error', key: string, fallback: string): void {
     const message = this.translocoService.translate(`appointments.${key}`) || fallback;
@@ -263,5 +254,38 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
       return 'Invalid Time';
     }
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'NextInQueue':
+        return 'status-next-in-queue';
+      case 'InProgress':
+        return 'status-in-progress';
+      case 'Proccessed':
+        return 'status-processed';
+      case 'Cancelled':
+        return 'status-cancelled';
+      case 'upcoming':
+        return 'status-upcoming';
+      default:
+        return 'status-default';
+    }
+  }
+
+  canCancelAppointment(status: string): boolean {
+    return status !== 'Proccessed' && status !== 'Cancelled';
+  }
+
+  canRescheduleAppointment(status: string): boolean {
+    return status === 'upcoming';
+  }
+
+  canMarkInProgress(status: string): boolean {
+    return status === 'NextInQueue';
+  }
+
+  isRowClickable(status: string): boolean {
+    return status === 'InProgress' || status === 'NextInQueue';
   }
 }

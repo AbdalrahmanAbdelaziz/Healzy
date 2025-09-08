@@ -61,6 +61,7 @@ quantity: number = 1;
  includeCheckPrice: boolean = true; // Default to true
 checkPrice: number = 0;
 
+visitDetailsSubmitted: boolean = false;
 
 
  
@@ -396,79 +397,11 @@ loadDoctorServices() {
     this.expandedVisits[visitId] = !this.expandedVisits[visitId];
   }
 
-  onDragOver(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver = true;
-  }
+ 
 
-  onDragLeave(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver = false;
-  }
 
-  onDrop(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver = false;
 
-    if (event.dataTransfer?.files) {
-      this.handleFiles(event.dataTransfer.files);
-    }
-  }
 
-  onFilesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.handleFiles(input.files);
-    }
-  }
-
-  handleFiles(files: FileList): void {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.size > 5 * 1024 * 1024) {
-        this.showTranslatedToastr('warning', 'file_too_large', `File ${file.name} is too large (max 5MB)`);
-        continue;
-      }
-
-      if (!['image/jpeg', 'image/png', 'application/pdf', 'text/plain'].includes(file.type)) {
-        this.showTranslatedToastr('warning', 'unsupported_file_type', `File type not supported: ${file.name}`);
-        continue;
-      }
-
-      if (file.type.includes('image')) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.uploadedFiles.push({
-            file: file,
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            url: e.target.result,
-            previewUrl: e.target.result
-          });
-        };
-        reader.readAsDataURL(file);
-      } else {
-        this.uploadedFiles.push({
-          file: file,
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          url: URL.createObjectURL(file)
-        });
-      }
-    }
-  }
-
-  removeFile(index: number): void {
-    if (this.uploadedFiles[index].url && !this.uploadedFiles[index].type.includes('image')) {
-      URL.revokeObjectURL(this.uploadedFiles[index].url);
-    }
-    this.uploadedFiles.splice(index, 1);
-  }
 
   saveDraft(): void {
     this.showTranslatedToastr('info', 'draft_saved', 'Draft saved locally');
@@ -484,18 +417,22 @@ loadDoctorServices() {
 
     const files = this.uploadedFiles.map(file => file.file);
 
-    this.patientService.addMedicalRecord(
-      this.patientDetails.id,
-      this.currentDiagnosis || '',
-      '',
-      this.currentSigns || '',
-      this.currentPrescription || '',
-      files,
-      this.appointmentId
-    ).subscribe({
-      next: (response) => {
-        this.isSubmitting = false;
-        this.showTranslatedToastr('success', 'medical_record_added', 'Medical record added successfully');
+     this.patientService.addMedicalRecord(
+    this.patientDetails.id,
+    this.currentDiagnosis || '',
+    '',
+    this.currentSigns || '',
+    this.currentPrescription || '',
+    files,
+    this.appointmentId
+  ).subscribe({
+    next: (response) => {
+      this.isSubmitting = false;
+      this.showTranslatedToastr('success', 'medical_record_added', 'Medical record added successfully');
+      
+      // Set the flag to indicate visit details have been submitted
+      this.visitDetailsSubmitted = true;
+      
         // this.loadCurrentAppointmentMedicalRecord(this.patientDetails.id);
         // this.changeTab('history');
 
@@ -605,21 +542,24 @@ addService(service: any, quantity: number = 1): void {
 
 
   completeVisit(): void {
-    const visitData = {
-      appointmentId: this.appointmentId,
-      checkPrice: this.doctorCheckPriceApplied ? this.doctorCheckPrice : 0
-    };
+  const visitData = {
+    appointmentId: this.appointmentId,
+    checkPrice: this.doctorCheckPriceApplied ? this.doctorCheckPrice : 0
+  };
 
-    this.appointmentService.completeVisit(visitData).subscribe({
-      next: () => {
-        this.showTranslatedToastr('success', 'visit_completed', 'Patient processed successfully');
-        this.router.navigate(['/doctor-home']);
-      },
-      error: (err) => {
-        this.showTranslatedToastr('error', 'complete_visit_error', 'Failed to complete visit');
-      }
-    });
-  }
+  this.appointmentService.completeVisit(visitData).subscribe({
+    next: () => {
+      this.showTranslatedToastr('success', 'visit_completed', 'Patient processed successfully');
+      this.router.navigate(['/doctor-home']);
+    },
+    error: (err) => {
+      // this.showTranslatedToastr('error', 'complete_visit_error', 'Failed to complete visit');
+      this.router.navigate(['/doctor-home']);
+
+    }
+    
+  });
+}
 
   isServiceSelected(serviceId: number): boolean {
     return this.selectedServices.some(service => service.id === serviceId);
@@ -942,7 +882,240 @@ fetchDoctorCheckPrice(docId: number): void {
 }
 
 
+onDragOver(event: DragEvent): void {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragOver = true;
+}
 
+onDragLeave(event: DragEvent): void {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragOver = false;
+}
+
+onDrop(event: DragEvent): void {
+  event.preventDefault();
+  event.stopPropagation();
+  this.isDragOver = false;
+
+  if (event.dataTransfer?.files) {
+    this.handleFiles(event.dataTransfer.files);
+  }
+}
+
+onFilesSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files) {
+    this.handleFiles(input.files);
+    // Reset the input to allow selecting the same file again
+    input.value = '';
+  }
+}
+
+handleFiles(files: FileList): void {
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+  const maxSize = 5 * 1024 * 1024; // 5MB
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    
+    // Check file type
+    if (!allowedTypes.includes(file.type)) {
+      this.showProfessionalFileTypeError(file);
+      continue;
+    }
+
+    // Check file size
+    if (file.size > maxSize) {
+      this.showProfessionalFileSizeError(file);
+      continue;
+    }
+
+    // Process valid file
+    if (file.type.includes('image')) {
+      this.processImageFile(file);
+    } else if (file.type === 'application/pdf') {
+      this.processPdfFile(file);
+    }
+  }
+}
+
+private showProfessionalFileTypeError(file: File): void {
+  const fileName = file.name;
+  const fileExtension = fileName.split('.').pop()?.toUpperCase() || 'UNKNOWN';
+  
+  this.toastr.error(
+    this.translocoService.translate('patient_profile.invalid_file_type', {
+      fileName: fileName,
+      fileType: fileExtension
+    }) || `File type not supported: ${fileName} (${fileExtension})`,
+    this.translocoService.translate('patient_profile.upload_error') || 'Upload Error',
+    {
+      timeOut: 5000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      toastClass: 'ngx-toastr professional-toast error-toast'
+    }
+  );
+}
+
+private showProfessionalFileSizeError(file: File): void {
+  const fileName = file.name;
+  const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+  
+  this.toastr.error(
+    this.translocoService.translate('patient_profile.file_too_large', {
+      fileName: fileName,
+      fileSize: fileSizeMB
+    }) || `File too large: ${fileName} (${fileSizeMB}MB)`,
+    this.translocoService.translate('patient_profile.upload_error') || 'Upload Error',
+    {
+      timeOut: 5000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      toastClass: 'ngx-toastr professional-toast error-toast'
+    }
+  );
+}
+
+private processImageFile(file: File): void {
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    this.uploadedFiles.push({
+      file: file,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      url: e.target.result,
+      previewUrl: e.target.result
+    });
+    
+    this.showUploadSuccessToast(file.name);
+  };
+  reader.onerror = () => {
+    this.showFileReadError(file.name);
+  };
+  reader.readAsDataURL(file);
+}
+
+private processPdfFile(file: File): void {
+  this.uploadedFiles.push({
+    file: file,
+    name: file.name,
+    size: file.size,
+    type: file.type,
+    url: URL.createObjectURL(file)
+  });
+  
+  this.showUploadSuccessToast(file.name);
+}
+
+private showUploadSuccessToast(fileName: string): void {
+  this.toastr.success(
+    this.translocoService.translate('patient_profile.file_uploaded', {
+      fileName: fileName
+    }) || `File uploaded successfully: ${fileName}`,
+    this.translocoService.translate('patient_profile.upload_success') || 'Upload Success',
+    {
+      timeOut: 3000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      toastClass: 'ngx-toastr professional-toast success-toast'
+    }
+  );
+}
+
+private showFileReadError(fileName: string): void {
+  this.toastr.error(
+    this.translocoService.translate('patient_profile.file_read_error', {
+      fileName: fileName
+    }) || `Error reading file: ${fileName}`,
+    this.translocoService.translate('patient_profile.upload_error') || 'Upload Error',
+    {
+      timeOut: 5000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right'
+    }
+  );
+}
+
+removeFile(index: number): void {
+  const fileName = this.uploadedFiles[index].name;
+  
+  if (this.uploadedFiles[index].url && !this.uploadedFiles[index].type.includes('image')) {
+    URL.revokeObjectURL(this.uploadedFiles[index].url);
+  }
+  
+  this.uploadedFiles.splice(index, 1);
+  
+  this.toastr.info(
+    this.translocoService.translate('patient_profile.file_removed', {
+      fileName: fileName
+    }) || `File removed: ${fileName}`,
+    this.translocoService.translate('patient_profile.file_removed_title') || 'File Removed',
+    {
+      timeOut: 3000,
+      progressBar: true,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      toastClass: 'ngx-toastr professional-toast info-toast'
+    }
+  );
+}
+
+async handleCompleteVisit(): Promise<void> {
+  // Check if current appointment medical record already exists
+  if (this.currentAppointmentMedicalRecord) {
+    // If record already exists, just complete the visit and navigate
+    this.completeVisit();
+    return;
+  }
+
+  // If no medical record exists, fill empty fields with default values
+  const hasExistingData = this.currentDiagnosis || this.currentSigns || this.currentPrescription;
+  
+  if (!hasExistingData) {
+    // Fill empty fields with default messages
+    this.currentDiagnosis = this.currentDiagnosis || this.translocoService.translate('patient_profile.no_diagnosis_provided') || 'No diagnosis provided';
+    this.currentSigns = this.currentSigns || this.translocoService.translate('patient_profile.no_signs_provided') || 'No signs provided';
+    this.currentPrescription = this.currentPrescription || this.translocoService.translate('patient_profile.no_prescription_provided') || 'No prescription provided';
+  }
+
+  // Submit the visit details first
+  this.isSubmitting = true;
+
+  try {
+    const files = this.uploadedFiles.map(file => file.file);
+    
+    await this.patientService.addMedicalRecord(
+      this.patientDetails.id,
+      this.currentDiagnosis || '',
+      '',
+      this.currentSigns || '',
+      this.currentPrescription || '',
+      files,
+      this.appointmentId
+    ).toPromise();
+
+    this.showTranslatedToastr('success', 'medical_record_added', 'Medical record added successfully');
+    
+    // After submitting medical record, complete the visit
+    this.completeVisit();
+  } catch (err) {
+    this.isSubmitting = false;
+    this.showTranslatedToastr('error', 'medical_record_error', 'Error adding medical record');
+    console.error('Error adding medical record:', err);
+  }
+}
+
+completeVisitNavigationOnly(): void {
+  this.router.navigate(['/doctor-home']);
+}
 
 
 }

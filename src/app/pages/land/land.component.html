@@ -1,18 +1,20 @@
 <div class="landing-page" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
     <header class="navbar">
-        <div class="logo-container">
-            <img src="vv_w.png" [alt]="'landing.logoAlt' | transloco" alt="Company logo" class="logo-image">
-        </div>
-    
-       <div class="lang-toggle">
-            <button (click)="toggleLanguage()">
-                {{ currentLang === 'en' ? 'عربي' : 'EN' }}
-            </button>
-        </div>
-    
-        <div class="right-button">
-            <button routerLink="/login">{{ 'landing.login' | transloco }}</button>
-            <button routerLink="/register">{{ 'landing.register' | transloco }}</button>
+        <div class="navbar-content">
+            <div class="logo-container">
+                <img src="vv_w.png" [alt]="'landing.logoAlt' | transloco" alt="Company logo" class="logo-image">
+            </div>
+        
+            <div class="lang-toggle">
+                <button (click)="toggleLanguage()">
+                    {{ currentLang === 'en' ? 'عربي' : 'EN' }}
+                </button>
+            </div>
+        
+            <div class="right-button">
+                <button routerLink="/login">{{ 'landing.login' | transloco }}</button>
+                <button routerLink="/register">{{ 'landing.register' | transloco }}</button>
+            </div>
         </div>
     </header>
 

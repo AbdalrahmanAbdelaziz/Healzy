@@ -93,33 +93,28 @@
     </section>
 
     <aside class="secondary-content">
-      <div class="actions-card">
+      <div class="actions-card enhanced">
         <div class="card-header">
           <h2 class="card-title">{{ 'dashboard.quickActions' | transloco }}</h2>
         </div>
 
         <div class="card-content">
-          <nav class="action-buttons">
-            <a routerLink="/d-list" class="action-button">
-              <span class="action-icon"><i class="fas fa-calendar-check"></i></span>
-              <span class="action-text">{{ 'quick_actions.my_appointments' | transloco }}</span>
-            </a>
-
-            <a routerLink="/d-service-settings" class="action-button">
-              <span class="action-icon"><i class="fas fa-cog"></i></span>
-              <span class="action-text">{{ 'dashboard.serviceSettings' | transloco }}</span>
-            </a>
-
-            <a routerLink="/d-timeslot-management" class="action-button">
-              <span class="action-icon"><i class="fas fa-calendar-alt"></i></span>
-              <span class="action-text">{{ 'dashboard.timeslotManagement' | transloco }}</span>
-            </a>
-
-            <a routerLink="/d-patients" class="action-button">
-              <span class="action-icon"><i class="fas fa-users"></i></span>
-              <span class="action-text">{{ 'dashboard.patients' | transloco }}</span>
-            </a>
-          </nav>
+          <div class="dashboard-grid" [style.gridTemplateColumns]="'repeat(' + gridColumns + ', 1fr)'">
+            <div 
+              *ngFor="let card of actionCards" 
+              class="dashboard-card" 
+              [style.background]="card.color"
+              (click)="navigateTo(card.route)"
+            >
+              <div class="card-icon">
+                {{ card.icon }}
+              </div>
+              <div class="card-content">
+                <h3>{{ card.title | transloco }}</h3>
+              </div>
+              <div class="card-hover-effect"></div>
+            </div>
+          </div>
         </div>
       </div>
     </aside>

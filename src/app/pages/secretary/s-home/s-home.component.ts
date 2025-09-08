@@ -1,16 +1,17 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { Component, HostListener, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SHeaderComponent } from '../s-header/s-header.component';
 import { Color, LegendPosition, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import { AppointmentService } from '../../../services/appointment.service';
-import { LoginResponse } from '../../../shared/models/login-response';
 import { UserService } from '../../../services/user.service';
-import { Observable, take, Subscription, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Observable, take, Subscription, fromEvent, interval } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
 import { BookingWayService } from '../../../services/booking-way.service';
+import { ToastrService } from 'ngx-toastr';
+import { LoginResponse } from '../../../shared/models/login-response';
 
 @Component({
   selector: 'app-s-home',
@@ -56,21 +57,73 @@ export class SHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private langChangeSubscription!: Subscription;
   private resizeSubscription!: Subscription;
   private chartResizeObserver!: ResizeObserver;
+  
+  // Polling properties
+  private pollingSubscription!: Subscription;
+  private previousInProgressAppointments: number[] = [];
+  private audio = new Audio(); // For notification sounds
 
   // Count properties
   upcomingCount: number = 0;
   cancelledCount: number = 0;
   processedCount: number = 0;
+  
+  // Enhanced action cards
+  gridColumns = 2;
+  actionCards = [
+    { 
+      title: 'header.appointments_sec', 
+      icon: '📅', 
+      route: '/my-appointment',
+      color: 'linear-gradient(135deg, #3f51b5 0%, #2196f3 100%)'
+    },
+    { 
+      title: 'dashboard.phoneReserve', 
+      icon: '📞', 
+      action: 'navigateToPhoneReserve',
+      color: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)'
+    },
+    { 
+      title: 'dashboard.walkinReserve', 
+      icon: '🚶', 
+      action: 'navigateToWalkInReserve',
+      color: 'linear-gradient(135deg, #ff9800 0%, #ffc107 100%)'
+    },
+    { 
+      title: 'dashboard.serviceSettings', 
+      icon: '⚙️', 
+      route: '/service-settings',
+      color: 'linear-gradient(135deg, #9c27b0 0%, #e91e63 100%)'
+    },
+    { 
+      title: 'dashboard.timeslotManagement', 
+      icon: '⏰', 
+      route: '/timeslot-management',
+      color: 'linear-gradient(135deg, #607D8B 0%, #78909C 100%)'
+    },
+    { 
+      title: 'dashboard.patients', 
+      icon: '👥', 
+      route: '/patients',
+      color: 'linear-gradient(135deg, #795548 0%, #9E9E9E 100%)'
+    }
+  ];
 
   constructor(
     private appointmentService: AppointmentService,
     private userService: UserService,
     public translocoService: TranslocoService,
     private bookingWayService: BookingWayService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    // Set up notification sound
+    this.audio.src = 'notification.mp3';
+    this.audio.load();
+    
     this.checkScreenSize();
     this.loadUserDetails();
 
@@ -102,6 +155,90 @@ export class SHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.chartResizeObserver) {
       this.chartResizeObserver.disconnect();
     }
+    
+    // Clean up polling subscription
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    const screenWidth = window.innerWidth;
+    
+    if (screenWidth >= 768) {
+      this.gridColumns = 2;
+    } else {
+      this.gridColumns = 1;
+    }
+  }
+
+  cardAction(card: any): void {
+    if (card.action === 'navigateToPhoneReserve') {
+      this.navigateToPhoneReserve();
+    } else if (card.action === 'navigateToWalkInReserve') {
+      this.navigateToWalkInReserve();
+    }
+  }
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
+  }
+
+  // Rest of the existing methods remain the same
+  startPolling(): void {
+    if (!this.doctorId) return;
+    
+    this.pollingSubscription = interval(5000)
+      .pipe(
+        switchMap(() => this.appointmentService.getDoctorDayAppointmentsCount(this.doctorId!, this.todayDate))
+      )
+      .subscribe({
+        next: (response: any) => {
+          // Check for changes in InProgress appointments
+          this.checkForInProgressChanges(response.data);
+          
+          // Update the chart data
+          this.processAppointmentData(response);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Error polling appointment data:', err);
+        },
+      });
+  }
+
+  private checkForInProgressChanges(data: any): void {
+    // This method checks for new InProgress appointments
+    // Since we don't have the full appointment list, we'll need to adapt
+    // For now, we'll just update the data without sound notifications
+    // You could implement a more sophisticated check if needed
+    
+    // If you want to track specific status changes, you might need to 
+    // store previous counts and compare them
+    const previousUpcoming = this.upcomingCount;
+    const previousCancelled = this.cancelledCount;
+    const previousProcessed = this.processedCount;
+    
+    const newUpcoming = data.upcominAppointmentsCount || 0;
+    const newCancelled = data.cancelledAppointmentsCount || 0;
+    const newProcessed = data.completedAppointmentsCount || 0;
+    
+    // Play sound if there are significant changes (you can customize this logic)
+    if (Math.abs(newUpcoming - previousUpcoming) > 0 || 
+        Math.abs(newCancelled - previousCancelled) > 0 ||
+        Math.abs(newProcessed - previousProcessed) > 0) {
+      this.playNotificationSound();
+    }
+  }
+
+  private playNotificationSound(): void {
+    try {
+      this.audio.currentTime = 0; // Reset audio to start
+      this.audio.play().catch(e => console.warn('Audio play failed:', e));
+    } catch (e) {
+      console.warn('Audio error:', e);
+    }
   }
 
   checkScreenSize(): void {
@@ -109,6 +246,7 @@ export class SHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     // Always use doughnut for better label visibility
     this.isDoughnut = true;
     this.adjustChartSize();
+    this.onResize();
   }
 
   adjustChartSizeInitial(): void {
@@ -173,6 +311,7 @@ export class SHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.loadAppointmentData();
+    this.startPolling(); // Start polling after loading initial data
   }
 
   loadAppointmentData(): void {
@@ -295,4 +434,13 @@ export class SHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+
+  // Add this new method to your component class
+handleCardClick(card: any): void {
+  if (card.action) {
+    this.cardAction(card);
+  } else if (card.route) {
+    this.navigateTo(card.route);
+  }
+}
 }

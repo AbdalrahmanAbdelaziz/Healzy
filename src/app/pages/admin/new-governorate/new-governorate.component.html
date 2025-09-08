@@ -1,0 +1,128 @@
+<!-- new-governorate.component.html -->
+<app-admin-header></app-admin-header>
+
+<div class="new-governorate-container">
+  <div class="header-section">
+    <!-- <button mat-button (click)="onCancel()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'new_governorate.back' | transloco }}
+    </button> -->
+    <h1>{{ 'new_governorate.title' | transloco }}</h1>
+    <p>{{ 'new_governorate.subtitle' | transloco }}</p>
+  </div>
+
+  <mat-card class="new-governorate-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>add_location</mat-icon>
+        {{ 'new_governorate.form_title' | transloco }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ 'new_governorate.form_subtitle' | transloco }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" class="governorate-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_governorate.name_en' | transloco }} *</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="governorate.name_En" 
+              name="name_En"
+              required
+              [class.error]="hasError('name_En')"
+              placeholder="{{ 'new_governorate.name_en_placeholder' | transloco }}">
+            <mat-icon matSuffix>language</mat-icon>
+            <!-- <mat-hint>{{ 'new_governorate.name_en_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('name_En')">
+              {{ getError('name_En') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_governorate.name_ar' | transloco }} *</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="governorate.name_Ar" 
+              name="name_Ar"
+              required
+              [class.error]="hasError('name_Ar')"
+              placeholder="{{ 'new_governorate.name_ar_placeholder' | transloco }}"
+              dir="rtl">
+            <mat-icon matSuffix>translate</mat-icon>
+            <!-- <mat-hint>{{ 'new_governorate.name_ar_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('name_Ar')">
+              {{ getError('name_Ar') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_governorate.country' | transloco }} *</mat-label>
+            <mat-select 
+              [(ngModel)]="governorate.countryID" 
+              name="countryID"
+              required
+              [class.error]="hasError('countryID')">
+              <mat-option *ngFor="let country of countries" [value]="country.id">
+                {{ country.name_En }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>public</mat-icon>
+            <!-- <mat-hint>{{ 'new_governorate.country_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('countryID')">
+              {{ getError('countryID') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <!-- <button 
+            mat-button 
+            type="button" 
+            (click)="onCancel()" 
+            class="cancel-button"
+            [disabled]="loading">
+            <mat-icon>cancel</mat-icon>
+            {{ 'new_governorate.cancel' | transloco }}
+          </button> -->
+          
+          <button 
+            mat-flat-button 
+            type="submit" 
+            color="primary" 
+            class="submit-button"
+            [disabled]="loading || countriesLoading">
+            <mat-icon *ngIf="!loading">save</mat-icon>
+            <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+            {{ loading ? ('new_governorate.creating' | transloco) : ('new_governorate.create' | transloco) }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Info Section -->
+  <mat-card class="info-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>info</mat-icon>
+        {{ 'new_governorate.info_title' | transloco }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul class="info-list">
+        <li>{{ 'new_governorate.info_point1' | transloco }}</li>
+        <li>{{ 'new_governorate.info_point2' | transloco }}</li>
+        <li>{{ 'new_governorate.info_point3' | transloco }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Countries Loading -->
+  <div *ngIf="countriesLoading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>{{ 'new_governorate.loading_countries' | transloco }}</p>
+  </div>
+</div>

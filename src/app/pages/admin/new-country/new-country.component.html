@@ -1,0 +1,104 @@
+<!-- new-country.component.html -->
+<app-admin-header></app-admin-header>
+
+<div class="new-country-container">
+  <div class="header-section">
+    <button mat-button (click)="onCancel()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'new_country.back' | transloco }}
+    </button>
+    <h1>{{ 'new_country.title' | transloco }}</h1>
+    <p>{{ 'new_country.subtitle' | transloco }}</p>
+  </div>
+
+  <mat-card class="new-country-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>add_location</mat-icon>
+        {{ 'new_country.form_title' | transloco }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ 'new_country.form_subtitle' | transloco }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" class="country-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_country.name_en' | transloco }} *</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="country.name_En" 
+              name="name_En"
+              required
+              [class.error]="hasError('name_En')"
+              placeholder="{{ 'new_country.name_en_placeholder' | transloco }}">
+            <mat-icon matSuffix>language</mat-icon>
+            <!-- <mat-hint>{{ 'new_country.name_en_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('name_En')">
+              {{ getError('name_En') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_country.name_ar' | transloco }} *</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="country.name_Ar" 
+              name="name_Ar"
+              required
+              [class.error]="hasError('name_Ar')"
+              placeholder="{{ 'new_country.name_ar_placeholder' | transloco }}"
+              dir="rtl">
+            <mat-icon matSuffix>translate</mat-icon>
+            <!-- <mat-hint>{{ 'new_country.name_ar_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('name_Ar')">
+              {{ getError('name_Ar') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <!-- <button 
+            mat-button 
+            type="button" 
+            (click)="onCancel()" 
+            class="cancel-button"
+            [disabled]="loading">
+            <mat-icon>cancel</mat-icon>
+            {{ 'new_country.cancel' | transloco }}
+          </button> -->
+          
+          <button 
+            mat-flat-button 
+            type="submit" 
+            color="primary" 
+            class="submit-button"
+            [disabled]="loading">
+            <mat-icon *ngIf="!loading">save</mat-icon>
+            <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+            {{ loading ? ('new_country.creating' | transloco) : ('new_country.create' | transloco) }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Info Section -->
+  <mat-card class="info-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>info</mat-icon>
+        {{ 'new_country.info_title' | transloco }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul class="info-list">
+        <li>{{ 'new_country.info_point1' | transloco }}</li>
+        <li>{{ 'new_country.info_point2' | transloco }}</li>
+        <li>{{ 'new_country.info_point3' | transloco }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>

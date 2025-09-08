@@ -1,0 +1,215 @@
+/* districts.component.css */
+.districts-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.header-section {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.header-section h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #24CC81;
+  margin-bottom: 8px;
+}
+
+.header-section p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.districts-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.districts-card mat-card-header {
+  background-color: #24CC81;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.districts-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.new-page-button {
+  border-radius: 25px;
+  padding: 8px 20px;
+}
+
+.mat-card-content {
+  padding: 24px;
+}
+
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #666;
+}
+
+.loading-section mat-spinner {
+  margin-bottom: 16px;
+}
+
+.table-section {
+  overflow-x: auto;
+}
+
+.districts-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.districts-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.districts-table td, .districts-table th {
+  padding: 16px;
+  text-align: left;
+}
+
+.districts-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.districts-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+.arabic-text {
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  color: #ccc;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+mat-paginator {
+  border-top: 1px solid #eee;
+  margin-top: 16px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loading-overlay p {
+  margin-top: 16px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .districts-container {
+    padding: 16px;
+  }
+  
+  .header-section h1 {
+    font-size: 2rem;
+  }
+  
+  .districts-card mat-card-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .new-page-button {
+    width: 100%;
+  }
+  
+  .districts-table {
+    min-width: 500px;
+  }
+  
+  .table-section {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-section h1 {
+    font-size: 1.75rem;
+  }
+  
+  .districts-card mat-card-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Snackbar styles */
+::ng-deep .error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+::ng-deep .error-snackbar .mat-simple-snackbar-action {
+  color: white !important;
+}

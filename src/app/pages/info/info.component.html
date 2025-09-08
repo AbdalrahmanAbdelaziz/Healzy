@@ -1,28 +1,23 @@
 <div class="landing-page" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
   <header class="navbar">
-    <div class="logo-container">
-      <img src="vv_w.png" 
-           [alt]="'info.logoAlt' | transloco" 
-           alt="Company logo"  
-           class="logo-image" 
-           routerLink="/">
-    </div>
-    
-    <!-- <div class="language-switcher">
-      <button (click)="switchLanguage('en')" [class.active]="currentLang === 'en'">EN</button>
-      <span class="separator">|</span>
-      <button (click)="switchLanguage('ar')" [class.active]="currentLang === 'ar'">عربي</button>
-    </div> -->
-    
-    <div class="right-button">
-      <button routerLink="/login">{{ 'info.login' | transloco }}</button>
-      <button routerLink="/register">{{ 'info.register' | transloco }}</button>
+    <div class="navbar-content">
+      <div class="logo-container">
+        <img src="vv_w.png" 
+             [alt]="'info.logoAlt' | transloco" 
+             alt="Company logo"  
+             class="logo-image" 
+             routerLink="/">
+      </div>
+      
+      <div class="right-button">
+        <button routerLink="/login">{{ 'info.login' | transloco }}</button>
+        <button routerLink="/register">{{ 'info.register' | transloco }}</button>
+      </div>
     </div>
   </header>
 
   <div class="navbar-spacer"></div>
 
-  <!-- Volunteer Section with full-width background -->
   <div class="volunteer-background">
     <div class="volunteer-container full-width section fade-in">
       <div class="text-section">
@@ -51,7 +46,6 @@
     </div>
   </div>
 
-  <!-- Second Volunteer Section with full-width background -->
   <div class="volunteer-background">
     <div class="volunteer-container full-width section fade-in">
       <div class="text-section">

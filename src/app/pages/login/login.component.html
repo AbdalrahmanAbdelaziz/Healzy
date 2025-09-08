@@ -2,16 +2,15 @@
   <div class="overlay"></div>
   <div class="cover-image">
     <img src="www.jpg" alt="" role="presentation" class="full-cover">
-    </div>
+  </div>
 
   <div class="navbar-spacer"></div>
 
   <div class="content">
     <img src="vv_b.png" alt="" class="logo" routerLink="/" />
     
-
-    
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <!-- الحقول الحالية -->
       <div class="field">
         <span class="fa fa-user"></span>
         <label for="emailUsernamePhone" class="sr-only">
@@ -29,6 +28,7 @@
           {{ 'login.emailRequired' | transloco }}
         </div>
       </div>
+      
       <div class="field space">
         <span class="fa fa-lock"></span>
         <label for="passwordInput" class="sr-only">
@@ -47,9 +47,34 @@
         </div>
       </div>
 
+
+      <div class="field" *ngIf="showCaptcha">
+  <re-captcha 
+    formControlName="recaptcha"
+    (resolved)="onCaptchaResolved($event)"
+    siteKey="6LfiQ78rAAAAANFJaQLXeEZt_z89YgXwpozrTF52"> <!-- Replace with your real site key -->
+  </re-captcha>
+  <div *ngIf="isSubmitted && fc['recaptcha'].invalid" class="error">
+    {{ 'login.captchaRequired' | transloco }}
+  </div>
+</div>
+
+
       <div class="field">
         <input type="submit" [value]="'login.login' | transloco" />
       </div>
+
+      <!-- Add this after your existing form or as a separate login option -->
+<div class="google-login-section">
+  <div class="or-separator">
+    <span>{{ 'login.or' | transloco }}</span>
+  </div>
+  
+  <button type="button" (click)="loginWithGoogle()" class="google-login-btn">
+    <img src="google-icon.png" alt="Google icon">
+    <span>{{ 'login.signInWithGoogle' | transloco }}</span>
+  </button>
+</div>
 
       <div class="forgot-password">
         <a routerLink="/forget-password">{{ 'login.forgotPassword' | transloco }}</a>

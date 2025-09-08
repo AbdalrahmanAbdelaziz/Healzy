@@ -1,3 +1,4 @@
+/* appointments-list.component.css */
 /* General Styles */
 body {
   font-family: 'Poppins', sans-serif;
@@ -131,19 +132,91 @@ body {
   transition: background-color 0.2s ease;
 }
 
-.appointment-table tbody tr:hover td {
-  background: #f8fafc;
+/* Status-based row coloring */
+.status-next-in-queue {
+  background-color: #FFFBEB;
+  border-left: 4px solid #F59E0B;
 }
 
-/* Highlight row for InProgress status */
-.in-progress-row {
-  background-color: #f0fdf9;
-  cursor: pointer;
+.status-in-progress {
+  background-color: #F0FDF4;
+  border-left: 4px solid #10B981;
+}
+
+.status-processed {
+  background-color: #EFF6FF;
+  border-left: 4px solid #3B82F6;
+  opacity: 0.8;
+}
+
+.status-cancelled {
+  background-color: #FEF2F2;
+  border-left: 4px solid #EF4444;
+  opacity: 0.7;
+}
+
+.status-upcoming {
+  background-color: #FEF2F2;
+  border-left: 4px solid #8B5CF6;
+}
+
+.status-default {
+  background-color: #FFFFFF;
+  border-left: 4px solid #94A3B8;
+}
+
+/* Status badges */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: 600;
+  text-transform: capitalize;
 }
 
-.in-progress-row:hover td {
-  background-color: #e0f2f0 !important;
+.status-next-in-queue .status-badge {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.status-in-progress .status-badge {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.status-processed .status-badge {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.status-cancelled .status-badge {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.status-upcoming .status-badge {
+  background: #EDE9FE;
+  color: #5B21B6;
+}
+
+.status-default .status-badge {
+  background: #F1F5F9;
+  color: #475569;
+}
+
+/* Clickable rows */
+.clickable-row {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.clickable-row:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.clickable-row:hover td {
+  background: inherit !important;
 }
 
 /* Actions Column Specific Styling */
@@ -153,6 +226,12 @@ body {
   justify-content: center;
   gap: 8px;
   padding: 12px;
+}
+
+.no-actions {
+  color: #94A3B8;
+  font-style: italic;
+  font-size: 0.9rem;
 }
 
 /* Button styles */
@@ -330,6 +409,23 @@ body {
   .empty-state {
     padding: 20px;
   }
+
+  /* Mobile status indicators */
+  .appointment-table tbody tr::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+  }
+
+  .status-next-in-queue::before { background: #F59E0B; }
+  .status-in-progress::before { background: #10B981; }
+  .status-processed::before { background: #3B82F6; }
+  .status-cancelled::before { background: #EF4444; }
+  .status-upcoming::before { background: #8B5CF6; }
+  .status-default::before { background: #94A3B8; }
 }
 
 @media (max-width: 480px) {
@@ -345,32 +441,4 @@ body {
   .empty-state h3 {
     font-size: 1.3rem;
   }
-}
-
-/* Status badges */
-.status-upcoming {
-  color: #2563eb;
-  background: #dbeafe;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  display: inline-block;
-}
-
-.status-next-in-queue {
-  color: #d97706;
-  background: #fef3c7;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  display: inline-block;
-}
-
-.status-in-progress {
-  color: #059669;
-  background: #d1fae5;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  display: inline-block;
 }

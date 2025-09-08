@@ -93,43 +93,28 @@
     </section>
 
     <aside class="secondary-content">
-      <div class="actions-card">
+      <div class="actions-card enhanced">
         <div class="card-header">
           <h2 class="card-title">{{ 'dashboard.quickActions' | transloco }}</h2>
         </div>
 
         <div class="card-content">
-          <nav class="action-buttons">
-            <a routerLink="/my-appointment" class="action-button">
-              <span class="action-icon"><i class="fas fa-calendar-check"></i></span>
-              <span class="action-text">{{ 'header.appointments_sec' | transloco }}</span>
-            </a>
-
-            <a (click)="navigateToPhoneReserve()" class="action-button">
-              <span class="action-icon"><i class="fas fa-phone"></i></span>
-              <span class="action-text">{{ 'dashboard.phoneReserve' | transloco }}</span>
-            </a>
-
-            <a (click)="navigateToWalkInReserve()" class="action-button">
-              <span class="action-icon"><i class="fas fa-user-clock"></i></span>
-              <span class="action-text">{{ 'dashboard.walkinReserve' | transloco }}</span>
-            </a>
-
-            <a routerLink="/service-settings" class="action-button">
-              <span class="action-icon"><i class="fas fa-cog"></i></span>
-              <span class="action-text">{{ 'dashboard.serviceSettings' | transloco }}</span>
-            </a>
-
-            <a routerLink="/timeslot-management" class="action-button">
-              <span class="action-icon"><i class="fas fa-calendar-alt"></i></span>
-              <span class="action-text">{{ 'dashboard.timeslotManagement' | transloco }}</span>
-            </a>
-
-            <a routerLink="/patients" class="action-button">
-              <span class="action-icon"><i class="fas fa-users"></i></span>
-              <span class="action-text">{{ 'dashboard.patients' | transloco }}</span>
-            </a>
-          </nav>
+          <div class="dashboard-grid" [style.gridTemplateColumns]="'repeat(' + gridColumns + ', 1fr)'">
+            <div 
+              *ngFor="let card of actionCards" 
+              class="dashboard-card" 
+              [style.background]="card.color"
+              (click)="handleCardClick(card)"
+            >
+              <div class="card-icon">
+                {{ card.icon }}
+              </div>
+              <div class="card-content">
+                <h3>{{ card.title | transloco }}</h3>
+              </div>
+              <div class="card-hover-effect"></div>
+            </div>
+          </div>
         </div>
       </div>
     </aside>

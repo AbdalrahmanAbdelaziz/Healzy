@@ -4,7 +4,8 @@ body {
   color: #333333;
   margin: 0;
   padding: 0;
-  padding-top: calc(70px + env(safe-area-inset-top)); /* Account for fixed navbar and notch */
+  /* This padding is now sufficient to push content below the fixed navbar */
+  padding-top: calc(70px + env(safe-area-inset-top, 0px));
 }
 
 body.dark-mode {
@@ -12,21 +13,20 @@ body.dark-mode {
   color: #ffffff;
 }
 
-/* Safe area padding for mobile devices */
-@supports (padding: max(0px)) {
+/* Remove the @supports rule and combine with the main body rule for consistency */
+/* @supports (padding: max(0px)) {
   body {
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
   }
-}
+} */
 
-/* Navbar */
+/* --- REFINED NAVBAR STYLES --- */
 .navbar {
   background-color: #165B40;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem max(1rem, env(safe-area-inset-left));
   width: 100%;
   position: fixed;
   top: 0;
@@ -34,8 +34,15 @@ body.dark-mode {
   z-index: 1000;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  height: calc(70px + env(safe-area-inset-top)); /* Include safe area inset */
-  padding-top: env(safe-area-inset-top); /* Push content below the notch */
+
+  /* Apply all safe area padding here */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+
+  /* The min-height ensures a base height for the content,
+     and the padding adds the safe area. */
+  min-height: 70px;
 }
 
 .dark-mode .navbar {
@@ -47,7 +54,8 @@ body.dark-mode {
 .logo-container {
   cursor: pointer;
   flex-shrink: 0;
-  margin-left: max(0px, env(safe-area-inset-left));
+  /* Remove specific safe area padding from here, it's handled by .navbar */
+  /* margin-left: max(0px, env(safe-area-inset-left)); */
 }
 
 .logo-image {
@@ -205,7 +213,8 @@ body.dark-mode {
   align-items: center;
   gap: 1rem;
   margin-left: 1rem;
-  margin-right: max(0px, env(safe-area-inset-right));
+  /* Remove specific safe area padding from here, it's handled by .navbar */
+  /* margin-right: max(0px, env(safe-area-inset-right)); */
 }
 
 .lang-switcher {
@@ -277,7 +286,8 @@ body.dark-mode {
 
 .mobile-menu {
   position: fixed;
-  top: calc(70px + env(safe-area-inset-top)); /* Account for navbar height and notch */
+  /* Position the menu below the combined height of the navbar and safe area */
+  top: calc(70px + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
   background-color: #ffffff;
@@ -287,8 +297,10 @@ body.dark-mode {
   transition: max-height 0.3s ease, opacity 0.3s ease;
   opacity: 0;
   z-index: 999;
-  padding-left: max(1rem, env(safe-area-inset-left));
-  padding-right: max(1rem, env(safe-area-inset-right));
+  /* Use env() for padding here as well for consistency */
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .dark-mode .mobile-menu {
@@ -343,7 +355,8 @@ body.dark-mode {
 
 @media (max-width: 992px) {
   .navbar {
-    padding: 0.5rem max(1rem, env(safe-area-inset-left));
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
   }
   
   .desktop-nav {
@@ -361,11 +374,11 @@ body.dark-mode {
   }
   
   .navbar {
-    height: calc(60px + env(safe-area-inset-top));
+    min-height: 60px;
   }
   
   .mobile-menu {
-    top: calc(60px + env(safe-area-inset-top));
+    top: calc(60px + env(safe-area-inset-top, 0px));
   }
   
   .lang-switcher {

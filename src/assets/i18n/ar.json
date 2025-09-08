@@ -34,6 +34,17 @@
     },
 
     "login": {
+       "or": "أو",
+    "signInWithGoogle": "تسجيل الدخول باستخدام جوجل",
+    "googleLoginFailed": "فشل تسجيل الدخول عبر جوجل",
+    "googleLoginSuccess": "تم تسجيل الدخول عبر جوجل بنجاح",
+     "captchaRequired": "التحقق من CAPTCHA مطلوب",
+    "captchaVerificationRequired": "يرجى إكمال التحقق من CAPTCHA للمتابعة",
+    "captchaEnabled": "تم تفعيل التحقق الأمني بعد عدة محاولات فاشلة",
+    "info": "معلومة",
+    "warning": "تحذير",
+    "incompleteFields": "يرجى ملء جميع الحقول المطلوبة قبل الإرسال.",
+     
        "errors": {
       "errorTitle": "خطأ",
       "generalError": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
@@ -305,7 +316,8 @@
     "statusUpdateFailed": "فشل تحديث حالة الموعد",
     "invalidCheckPrice": "الرجاء إدخال سعر فحص صالح (أكبر من الصفر)",
     "setCheckPriceError": "فشل تعيين سعر الفحص",
-    "checkPriceSet": "تم تعيين سعر الفحص بنجاح"
+    "checkPriceSet": "تم تعيين سعر الفحص بنجاح",
+    "no_actions": "لا توجد إجراءات متاحة"
 
   },
   "booking": {
@@ -706,6 +718,23 @@
   },
 
   "patient_profile": {
+     "no_diagnosis_provided": "لم يتم تقديم تشخيص",
+    "no_signs_provided": "لم يتم توثيق العلامات",
+    "no_prescription_provided": "لم يتم إعطاء وصفة طبية",
+    "upload_title": "رفع المستندات الطبية",
+    "browse_files": "تصفح الملفات",
+    "allowed_formats": "الصيغ المسموح بها: {{formats}}",
+    "max_file_size": "الحد الأقصى لحجم الملف: {{size}}",
+    "uploaded_files": "الملفات المرفوعة",
+    "uploading": "جارٍ الرفع...",
+    "invalid_file_type": "الملف '{{fileName}}' ({{fileType}}) غير مدعوم. يرجى رفع ملفات بصيغة PDF أو JPG أو JPEG أو PNG فقط.",
+    "file_too_large": "الملف '{{fileName}}' ({{fileSize}}MB) يتجاوز الحد الأقصى المسموح به وهو 5MB.",
+    "file_uploaded": "تم رفع الملف '{{fileName}}' بنجاح",
+    "file_removed": "تم حذف الملف '{{fileName}}'",
+    "file_removed_title": "تم حذف الملف",
+    "upload_success": "تم الرفع بنجاح",
+    "upload_error": "خطأ في الرفع",
+    "file_read_error": "حدث خطأ أثناء قراءة الملف '{{fileName}}'. يرجى المحاولة مرة أخرى.",
     "title": "ملف المريض",
     "appointment_time": "وقت الموعد",
     "id": "المعرف",
@@ -853,7 +882,32 @@
       "new_service": {
         "title": "خدمة جديدة",
         "description": "إضافة خدمة رعاية صحية جديدة"
-      }
+      },
+      "countries": {
+  "title": "الدول",
+  "description": "عرض وإدارة جميع الدول"
+},
+"new_country": {
+  "title": "إضافة دولة",
+  "description": "إنشاء دولة جديدة"
+},
+"governorates": {
+  "title": "المحافظات",
+  "description": "عرض وإدارة جميع المحافظات"
+},
+"new_governorate": {
+  "title": "إضافة محافظة",
+  "description": "إنشاء محافظة جديدة"
+},
+"districts": {
+  "title": "المناطق",
+  "description": "عرض وإدارة جميع المناطق"
+},
+"new_district": {
+  "title": "إضافة منطقة",
+  "description": "إنشاء منطقة جديدة"
+}
+
     },
     "create_user": "إنشاء مستخدم جديد",
     "select_user_type": "حدد نوع المستخدم الذي تريد إنشاءه",
@@ -1122,7 +1176,188 @@
     "no_patients_message": "لا يوجد مرضى مسجلين في النظام حالياً.",
     "last_visit": "آخر زيارة",
     "no_visits": "لا يوجد زيارات بعد"
+  },
+
+  "exitModal": {
+    "title": "خروج من التطبيق",
+    "message": "هل أنت متأكد أنك تريد الخروج؟",
+    "cancel": "إلغاء",
+    "confirm": "خروج"
+  },
+
+  "countries": {
+  "title": "إدارة الدول",
+  "subtitle": "إدارة جميع الدول في النظام",
+  "management": "إدارة الدول",
+  "add_country": "إضافة دولة",
+  "cancel": "إلغاء",
+  "add_new": "إضافة دولة جديدة",
+  "name_en": "الاسم باللغة الإنجليزية",
+  "name_ar": "الاسم باللغة العربية",
+  "save": "حفظ",
+  "edit_country": "تعديل الدولة",
+  "update": "تحديث",
+  "loading": "جارٍ تحميل الدول...",
+  "id": "المعرف",
+  "actions": "الإجراءات",
+  "empty_title": "لا توجد دول",
+  "empty_message": "ابدأ بإضافة أول دولة باستخدام الزر أعلاه.",
+  "delete_confirmation": {
+    "title": "حذف الدولة",
+    "message": "هل أنت متأكد أنك تريد حذف {{name}}؟ هذا الإجراء لا يمكن التراجع عنه."
+  },
+  "messages": {
+    "add_success": "تمت إضافة الدولة بنجاح",
+    "update_success": "تم تحديث الدولة بنجاح",
+    "delete_success": "تم حذف الدولة بنجاح"
+  },
+  "errors": {
+    "load_failed": "فشل تحميل الدول",
+    "load_error": "حدث خطأ أثناء تحميل الدول",
+    "add_failed": "فشل في إضافة الدولة",
+    "add_error": "حدث خطأ أثناء إضافة الدولة",
+    "update_failed": "فشل في تحديث الدولة",
+    "update_error": "حدث خطأ أثناء تحديث الدولة",
+    "delete_failed": "فشل في حذف الدولة",
+    "delete_error": "حدث خطأ أثناء حذف الدولة",
+    "name_required": "مطلوب إدخال الاسم باللغتين العربية والإنجليزية"
   }
+},
+
+"new_country": {
+  "back": "العودة إلى قائمة الدول",
+  "title": "إضافة دولة جديدة",
+  "subtitle": "إنشاء إدخال جديد لدولة في النظام",
+  "form_title": "معلومات الدولة",
+  "form_subtitle": "يرجى إدخال اسم الدولة باللغتين الإنجليزية والعربية",
+  "name_en": "الاسم باللغة الإنجليزية",
+  "name_en_placeholder": "أدخل اسم الدولة بالإنجليزية",
+  "name_en_hint": "الاسم الدولي للدولة",
+  "name_ar": "الاسم باللغة العربية",
+  "name_ar_placeholder": "أدخل اسم الدولة بالعربية",
+  "name_ar_hint": "اسم الدولة باللغة العربية",
+  "cancel": "إلغاء",
+  "create": "إنشاء الدولة",
+  "creating": "جارٍ الإنشاء...",
+  "info_title": "معلومات هامة",
+  "info_point1": "يجب أن تكون أسماء الدول فريدة داخل النظام",
+  "info_point2": "الاسم باللغتين العربية والإنجليزية مطلوب",
+  "info_point3": "لا يمكن حذف الدول إذا كانت مرتبطة بمحافظات",
+  "messages": {
+    "create_success": "تم إنشاء الدولة بنجاح"
+  },
+  "errors": {
+    "name_en_required": "الاسم بالإنجليزية مطلوب",
+    "name_ar_required": "الاسم بالعربية مطلوب",
+    "create_failed": "فشل في إنشاء الدولة",
+    "create_error": "حدث خطأ أثناء إنشاء الدولة"
+  }
+},
+
+"governorates": {
+  "title": "إدارة المحافظات",
+  "subtitle": "إدارة جميع المحافظات في النظام",
+  "management": "إدارة المحافظات",
+  "add_governorate": "إضافة محافظة",
+  "new_page": "صفحة جديدة",
+  "cancel": "إلغاء",
+  "add_new": "إضافة محافظة جديدة",
+  "name_en": "الاسم باللغة الإنجليزية",
+  "name_ar": "الاسم باللغة العربية",
+  "country": "الدولة",
+  "save": "حفظ",
+  "edit_governorate": "تعديل المحافظة",
+  "update": "تحديث",
+  "loading": "جارٍ تحميل المحافظات...",
+  "id": "المعرف",
+  "actions": "الإجراءات",
+  "empty_title": "لا توجد محافظات",
+  "empty_message": "ابدأ بإضافة أول محافظة باستخدام الزر أعلاه.",
+  "delete_confirmation": {
+    "title": "حذف المحافظة",
+    "message": "هل أنت متأكد أنك تريد حذف {{name}}؟ هذا الإجراء لا يمكن التراجع عنه."
+  },
+  "messages": {
+    "add_success": "تمت إضافة المحافظة بنجاح",
+    "update_success": "تم تحديث المحافظة بنجاح",
+    "delete_success": "تم حذف المحافظة بنجاح"
+  },
+  "errors": {
+    "load_failed": "فشل في تحميل المحافظات",
+    "load_error": "حدث خطأ أثناء تحميل المحافظات",
+    "countries_load_failed": "فشل في تحميل الدول",
+    "countries_load_error": "حدث خطأ أثناء تحميل الدول",
+    "add_failed": "فشل في إضافة المحافظة",
+    "add_error": "حدث خطأ أثناء إضافة المحافظة",
+    "update_failed": "فشل في تحديث المحافظة",
+    "update_error": "حدث خطأ أثناء تحديث المحافظة",
+    "delete_failed": "فشل في حذف المحافظة",
+    "delete_error": "حدث خطأ أثناء حذف المحافظة",
+    "all_fields_required": "جميع الحقول مطلوبة"
+  }
+},
+
+"new_governorate": {
+  "back": "العودة إلى قائمة المحافظات",
+  "title": "إضافة محافظة جديدة",
+  "subtitle": "إنشاء إدخال جديد لمحافظة في النظام",
+  "form_title": "معلومات المحافظة",
+  "form_subtitle": "يرجى إدخال اسم المحافظة باللغتين الإنجليزية والعربية واختيار الدولة",
+  "name_en": "الاسم باللغة الإنجليزية",
+  "name_en_placeholder": "أدخل اسم المحافظة بالإنجليزية",
+  "name_en_hint": "الاسم الدولي للمحافظة",
+  "name_ar": "الاسم باللغة العربية",
+  "name_ar_placeholder": "أدخل اسم المحافظة بالعربية",
+  "name_ar_hint": "اسم المحافظة باللغة العربية",
+  "country": "الدولة",
+  "country_hint": "اختر الدولة الخاصة بهذه المحافظة",
+  "cancel": "إلغاء",
+  "create": "إنشاء المحافظة",
+  "creating": "جارٍ الإنشاء...",
+  "loading_countries": "جارٍ تحميل الدول...",
+  "info_title": "معلومات هامة",
+  "info_point1": "يجب أن تكون أسماء المحافظات فريدة داخل نفس الدولة",
+  "info_point2": "الاسم باللغتين العربية والإنجليزية مطلوب",
+  "info_point3": "لا يمكن حذف المحافظات إذا كانت مرتبطة بمناطق",
+  "messages": {
+    "create_success": "تم إنشاء المحافظة بنجاح"
+  },
+  "errors": {
+    "name_en_required": "الاسم بالإنجليزية مطلوب",
+    "name_ar_required": "الاسم بالعربية مطلوب",
+    "country_required": "اختيار الدولة مطلوب",
+    "create_failed": "فشل في إنشاء المحافظة",
+    "create_error": "حدث خطأ أثناء إنشاء المحافظة",
+    "countries_load_failed": "فشل في تحميل الدول",
+    "countries_load_error": "حدث خطأ أثناء تحميل الدول"
+  }
+},
+"districts": {
+  "title": "إدارة المناطق",
+  "subtitle": "إدارة جميع المناطق في النظام",
+  "management": "إدارة المناطق",
+  "add_district": "إضافة منطقة",
+  "loading": "جارٍ تحميل المناطق...",
+  "loading_governorates": "جارٍ تحميل المحافظات...",
+  "id": "المعرف",
+  "name_en": "الاسم باللغة الإنجليزية",
+  "name_ar": "الاسم باللغة العربية",
+  "governorate": "المحافظة",
+  "empty_title": "لا توجد مناطق",
+  "empty_message": "ابدأ بإضافة أول منطقة باستخدام الزر أعلاه.",
+  "errors": {
+    "load_failed": "فشل في تحميل المناطق",
+    "load_error": "حدث خطأ أثناء تحميل المناطق",
+    "governorates_load_failed": "فشل في تحميل المحافظات",
+    "governorates_load_error": "حدث خطأ أثناء تحميل المحافظات"
+  }
+}
+
+
+
+
+
+
 
     
   }

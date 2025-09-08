@@ -103,34 +103,38 @@ body {
 
 
  
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
+body:not(.landing-page) {
+  padding-top: env(safe-area-inset-top, 0px);
+}
 
 
 .background-container {
- position: fixed; /* Keeps the background fixed in place */
- top: 0;
- left: 0;
- width: 100vw; /* Full viewport width */
- height: 100vh; /* Full viewport height */
- overflow: hidden;
- z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
 }
 
 .background-img {
- width: 100%;
- height: 100%;
- object-fit: cover;
- filter: brightness(50%);
- opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(50%);
+  opacity: 0.5;
 }
 
-
-/* Global Dark Mode Styles */
 body.dark-mode {
- background-color: #121212;
- color: white;
+  background-color: #121212;
+  color: white;
 }
 
 body.dark-mode .card {

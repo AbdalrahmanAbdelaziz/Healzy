@@ -37,7 +37,20 @@
     },
 
     "login": {
+       "or": "Or",
+    "signInWithGoogle": "Sign in with Google",
+    "googleLoginFailed": "Google authentication failed",
+    "googleLoginSuccess": "Google authentication successful",
+  "captchaRequired": "CAPTCHA verification is required",
+    "captchaVerificationRequired": "Please complete the CAPTCHA verification to continue",
+    "captchaEnabled": "Security verification has been enabled after several failed attempts",
+    "info": "Info",
+    "warning": "Warning",
+    "incompleteFields": "Please fill in all required fields before submitting.",
+
+
       "errors": {
+        
       "errorTitle": "Error",
       "generalError": "Login failed. Please try again.",
       "connectionFailed": "Failed to connect to server. Check your internet connection or try again later.",
@@ -314,7 +327,8 @@
     "statusUpdateFailed": "Failed to update appointment status",
     "invalidCheckPrice": "Please enter a valid check price (greater than 0)",
     "setCheckPriceError": "Failed to set check price",
-    "checkPriceSet": "Check price set successfully"
+    "checkPriceSet": "Check price set successfully",
+    "no_actions": "No actions available"
   
   },
 
@@ -731,6 +745,23 @@
   },
 
   "patient_profile": {
+    "no_diagnosis_provided": "No diagnosis provided",
+    "no_signs_provided": "No signs documented",
+    "no_prescription_provided": "No prescription given",
+    "upload_title": "Upload Medical Documents",
+    "browse_files": "Browse Files",
+    "allowed_formats": "Allowed formats: {{formats}}",
+    "max_file_size": "Maximum file size: {{size}}",
+    "uploaded_files": "Uploaded Files",
+    "uploading": "Uploading...",
+    "invalid_file_type": "File '{{fileName}}' ({{fileType}}) is not supported. Please upload PDF, JPG, JPEG, or PNG files only.",
+    "file_too_large": "File '{{fileName}}' ({{fileSize}}MB) exceeds the maximum size limit of 5MB.",
+    "file_uploaded": "File '{{fileName}}' uploaded successfully",
+    "file_removed": "File '{{fileName}}' removed",
+    "file_removed_title": "File Removed",
+    "upload_success": "Upload Success",
+    "upload_error": "Upload Error",
+    "file_read_error": "Error reading file '{{fileName}}'. Please try again.",
     "title": "Patient Profile",
     "appointment_time": "Appointment Time",
     "id": "ID",
@@ -882,6 +913,30 @@
       "new_service": {
         "title": "New Service",
         "description": "Add new healthcare service"
+      },
+       "countries": {
+        "title": "Countries",
+        "description": "View and manage all countries"
+      },
+      "new_country": {
+        "title": "Add Country",
+        "description": "Create a new country"
+      },
+      "governorates": {
+        "title": "Governorates",
+        "description": "View and manage all governorates"
+      },
+      "new_governorate": {
+        "title": "Add Governorate",
+        "description": "Create a new governorate"
+      },
+      "districts": {
+        "title": "Districts",
+        "description": "View and manage all districts"
+      },
+      "new_district": {
+        "title": "Add District",
+        "description": "Create a new district"
       }
     },
 
@@ -1154,6 +1209,218 @@
     "no_patients_message": "There are currently no patients registered in the system.",
     "last_visit": "Last Visit",
     "no_visits": "No visits yet"
+  },
+  
+   "exitModal": {
+    "title": "Exit App",
+    "message": "Are you sure you want to exit?",
+    "cancel": "Cancel",
+    "confirm": "Exit"
+  },
+
+   "countries": {
+    "title": "Countries Management",
+    "subtitle": "Manage all countries in the system",
+    "management": "Countries Management",
+    "add_country": "Add Country",
+    "cancel": "Cancel",
+    "add_new": "Add New Country",
+    "name_en": "English Name",
+    "name_ar": "Arabic Name",
+    "save": "Save",
+    "edit_country": "Edit Country",
+    "update": "Update",
+    "loading": "Loading countries...",
+    "id": "ID",
+    "actions": "Actions",
+    "empty_title": "No Countries Found",
+    "empty_message": "Start by adding your first country using the button above.",
+    "delete_confirmation": {
+      "title": "Delete Country",
+      "message": "Are you sure you want to delete {{name}}? This action cannot be undone."
+    },
+    "messages": {
+      "add_success": "Country added successfully",
+      "update_success": "Country updated successfully",
+      "delete_success": "Country deleted successfully"
+    },
+    "errors": {
+      "load_failed": "Failed to load countries",
+      "load_error": "An error occurred while loading countries",
+      "add_failed": "Failed to add country",
+      "add_error": "An error occurred while adding the country",
+      "update_failed": "Failed to update country",
+      "update_error": "An error occurred while updating the country",
+      "delete_failed": "Failed to delete country",
+      "delete_error": "An error occurred while deleting the country",
+      "name_required": "Both English and Arabic names are required"
+    }
+  },
+
+   "new_country": {
+    "back": "Back to Countries",
+    "title": "Add New Country",
+    "subtitle": "Create a new country entry in the system",
+    "form_title": "Country Information",
+    "form_subtitle": "Please provide both English and Arabic names for the country",
+    "name_en": "English Name",
+    "name_en_placeholder": "Enter country name in English",
+    "name_en_hint": "The international name of the country",
+    "name_ar": "Arabic Name",
+    "name_ar_placeholder": "Enter country name in Arabic",
+    "name_ar_hint": "The international name of the country",
+    "cancel": "Cancel",
+    "create": "Create Country",
+    "creating": "Creating...",
+    "info_title": "Important Information",
+    "info_point1": "Country names must be unique in the system",
+    "info_point2": "Both English and Arabic names are required",
+    "info_point3": "Countries cannot be deleted if they have associated governorates",
+    "messages": {
+      "create_success": "Country created successfully"
+    },
+    "errors": {
+      "name_en_required": "English name is required",
+      "name_ar_required": "Arabic name is required",
+      "create_failed": "Failed to create country",
+      "create_error": "An error occurred while creating the country"
+    }
+  },
+
+  "governorates": {
+    "title": "Governorates Management",
+    "subtitle": "Manage all governorates in the system",
+    "management": "Governorates Management",
+    "add_governorate": "Add Governorate",
+    "new_page": "New Page",
+    "cancel": "Cancel",
+    "add_new": "Add New Governorate",
+    "name_en": "English Name",
+    "name_ar": "Arabic Name",
+    "country": "Country",
+    "save": "Save",
+    "edit_governorate": "Edit Governorate",
+    "update": "Update",
+    "loading": "Loading governorates...",
+    "id": "ID",
+    "actions": "Actions",
+    "empty_title": "No Governorates Found",
+    "empty_message": "Start by adding your first governorate using the button above.",
+    "delete_confirmation": {
+      "title": "Delete Governorate",
+      "message": "Are you sure you want to delete {{name}}? This action cannot be undone."
+    },
+    "messages": {
+      "add_success": "Governorate added successfully",
+      "update_success": "Governorate updated successfully",
+      "delete_success": "Governorate deleted successfully"
+    },
+    "errors": {
+      "load_failed": "Failed to load governorates",
+      "load_error": "An error occurred while loading governorates",
+      "countries_load_failed": "Failed to load countries",
+      "countries_load_error": "An error occurred while loading countries",
+      "add_failed": "Failed to add governorate",
+      "add_error": "An error occurred while adding the governorate",
+      "update_failed": "Failed to update governorate",
+      "update_error": "An error occurred while updating the governorate",
+      "delete_failed": "Failed to delete governorate",
+      "delete_error": "An error occurred while deleting the governorate",
+      "all_fields_required": "All fields are required"
+    }
+  },
+
+   "new_governorate": {
+    "back": "Back to Governorates",
+    "title": "Add New Governorate",
+    "subtitle": "Create a new governorate entry in the system",
+    "form_title": "Governorate Information",
+    "form_subtitle": "Please provide both English and Arabic names and select a country",
+    "name_en": "English Name",
+    "name_en_placeholder": "Enter governorate name in English",
+    "name_en_hint": "The international name of the governorate",
+    "name_ar": "Arabic Name",
+    "name_ar_placeholder": "Enter governorate name in Arabic",
+    "name_ar_hint": "The international name of the governorate",
+    "country": "Country",
+    "country_hint": "Select the country for this governorate",
+    "cancel": "Cancel",
+    "create": "Create Governorate",
+    "creating": "Creating...",
+    "loading_countries": "Loading countries...",
+    "info_title": "Important Information",
+    "info_point1": "Governorate names must be unique within the same country",
+    "info_point2": "Both English and Arabic names are required",
+    "info_point3": "Governorates cannot be deleted if they have associated districts",
+    "messages": {
+      "create_success": "Governorate created successfully"
+    },
+    "errors": {
+      "name_en_required": "English name is required",
+      "name_ar_required": "Arabic name is required",
+      "country_required": "Country selection is required",
+      "create_failed": "Failed to create governorate",
+      "create_error": "An error occurred while creating the governorate",
+      "countries_load_failed": "Failed to load countries",
+      "countries_load_error": "An error occurred while loading countries"
+    }
+  },
+
+   "districts": {
+    "title": "Districts Management",
+    "subtitle": "Manage all districts in the system",
+    "management": "Districts Management",
+    "add_district": "Add District",
+    "loading": "Loading districts...",
+    "loading_governorates": "Loading governorates...",
+    "id": "ID",
+    "name_en": "English Name",
+    "name_ar": "Arabic Name",
+    "governorate": "Governorate",
+    "empty_title": "No Districts Found",
+    "empty_message": "Start by adding your first district using the button above.",
+    "errors": {
+      "load_failed": "Failed to load districts",
+      "load_error": "An error occurred while loading districts",
+      "governorates_load_failed": "Failed to load governorates",
+      "governorates_load_error": "An error occurred while loading governorates"
+    }
+  },
+
+   "new_district": {
+    "back": "Back to Districts",
+    "title": "Add New District",
+    "subtitle": "Create a new district entry in the system",
+    "form_title": "District Information",
+    "form_subtitle": "Please provide both English and Arabic names and select a governorate",
+    "name_en": "English Name",
+    "name_en_placeholder": "Enter district name in English",
+    "name_en_hint": "The international name of the district",
+    "name_ar": "Arabic Name",
+    "name_ar_placeholder": "Enter district name in Arabic",
+    "name_ar_hint": "The international name of the district",
+    "governorate": "Governorate",
+    "governorate_hint": "Select the governorate for this district",
+    "cancel": "Cancel",
+    "create": "Create District",
+    "creating": "Creating...",
+    "loading_governorates": "Loading governorates...",
+    "info_title": "Important Information",
+    "info_point1": "District names must be unique within the same governorate",
+    "info_point2": "Both English and Arabic names are required",
+    "info_point3": "Districts are used for precise location mapping",
+    "messages": {
+      "create_success": "District created successfully"
+    },
+    "errors": {
+      "name_en_required": "English name is required",
+      "name_ar_required": "Arabic name is required",
+      "governorate_required": "Governorate selection is required",
+      "create_failed": "Failed to create district",
+      "create_error": "An error occurred while creating the district",
+      "governorates_load_failed": "Failed to load governorates",
+      "governorates_load_error": "An error occurred while loading governorates"
+    }
   }
 
 

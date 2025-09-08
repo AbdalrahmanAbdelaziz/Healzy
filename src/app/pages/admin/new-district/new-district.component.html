@@ -1,0 +1,128 @@
+<!-- new-district.component.html -->
+<app-admin-header></app-admin-header>
+
+<div class="new-district-container">
+  <div class="header-section">
+    <!-- <button mat-button (click)="onCancel()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'new_district.back' | transloco }}
+    </button> -->
+    <h1>{{ 'new_district.title' | transloco }}</h1>
+    <p>{{ 'new_district.subtitle' | transloco }}</p>
+  </div>
+
+  <mat-card class="new-district-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>add_road</mat-icon>
+        {{ 'new_district.form_title' | transloco }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ 'new_district.form_subtitle' | transloco }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" class="district-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_district.name_en' | transloco }} *</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="district.name_En" 
+              name="name_En"
+              required
+              [class.error]="hasError('name_En')"
+              placeholder="{{ 'new_district.name_en_placeholder' | transloco }}">
+            <mat-icon matSuffix>language</mat-icon>
+            <!-- <mat-hint>{{ 'new_district.name_en_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('name_En')">
+              {{ getError('name_En') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_district.name_ar' | transloco }} *</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="district.name_Ar" 
+              name="name_Ar"
+              required
+              [class.error]="hasError('name_Ar')"
+              placeholder="{{ 'new_district.name_ar_placeholder' | transloco }}"
+              dir="rtl">
+            <mat-icon matSuffix>translate</mat-icon>
+            <!-- <mat-hint>{{ 'new_district.name_ar_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('name_Ar')">
+              {{ getError('name_Ar') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ 'new_district.governorate' | transloco }} *</mat-label>
+            <mat-select 
+              [(ngModel)]="district.governorateID" 
+              name="governorateID"
+              required
+              [class.error]="hasError('governorateID')">
+              <mat-option *ngFor="let governorate of governorates" [value]="governorate.id">
+                {{ governorate.name_En }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>map</mat-icon>
+            <!-- <mat-hint>{{ 'new_district.governorate_hint' | transloco }}</mat-hint> -->
+            <mat-error *ngIf="hasError('governorateID')">
+              {{ getError('governorateID') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <!-- <button 
+            mat-button 
+            type="button" 
+            (click)="onCancel()" 
+            class="cancel-button"
+            [disabled]="loading">
+            <mat-icon>cancel</mat-icon>
+            {{ 'new_district.cancel' | transloco }}
+          </button> -->
+          
+          <button 
+            mat-flat-button 
+            type="submit" 
+            color="primary" 
+            class="submit-button"
+            [disabled]="loading || governoratesLoading">
+            <mat-icon *ngIf="!loading">save</mat-icon>
+            <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+            {{ loading ? ('new_district.creating' | transloco) : ('new_district.create' | transloco) }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Info Section -->
+  <mat-card class="info-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>info</mat-icon>
+        {{ 'new_district.info_title' | transloco }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul class="info-list">
+        <li>{{ 'new_district.info_point1' | transloco }}</li>
+        <li>{{ 'new_district.info_point2' | transloco }}</li>
+        <li>{{ 'new_district.info_point3' | transloco }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Governorates Loading -->
+  <div *ngIf="governoratesLoading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>{{ 'new_district.loading_governorates' | transloco }}</p>
+  </div>
+</div>
