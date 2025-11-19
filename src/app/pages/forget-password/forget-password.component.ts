@@ -7,12 +7,18 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'app-forget-password',
-  imports: [RouterModule, CommonModule, HttpClientModule, FormsModule, ReactiveFormsModule, MatSnackBarModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
+  ],
   templateUrl: './forget-password.component.html',
-  styleUrl: './forget-password.component.css'
+  styleUrls: ['./forget-password.component.css']
 })
 export class ForgetPasswordComponent implements OnInit {
   forgetPasswordForm!: FormGroup;
@@ -43,8 +49,11 @@ export class ForgetPasswordComponent implements OnInit {
     }
 
     const email = this.fc['email'].value;
+    
+    // Set your callback URL here (where user will reset password)
+    const callbackUrl = `${window.location.origin}/reset-password`;
 
-    this.userService.forgetPassword(email).subscribe({
+    this.userService.forgetPassword(email, callbackUrl).subscribe({
       next: () => {
         this.toastr.success('Reset link sent to your email.');
       },

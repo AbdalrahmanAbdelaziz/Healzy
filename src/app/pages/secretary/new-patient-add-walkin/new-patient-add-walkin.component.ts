@@ -9,13 +9,19 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
 
-
 @Component({
   selector: 'app-new-patient-add-walkin',
-    imports: [CommonModule, FormsModule, SHeaderComponent, SSidenavbarComponent, TranslocoModule, FooterComponent],
-
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    SHeaderComponent,
+    SSidenavbarComponent,
+    TranslocoModule,
+    FooterComponent
+  ],
   templateUrl: './new-patient-add-walkin.component.html',
-  styleUrl: './new-patient-add-walkin.component.css'
+  styleUrls: ['./new-patient-add-walkin.component.css']
 })
 export class NewPatientAddWalkinComponent implements OnInit {
   firstName: string = '';
@@ -48,38 +54,45 @@ export class NewPatientAddWalkinComponent implements OnInit {
     this.usernameTouched = true;
   }
 
+  // ✅ Helper for username validation
+  isValidUsername(username: string): boolean {
+    const usernameRegex = /^[A-Za-z0-9]{4,20}$/;
+    return usernameRegex.test(username);
+  }
+
   submitAppointment(): void {
+    // Required fields
     if (!this.firstName || !this.lastName || !this.username || !this.phoneNumber) {
       this.toastr.warning('Please fill all required fields.');
       return;
     }
-  
-    // Validate username length
-    if (this.username.length < 4) {
-      this.toastr.warning('Username must be at least 4 characters long.');
+
+    // Username validation
+    if (!this.isValidUsername(this.username)) {
+      this.toastr.warning(
+        'Username must be at least 4 characters, English letters or numbers only, with no spaces.'
+      );
       return;
     }
-  
-    // Validate phone number format
+
+    // Phone number validation (digits only)
     if (!/^[0-9]+$/.test(this.phoneNumber)) {
       this.toastr.warning('Please enter a valid phone number (digits only).');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('firstName', this.firstName);
     formData.append('lastName', this.lastName);
     formData.append('username', this.username);
     formData.append('phoneNumber', this.phoneNumber);
-  
+
     this.authService.addNewPatient(formData).subscribe(
       (response: any) => {
         if (response && response.data) {
-          const patientId = response.data;
+          const patientId = response.data.id;
           this.resetForm();
-          this.router.navigate([
-            `/sec-doctor-appointments-walk/${this.docId}/${patientId}`
-          ]);
+          this.router.navigate([`/sec-doctor-appointments-walk/${this.docId}/${patientId}`]);
         } else {
           this.toastr.error('Failed to retrieve patient ID from the response.');
         }
@@ -95,7 +108,8 @@ export class NewPatientAddWalkinComponent implements OnInit {
     );
   }
 
-  private resetForm(): void {
+  // ✅ Public reset method
+  resetForm(): void {
     this.firstName = '';
     this.lastName = '';
     this.username = '';

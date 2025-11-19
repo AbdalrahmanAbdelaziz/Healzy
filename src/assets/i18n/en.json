@@ -31,12 +31,15 @@
       "manageAppointmentsText": "View your upcoming visits, receive reminders, and access your consultation history in one place.",
       "viewAppointments": "View Your Appointments",
       "trackAppointments": "Track Appointments",
-      "already_assigned": "This service is already assigned to you."
+      "already_assigned": "This service is already assigned to you.",
+      "assign_failed": "Failed to assign service. It might already be assigned."
+      
 
       
     },
 
     "login": {
+      "passwordLabel": "Password",
        "or": "Or",
     "signInWithGoogle": "Sign in with Google",
     "googleLoginFailed": "Google authentication failed",
@@ -77,46 +80,52 @@
     "coverImageAlt": "Healthcare Background",
     "logoAlt": "HOGOZATY Logo",
     "form": {
-      "firstName": "First Name",
+       "usernameHint": "Must be at least 4 characters (English only)",
+         "firstName": "First Name",
       "firstNamePlaceholder": "Enter your first name",
       "lastName": "Last Name",
       "lastNamePlaceholder": "Enter your last name",
       "username": "Username",
-      "usernamePlaceholder": "Enter your username",
+      "usernamePlaceholder": "Choose a username",
       "password": "Password",
-      "passwordPlaceholder": "Enter your password",
+      "passwordPlaceholder": "Enter a strong password",
       "phoneNumber": "Phone Number",
       "phoneNumberPlaceholder": "Enter your phone number",
       "email": "Email",
-      "emailPlaceholder": "Enter your email",
+      "emailPlaceholder": "Enter your email address",
       "dateOfBirth": "Date of Birth",
       "gender": "Gender",
-      "selectGender": "Select Gender",
+      "selectGender": "Select gender",
       "country": "Country",
-      "selectCountry": "Select Country",
+      "selectCountry": "Select country",
       "governorate": "Governorate",
-      "selectGovernorate": "Select Governorate",
+      "selectGovernorate": "Select governorate",
       "district": "District",
-      "selectDistrict": "Select District",
+      "selectDistrict": "Select district",
       "profilePicture": "Profile Picture",
       "emergencyContactName": "Emergency Contact Name",
       "emergencyContactPlaceholder": "Enter emergency contact name",
       "emergencyContactPhone": "Emergency Contact Phone",
       "emergencyContactPhonePlaceholder": "Enter emergency contact phone",
       "bloodType": "Blood Type",
-      "bloodTypePlaceholder": "Enter your blood type",
-       "usernameHint": "Must be at least 4 characters (English only)"
+      "bloodTypePlaceholder": "e.g., A+, O-"
     },
     "formErrors": {
-      "firstNameRequired": "First Name is required.",
-      "lastNameRequired": "Last Name is required.",
+"dateOfBirthFuture": "Date of birth cannot be in the future.",
+
+       "incompleteFields": "Please complete the required fields.",
+      "warning": "Warning",
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required.",
       "usernameRequired": "Username is required.",
-      "usernameMinLength": "Minimum length is {{length}} characters.",
+      "usernameMinLength": "Username must be at least {{length}} characters.",
       "passwordRequired": "Password is required.",
-      "passwordMinLength": "Minimum length is {{length}} characters.",
-      "phoneNumberRequired": "Phone Number is required.",
-      "incompleteFields": "Please complete all required fields.",
-      "warning": "Incomplete Data"
+      "passwordMinLength": "Password must be at least 8 characters.",
+      "passwordUppercase": "Password must contain at least one uppercase letter (A–Z).",
+      "passwordDigit": "Password must contain at least one digit (0–9).",
+      "passwordNonAlpha": "Password must contain at least one special character (e.g. !@#$).",
+      "phoneNumberRequired": "Phone number is required.",
+      "usernamePattern": "Username must be at least 4 characters, English letters or numbers only, with no spaces."
     },
     "buttons": {
       "register": "Register"
@@ -240,7 +249,14 @@
     "service_creation_error": "An error occurred while creating service",
     "load_doctors_error": "An error occurred while loading doctors",
     "loginFailed": "Login failed. Please check your credentials.",
-    "error": "Error"
+    "error": "Error",
+    "error_title": "Error",
+    "file_not_allowed": "File type not allowed",
+    "incomplete_fields": "Please complete all required fields",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "passwordsMismatch": "Passwords do not match",
+     "required": "This field is required",
+     "updateFailed": "Update failed, please try again."
  
     
    
@@ -413,7 +429,29 @@
     "picture_alt": "Profile Picture",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "phone_number": "Phone Number"
+    "phone_number": "Phone Number",
+    "dateOfBirth": "Date of Birth",
+    "gender":"Gender",
+    "saveChanges": "Save",
+    "profilePicture":"Profile Picture",
+    "country":"Country",
+    "governorate":"Governorate",
+    "district":"District",
+    "selectGender":"Select gender",
+    "selectCountry":"Select Country",
+    "selectGovernorate":"Select Governorate",
+    "selectDistrict":"Select District",
+    "deletePicture":"Remove Picture",
+    "pictureRemoved": "Profile picture removed successfully",
+    "saveCropped": "Save cropped picture",
+    "cancelCrop": "Cancel",
+    "personalInfo": "Personal Information",
+    "address": "Address",
+     "changePassword": "Change Password",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
+  "updatePassword": "Update Password"
 
   },
   "validation": {
@@ -430,7 +468,7 @@
     "username_required": "Username is required (min 4 characters)",
     "valid_email": "Valid email is required",
     "phone_required": "Phone number is required",
-    "password_required": "Password is required (min 6 characters)",
+    "password_required": "Password is required (min 8 characters, at least one non-alphanumeric character, at least one digit, at least one uppercase letter)",
     "dob_required": "Date of birth is required",
     "gender_required": "Gender is required",
     "clinic_required": "Clinic is required",
@@ -447,7 +485,24 @@
     "duration_positive": "Duration must be greater than 0",
     "english_name_required": "English name is required",
     "arabic_name_required": "Arabic name is required",
-    "max_length_50": "Maximum 50 characters allowed"
+    "only_arabic_letters": "Only Arabic letters allowed",
+    "only_english_letters": "Only English letters allowed",
+    "max_length_50": "Maximum 50 characters allowed",
+
+    "username_min_length": "Username must be at least 4 characters",
+    "username_max_length": "Username must not exceed 20 characters",
+    "username_invalid": "Username can only contain letters, numbers, dot, underscore and dash",
+
+    "email_required": "Email is required",
+
+    "valid_phone": "Phone number must be 10–15 digits",
+
+    "password_min_length": "Password must be at least 6 characters",
+    "password_max_length": "Password must not exceed 20 characters",
+    "password_complexity": "Password must contain at least one letter and one number",
+
+   
+    "price_required": "Check price is required"
   },
 
   "auth": {
@@ -458,7 +513,14 @@
     "resetSuccess": "Password reset successfully",
     "resetFailed": "Failed to reset password",
     "patientRegistrationSuccess": "Patient registered successfully!",
-    "patientRegistrationError": "Failed to register patient, Please try again."
+    "patientRegistrationError": "Failed to register patient, Please try again.",
+     "changePasswordSuccess": "Password changed successfully",
+  "changePasswordFailed": "Failed to change password",
+  "changePassword": "Change Password",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
+  "updatePassword": "Update Password"
   },
 
 "dashboard": {
@@ -492,7 +554,11 @@
   "notRegistered": "Patient not registered.",
   "addPatientButton": "Add New Patient",
   "registeredMessage": "Patient is registered! Patient ID: {{patientId}}",
-  "goToAppointments": "Go to Doctor Appointments"
+  "goToAppointments": "Go to Doctor Appointments",
+    "validation": {
+      "required": "Phone number is required.",
+      "phoneInvalid": "Phone number must be 11 digits."
+    }
 },
 
 "confirmReschedule": {
@@ -592,7 +658,8 @@
     "arrivalTime": "Arrival Time",
     "bookingWay": "Booking",
     "notes": "Notes",
-    "status": "Status"
+    "status": "Status",
+    "noNotes": "No notes available"
   },
 
   "confirmationModal": {
@@ -642,7 +709,7 @@
     "totalPrice": "Total Price",
     "amountPaid": "Amount Paid",
     "remainingBalance": "Remaining Balance",
-    "thankYou": "Thank you for choosing our clinic",
+    "thankYou": "HEALZY. All rights reserved.",
     "noServices": "No services were recorded for this appointment",
     "paymentDetails": "Payment Details",
     "method": "Method",
@@ -689,6 +756,12 @@
   },
 
   "toastr": {
+    "receipt_download_success": "Receipt downloaded successfully.",
+    "receipt_download_error": "Failed to generate receipt PDF.",
+    "no_receipt_info": "Receipt information is missing for this visit.",
+    "upload_success": "File uploaded successfully.",
+"upload_failed": "File upload failed because of the extension.",
+"no_file_selected": "Please select a file to upload.",
     "no_doctor_id": "No user ID found for the doctor.",
     "fetch_appointments_failed": "Failed to fetch appointments",
     "fetch_days_failed": "Failed to fetch available days",
@@ -745,6 +818,35 @@
   },
 
   "patient_profile": {
+    "edit": "Edit Attachments",
+    "receipt_id": "Receipt ID",
+    "issue_date": "Issue Date",
+    "patient_id": "Patient ID",
+    "license": "License No",
+    "clinic": "Clinic",
+    "unit_price": "Unit Price",
+    "no_services": "No services recorded",
+    "payment_breakdown": "Payment Breakdown",
+    "cash": "Cash",
+    "visa": "Visa",
+    "wallet": "Wallet",
+    "instapay": "Instapay",
+    "receipt_footer": "Thank you for choosing Healzy Medical Center. This receipt is computer generated and does not require a signature.",
+    "generated_on": "Generated on",
+    "download_receipt": "Download Receipt",
+    "receipt_title": "Payment Receipt",
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "total_paid": "Total Paid",
+    "open_checkout": "Open Checkout",
+    "total_price": "Total Price",
+    "remaining_to_pay": "Remaining to Pay",
+    "edit_attachments": "Edit Attachments",
+    "done": "Done",
+    "upload": "Upload",
+    "file_uploaded_success": "File uploaded successfully",
+    "file_upload_failed": "Failed to upload file",
+    "select_file_warning": "Please select a file first",
     "no_diagnosis_provided": "No diagnosis provided",
     "no_signs_provided": "No signs documented",
     "no_prescription_provided": "No prescription given",
@@ -951,6 +1053,7 @@
   },
 
   "common": {
+     "save": "Save",
     "cancel": "Cancel",
      "reset": "Reset",
     "creating": "Creating...",
@@ -962,7 +1065,7 @@
     "of": "of"    ,
     "exporting": "Exporting...",
     "export_pdf": "Export PDF"
-    },
+      },
 
   "doctor_form": {
     "register_title": "Register New Doctor",
@@ -1060,9 +1163,28 @@
     "services_count": "services",
     "all_specializations": "All Specializations",
     "no_services_found": "No services found for the selected filter",
+    "add_new": "Add New Service",
+    "fields": {
+      "name": "Service Name",
+      "description": "Description",
+      "duration": "Average Duration (minutes)",
+      "specialization": "Specialization"
+    },
+     "messages": {
+      "create_success": "Service created successfully"
+    },
     "errors": {
       "load_failed": "Failed to load data",
-      "generic": "An error occurred while loading data. Please try again later."
+      "generic": "An error occurred while loading data. Please try again later.",
+       "name_required": "Service name is required",
+      "name_min": "Service name must be at least 3 characters",
+      "description_required": "Service description is required",
+      "description_min": "Service description must be at least 10 characters",
+      "duration_required": "Duration must be greater than 0",
+      "specialization_required": "Please select a specialization",
+       "messages": {
+      "create_success": "Service created successfully!"
+    }
     },
     "table": {
       "id": "ID",
@@ -1097,6 +1219,7 @@
     "create_success": "Specialization created successfully!",
     "create_error": "Failed to create specialization"
   },
+  
 
   "specializations": {
     "title": "Medical Specializations",
@@ -1285,6 +1408,7 @@
       "create_failed": "Failed to create country",
       "create_error": "An error occurred while creating the country"
     }
+    
   },
 
   "governorates": {
@@ -1421,8 +1545,62 @@
       "governorates_load_failed": "Failed to load governorates",
       "governorates_load_error": "An error occurred while loading governorates"
     }
-  }
+  },
 
+    "user_type_modal": {
+    "title": "Select User Type",
+    "subtitle": "Please choose the type of user you want to add:",
+    "doctor": {
+      "title": "Doctor",
+      "description": "Create a new doctor account"
+    },
+    "secretary": {
+      "title": "Secretary",
+      "description": "Create a new secretary account"
+    }
+  },
+
+    "revenue": {
+    "title": "Daily Revenue Report",
+    "reportDate": "Report Date",
+    "generated": "Generated",
+    "secretaryForDoctor": "Secretary for Doctor",
+    "doctor": "Doctor",
+    "patientName": "Patient Name",
+    "total": "Total",
+    "paid": "Paid",
+    "cash": "Cash",
+    "wallet": "Wallet",
+    "insta": "Instapay",
+    "visa": "Visa",
+    "remaining": "Remaining",
+    "summary": "Summary",
+    "totalCollected": "Total Collected",
+    "totalRemaining": "Total Remaining",
+    "totalRevenue": "Total Revenue",
+    "noDataToExport": "No data to export for the selected date",
+    "shareText": "Revenue report for {date}",
+    "shareDialogTitle": "Share Revenue Report",
+    "pdfSavedAndShared": "PDF saved and ready to share!",
+    "pdfSavedOnly": "PDF downloaded successfully!",
+  
+    "patient_name": "Patient Name",
+     "select_date": "Select Date",
+
+    "actions": "Actions",
+
+    "no_data": "No revenue data found for the selected date.",
+    "pay_remaining": "Pay Remaining",
+    "export_pdf": "Export PDF",
+    "exporting": "Exporting...",
+    "export_tooltip": "Export this report as PDF"
+  },
+  "errors": {
+    "pdfGenerationError": "Failed to generate PDF"
+  },
+  "general": {
+    "currency": "EGP"
+  }
 
   
 

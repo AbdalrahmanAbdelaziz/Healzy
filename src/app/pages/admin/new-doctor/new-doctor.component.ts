@@ -44,23 +44,54 @@ export class NewDoctorComponent implements OnInit {
     this.loadLookups();
   }
 
-  private initForm(): void {
-    this.doctorForm = this.fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      dateOfBirth: ['', [Validators.required]],
-      genderId: ['', [Validators.required]],
-      clinicId: ['', [Validators.required]],
-      specializationId: ['', [Validators.required]],
-      brief: ['', [Validators.required]],
-      checkPrice: ['', [Validators.required, Validators.min(0)]],
-      profilePicture: [null]
-    });
-  }
+private initForm(): void {
+  this.doctorForm = this.fb.group({
+    firstName: ['', [
+      Validators.required,
+      Validators.maxLength(50),
+      Validators.pattern(/^[A-Za-z\s]+$/) // English only letters
+    ]],
+    lastName: ['', [
+      Validators.required,
+      Validators.maxLength(50),
+      Validators.pattern(/^[A-Za-z\s]+$/)
+    ]],
+    username: ['', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(20),
+      Validators.pattern(/^[a-zA-Z0-9._-]+$/) // letters, numbers, dot, underscore, dash
+    ]],
+    email: ['', [
+      Validators.required,
+      Validators.email
+    ]],
+    phoneNumber: ['', [
+      Validators.required,
+      Validators.pattern(/^[0-9]{10,15}$/) // 10-15 digits only
+    ]],
+    password: ['', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20),
+      Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]+$/) // must include letters & numbers
+    ]],
+    dateOfBirth: ['', [Validators.required]],
+    genderId: ['', [Validators.required]],
+    clinicId: ['', [Validators.required]],
+    specializationId: ['', [Validators.required]],
+    brief: ['', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(500)
+    ]],
+    checkPrice: ['', [
+      Validators.required,
+      Validators.min(0)
+    ]],
+    profilePicture: [null]
+  });
+}
 
   private loadLookups(): void {
     this.lookupService.loadGenders().subscribe(

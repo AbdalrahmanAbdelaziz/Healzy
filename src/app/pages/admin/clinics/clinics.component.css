@@ -21,6 +21,7 @@
     align-items: flex-end;
     flex-wrap: wrap;
     gap: 20px;
+    
   }
   
   .search-filter-container {
@@ -130,11 +131,12 @@
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px #24CC81;
   }
   
   .clinic-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px #24CC81;
   }
   
   .card-header {

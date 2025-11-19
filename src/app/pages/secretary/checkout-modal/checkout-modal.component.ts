@@ -52,6 +52,19 @@ export class CheckoutModalComponent implements OnInit, OnChanges {
 
   paymentMethods: { name: string, icon: string, displayName: string }[] = [];
 
+  // English receipt labels - for consistent PDF generation regardless of app language
+  private receiptLabels = {
+    receipt_title: 'Payment Receipt',
+    issue_date: 'Issue Date',
+    method: 'Method',
+    amount: 'Amount',
+    date: 'Date',
+    thankYou: 'Thank you for your visit!',
+    payment_details: 'Payment Details',
+    shareTitle: 'Share Payment Receipt',
+    shareText: 'Payment receipt for Appointment ID'
+  };
+
   ngOnInit(): void {
     this.paymentMethods = [
       { name: 'paidCash', icon: 'fa-solid fa-money-bill-wave', displayName: '' },
@@ -177,111 +190,133 @@ export class CheckoutModalComponent implements OnInit, OnChanges {
     });
   }
 
-  async generatePaymentReceipt(): Promise<void> {
-    this.isGeneratingPDF = true;
+  /**
+   * Helper function to format date for the PDF (English format for consistency)
+   */
+  private formatDateEnglish(date: Date): string {
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    }).replace(',', '');
+  }
 
-    try {
+  /**
+   * Builds and prepares the complete HTML content for PDF generation by cloning the
+   * receipt template and injecting the current payment details using hardcoded English labels
+   * for consistent document structure.
+   */
+  private buildDynamicReceiptContentForPDF(): HTMLDivElement {
       const pdfContainer = document.createElement('div');
       pdfContainer.id = 'pdf-container';
       pdfContainer.style.position = 'fixed';
       pdfContainer.style.left = '-10000px';
       pdfContainer.style.top = '0';
-      pdfContainer.style.width = '800px'; // Increased width for better table display
+      pdfContainer.style.width = '800px'; 
       pdfContainer.style.padding = '20px';
       pdfContainer.style.backgroundColor = 'white';
 
       const content = this.receiptContent.nativeElement.cloneNode(true) as HTMLElement;
 
-      // Remove buttons and form elements from the cloned content for PDF
-      const buttons = content.querySelectorAll('button');
-      buttons.forEach(btn => btn.remove());
-      const forms = content.querySelectorAll('form');
-      forms.forEach(form => form.remove());
+      // 1. Remove interactive/irrelevant elements
+      content.querySelectorAll('button, form, input, .action-buttons').forEach(el => el.remove());
 
-      // Add app logo at the top
+      // 2. Add app logo at the top
       const logoHtml = `
-        <div class="receipt-logo" style="text-align: center; margin-bottom: 20px;">
-          <img src="assets/images/vv_b.png"
-               alt="App Logo"
-               style="height: 80px; margin-bottom: 15px;">
-        </div>
+          <div class="receipt-logo" style="text-align: center; margin-bottom: 20px;">
+              <img src="assets/images/vv_b.png"
+                  alt="App Logo"
+                  style="height: 80px; margin-bottom: 15px;">
+          </div>
       `;
-
-      // Insert logo at the top of the content
       const header = content.querySelector('.receipt-header');
       if (header) {
-        header.insertAdjacentHTML('beforebegin', logoHtml);
+          header.insertAdjacentHTML('beforebegin', logoHtml);
       }
 
-      // Get translated payment method name for the current transaction
-      const paymentMethodKey = this.paymentMethods.find(m => m.name === this.paymentMethod)?.name.replace('paid', '').toLowerCase() || '';
-      const paymentMethodName = this.translocoService.translate(`paymentMethods.${paymentMethodKey}`);
-
-      // Add payment details section with translated labels
+      // 3. Get current payment details for injection
+      const currentTransactionDate = new Date();
+      const paymentMethodObject = this.paymentMethods.find(m => m.name === this.paymentMethod);
+      // Translate the payment method name for the PDF
+      const paymentMethodName = paymentMethodObject 
+          ? this.translocoService.translate(`paymentMethods.${paymentMethodObject.name.replace('paid', '').toLowerCase()}`)
+          : 'N/A';
+      
+      // 4. Create and inject the specific payment details section (current transaction only)
       const paymentDetailsHTML = `
-        <div class="payment-details-section" style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px;">
-          <h4 class="section-title" style="color: #24CC81; margin-bottom: 10px; font-size: 16px;">
-            ${this.translocoService.translate('receipt.paymentDetails')}
-          </h4>
-          <div class="payment-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-            <div class="payment-info-item">
-              <span class="label" style="font-weight: bold;">${this.translocoService.translate('receipt.method')}:</span>
-              <span class="value">${paymentMethodName}</span>
-            </div>
-            <div class="payment-info-item">
-              <span class="label" style="font-weight: bold;">${this.translocoService.translate('receipt.amount')}:</span>
-              <span class="value">${this.paidAmount.toFixed(2)} ${this.translocoService.translate('general.currency')}</span>
-            </div>
-            <div class="payment-info-item">
-              <span class="label" style="font-weight: bold;">${this.translocoService.translate('receipt.date')}:</span>
-              <span class="value">${new Date().toLocaleString(this.translocoService.getActiveLang())}</span>
-            </div>
+          <div class="payment-details-section" style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px;">
+              <h4 class="section-title" style="color: #24CC81; margin-bottom: 10px; font-size: 16px;">
+                  ${this.receiptLabels.payment_details}
+              </h4>
+              <div class="payment-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 14px;">
+                  <div class="payment-info-item">
+                      <span class="label" style="font-weight: bold;">${this.receiptLabels.method}:</span>
+                      <span class="value">${paymentMethodName}</span>
+                  </div>
+                  <div class="payment-info-item">
+                      <span class="label" style="font-weight: bold;">${this.receiptLabels.amount}:</span>
+                      <span class="value">${this.paidAmount.toFixed(2)} ${this.translocoService.translate('general.currency')}</span>
+                  </div>
+                  <div class="payment-info-item" style="grid-column: 1 / span 2;">
+                      <span class="label" style="font-weight: bold;">${this.receiptLabels.date}:</span>
+                      <span class="value">${this.formatDateEnglish(currentTransactionDate)}</span>
+                  </div>
+              </div>
           </div>
-        </div>
       `;
 
+      // Insert the payment details before the final summary/footer
       const footer = content.querySelector('.receipt-footer');
       if (footer) {
-        footer.insertAdjacentHTML('beforebegin', paymentDetailsHTML);
+          footer.insertAdjacentHTML('beforebegin', paymentDetailsHTML);
 
-        // Update footer with translated text
-        const thankYou = footer.querySelector('p');
-        if (thankYou) {
-          thankYou.textContent = this.translocoService.translate('receipt.thankYou');
-        }
+          // 5. Update footer with hardcoded English thank you text
+          const thankYou = footer.querySelector('p');
+          if (thankYou) {
+              thankYou.textContent = this.receiptLabels.thankYou;
+          }
       }
 
-      // Ensure table headers are visible in PDF
-     const tableHeaders = content.querySelectorAll('.table-header');
-      tableHeaders.forEach(header => {
-        (header as HTMLElement).style.display = 'flex'; // Cast to HTMLElement
-      });
-
-      // Ensure table rows are horizontal in PDF
-      const tableRows = content.querySelectorAll('.table-row');
-      tableRows.forEach(row => {
-        (row as HTMLElement).style.flexDirection = 'row'; // Cast to HTMLElement
+      // 6. Ensure table headers and rows are visible in PDF by setting display styles
+      content.querySelectorAll('.table-header, .table-row').forEach(element => {
+          (element as HTMLElement).style.display = 'flex';
+          (element as HTMLElement).style.flexDirection = 'row';
       });
 
       pdfContainer.appendChild(content);
-      document.body.appendChild(pdfContainer);
+      return pdfContainer;
+  }
 
-      // Wait briefly to ensure logo loads and content is rendered
+  async generatePaymentReceipt(): Promise<void> {
+    this.isGeneratingPDF = true;
+    let container: HTMLDivElement | null = null;
+
+    try {
+      // Build the dynamically structured and styled content
+      container = this.buildDynamicReceiptContentForPDF();
+      document.body.appendChild(container);
+
+      // Wait briefly to ensure content is rendered, especially images
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Generate PDF from HTML content
-      const canvas = await html2canvas(pdfContainer, {
+      // Generate canvas from HTML content
+      const canvas = await html2canvas(container, {
         scale: 2,
         logging: false,
         useCORS: true,
         allowTaint: true,
         scrollX: 0,
         scrollY: 0,
-        windowWidth: pdfContainer.scrollWidth,
-        width: pdfContainer.scrollWidth,
-        height: pdfContainer.scrollHeight
+        windowWidth: container.scrollWidth,
+        width: container.scrollWidth,
+        height: container.scrollHeight
       });
 
+      // Convert canvas to PDF
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
       const pdf = new jsPDF('p', 'pt', 'a4');
       const margin = 20;
@@ -302,40 +337,47 @@ export class CheckoutModalComponent implements OnInit, OnChanges {
         heightLeft -= (pdf.internal.pageSize.getHeight() - margin);
       }
 
-      // Save with translated filename
+      // Generate filename using English/transloco key for consistency
       const filename = this.translocoService.translate('receipt.filename', {
         id: this.appointmentId,
         date: new Date().toISOString().slice(0, 10)
-      });
+      }).replace(/ /g, '_') + '.pdf';
 
-      // --- Capacitor Filesystem Integration ---
-      const pdfBlob = new Blob([pdf.output('arraybuffer')], { type: 'application/pdf' });
-      const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
+      // --- Platform Detection: Browser vs Mobile (APK) ---
+      const isMobile = this.isMobilePlatform();
+      
+      if (isMobile) {
+        // 📱 Mobile behavior: Use Capacitor Filesystem and Share
+        const pdfBlob = new Blob([pdf.output('arraybuffer')], { type: 'application/pdf' });
+        const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
 
-      const fullFileName = `${filename}.pdf`;
-
-      // Use Capacitor Filesystem to write the file
-      await Filesystem.writeFile({
-        path: fullFileName,
-        data: base64Data,
-        directory: Directory.Documents,
-      });
-
-      // Get the URI to share the file
-      const fileUriResult = await Filesystem.getUri({
-        directory: Directory.Documents,
-        path: fullFileName
-      });
-
-      if (fileUriResult && fileUriResult.uri) {
-        await Share.share({
-          title: this.translocoService.translate('receipt.shareTitle'),
-          text: this.translocoService.translate('receipt.shareText', { id: this.appointmentId }),
-          url: fileUriResult.uri,
-          dialogTitle: this.translocoService.translate('receipt.shareDialogTitle')
+        // Use Capacitor Filesystem to write the file
+        await Filesystem.writeFile({
+          path: filename,
+          data: base64Data,
+          directory: Directory.Documents,
         });
-        this.toastr.success(this.translocoService.translate('success.pdfSavedAndShared'));
+
+        // Get the URI to share the file
+        const fileUriResult = await Filesystem.getUri({
+          directory: Directory.Documents,
+          path: filename
+        });
+
+        if (fileUriResult && fileUriResult.uri) {
+          await Share.share({
+            title: this.receiptLabels.shareTitle,
+            text: `${this.receiptLabels.shareText} ${this.appointmentId}`,
+            url: fileUriResult.uri,
+            dialogTitle: this.translocoService.translate('receipt.shareDialogTitle')
+          });
+          this.toastr.success(this.translocoService.translate('success.pdfSavedAndShared'));
+        } else {
+          this.toastr.success(this.translocoService.translate('success.pdfSavedOnly'));
+        }
       } else {
+        // 🖥️ Browser behavior: Direct download
+        pdf.save(filename);
         this.toastr.success(this.translocoService.translate('success.pdfSavedOnly'));
       }
 
@@ -343,7 +385,6 @@ export class CheckoutModalComponent implements OnInit, OnChanges {
       console.error('PDF Generation or Saving Error:', error);
       this.toastr.error(this.translocoService.translate('errors.pdfGenerationError'));
     } finally {
-      const container = document.getElementById('pdf-container');
       if (container) {
         document.body.removeChild(container);
       }
@@ -353,6 +394,17 @@ export class CheckoutModalComponent implements OnInit, OnChanges {
 
   onClose(): void {
     this.closed.emit();
+  }
+
+  // Helper method to detect mobile platforms (identical to RevenueComponent)
+  private isMobilePlatform(): boolean {
+    const capacitor = (window as any).Capacitor;
+    if (capacitor && capacitor.isNativePlatform && capacitor.isNativePlatform()) {
+      return true;
+    }
+    
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
   }
 
   private convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {

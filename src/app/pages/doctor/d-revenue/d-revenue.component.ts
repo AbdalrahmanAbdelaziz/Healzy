@@ -11,13 +11,13 @@ import { DSidenavbarComponent } from '../d-sidenavbar/d-sidenavbar.component';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
 
-// Import jsPDF with proper types
-import { jsPDF } from 'jspdf';
+// PDF Generation Imports
+import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-// Import Capacitor Filesystem and Share
-import { Filesystem, Directory } from '@capacitor/filesystem'; // Removed Encoding as it's not needed for base64 data
-import { Share } from '@capacitor/share'; // Optional: for sharing the PDF
+// Capacitor Imports for Mobile
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-d-revenue',
@@ -68,7 +68,6 @@ export class DRevenueComponent implements OnInit {
 
   fetchAvailableDays(): void {
     const numberOfRequiredDays = 30;
-
     this.appointmentService.getAllDays(this.userId, numberOfRequiredDays).subscribe({
       next: (response: any) => {
         this.availableDays = (response.data.workingDays || []).map((date: string) => {
@@ -81,7 +80,7 @@ export class DRevenueComponent implements OnInit {
           this.fetchAppointmentsForDate(this.selectedDate);
         }
       },
-      error: (error) => {
+      error: () => {
         this.toastr.error('Failed to fetch available days', 'Error');
       },
     });
@@ -94,7 +93,7 @@ export class DRevenueComponent implements OnInit {
           return appointment.timeSlot?.date === date;
         });
       },
-      error: (error) => {
+      error: () => {
         this.toastr.error('Failed to fetch appointments', 'Error');
       },
     });
@@ -118,65 +117,92 @@ export class DRevenueComponent implements OnInit {
 
   async exportToPDF(): Promise<void> {
     if (this.appointments.length === 0) {
-      this.toastr.warning('No data to export');
+      this.toastr.warning(this.translocoService.translate('revenue.noDataToExport'));
       return;
     }
 
     this.isGeneratingPDF = true;
 
     try {
-      // Create a new PDF document
-      const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'pt',
-        format: 'a4'
-      });
+      const doc = new jsPDF('p', 'pt', 'a4');
+      const margin = 40;
+      const pdfWidth = doc.internal.pageSize.getWidth() - (margin * 2);
 
-      // Set metadata
-      doc.setProperties({
-        title: `Daily Revenue Report - ${this.selectedDate}`,
-        subject: 'Revenue Report',
-        author: 'Your Clinic Name',
-        keywords: 'revenue, report, clinic',
-        creator: 'Your Clinic App'
-      });
+      // Hardcoded English translations for PDF
+      const translations = {
+        title: 'Daily Revenue Report',
+        reportDate: 'Report Date',
+        generated: 'Generated On',
+        doctor: 'Doctor',
+        patientName: 'Patient Name',
+        total: 'Total',
+        cash: 'Cash',
+        wallet: 'Wallet',
+        instapay: 'Instapay',
+        visa: 'Visa',
+        remaining: 'Remaining',
+        summary: 'Summary',
+        totalRevenue: 'Total Revenue',
+        totalCollected: 'Total Collected',
+        totalRemaining: 'Total Remaining',
+        currency: 'EGP'
+      };
 
       // Add header
       doc.setFontSize(18);
       doc.setTextColor('#24CC81');
-      doc.text('Daily Revenue Report', 40, 40);
+      doc.text(translations.title, margin, margin + 20);
 
-      // Add report details
+      // Add report details - Always use English format
       doc.setFontSize(12);
       doc.setTextColor('#666666');
-      doc.text(`Report Date: ${this.selectedDate}`, 40, 70);
-      doc.text(`Generated: ${new Date().toLocaleDateString()}`, 40, 90);
+      
+      const selectedDay = this.availableDays.find(d => d.date === this.selectedDate);
+      doc.text(`${translations.reportDate}: ${this.selectedDate} (${selectedDay?.dayOfWeek || ''})`, 
+               margin, margin + 40);
+      
+      // Always use English date format
+      doc.text(`${translations.generated}: ${new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}`, margin, margin + 60);
 
       // Add doctor information
       const user = this.userService.getUser();
       if (user) {
-        const doctorName = `${user.data.firstName || ''} ${user.data.lastName || ''}`.trim();
-        doc.text(`Doctor: ${doctorName}`, 40, 110);
+        const doctorFirstName = user.data.firstName || '';
+        const doctorLastName = user.data.lastName || '';
+        const doctorName = (doctorFirstName + ' ' + doctorLastName).trim() || 'N/A';
+        doc.text(`${translations.doctor}: ${doctorName}`, margin, margin + 80);
       }
 
       // Prepare table data
       const tableData = this.appointments.map((appointment, index) => [
         (index + 1).toString(),
         appointment.patientName || 'N/A',
-        (appointment.totalPrice || 0).toFixed(2),
-        (appointment.paidCash || 0).toFixed(2),
-        (appointment.paidWallet || 0).toFixed(2),
-        (appointment.paidInstapay || 0).toFixed(2),
-        (appointment.paidVisa || 0).toFixed(2),
-        this.getRemainingToPay(appointment).toFixed(2)
+        this.formatCurrency(appointment.totalPrice || 0),
+        this.formatCurrency(appointment.paidCash || 0),
+        this.formatCurrency(appointment.paidWallet || 0),
+        this.formatCurrency(appointment.paidInstapay || 0),
+        this.formatCurrency(appointment.paidVisa || 0),
+        this.formatCurrency(this.getRemainingToPay(appointment))
       ]);
 
-      // Add table
+      // Add table using autoTable with English headers
       autoTable(doc, {
-        startY: 130,
-        head: [
-          ['#', 'Patient Name', 'Total', 'Cash', 'Wallet', 'Instapay', 'Visa', 'Remaining']
-        ],
+        startY: margin + 100,
+        head: [[
+          '#', 
+          translations.patientName, 
+          translations.total, 
+          translations.cash,
+          translations.wallet, 
+          translations.instapay, 
+          translations.visa, 
+          translations.remaining
+        ]],
         body: tableData,
         headStyles: {
           fillColor: '#24CC81',
@@ -187,78 +213,108 @@ export class DRevenueComponent implements OnInit {
           fillColor: '#f9f9f9'
         },
         styles: {
-          cellPadding: 6,
+          cellPadding: 8,
           fontSize: 10,
           valign: 'middle',
           halign: 'center'
         },
         columnStyles: {
-          0: { halign: 'center', cellWidth: 30 },
-          1: { halign: 'left', cellWidth: 100 },
-          2: { halign: 'right', cellWidth: 50 },
-          3: { halign: 'right', cellWidth: 50 },
-          4: { halign: 'right', cellWidth: 50 },
-          5: { halign: 'right', cellWidth: 50 },
-          6: { halign: 'right', cellWidth: 50 },
-          7: { halign: 'right', cellWidth: 60 }
+          0: { halign: 'center', cellWidth: 40 },
+          1: { halign: 'left', cellWidth: 'auto' },
+          2: { halign: 'right', cellWidth: 70 },
+          3: { halign: 'right', cellWidth: 60 },
+          4: { halign: 'right', cellWidth: 60 },
+          5: { halign: 'right', cellWidth: 60 },
+          6: { halign: 'right', cellWidth: 60 },
+          7: { halign: 'right', cellWidth: 70 }
         }
       });
 
-      // Add summary section
+      // Add summary section in English
       const finalY = (doc as any).lastAutoTable.finalY + 30;
-      const totalRevenue = this.appointments.reduce((sum, app) => sum + (app.totalPrice || 0), 0);
-      const totalPaid = this.appointments.reduce((sum, app) => sum + this.calculateTotalPaid(app), 0);
-      const totalRemaining = this.appointments.reduce((sum, app) => sum + this.getRemainingToPay(app), 0);
+      const totalRevenue = this.appointments.reduce((sum, a) => sum + (a.totalPrice || 0), 0);
+      const totalCollected = this.appointments.reduce((sum, a) => sum + this.calculateTotalPaid(a), 0);
+      const totalRemaining = this.appointments.reduce((sum, a) => sum + this.getRemainingToPay(a), 0);
 
       doc.setFontSize(14);
       doc.setTextColor('#24CC81');
-      doc.text('Summary', 40, finalY);
+      doc.text(translations.summary, margin, finalY);
 
       doc.setFontSize(12);
       doc.setTextColor('#000000');
-      doc.text(`Total Revenue: ${totalRevenue.toFixed(2)}`, 40, finalY + 25);
-      doc.text(`Total Paid: ${totalPaid.toFixed(2)}`, 40, finalY + 50);
-      doc.text(`Total Remaining: ${totalRemaining.toFixed(2)}`, 40, finalY + 75);
+      doc.text(`${translations.totalRevenue}: ${this.formatCurrency(totalRevenue)}`, margin, finalY + 25);
+      doc.text(`${translations.totalCollected}: ${this.formatCurrency(totalCollected)}`, margin, finalY + 50);
+      doc.text(`${translations.totalRemaining}: ${this.formatCurrency(totalRemaining)}`, margin, finalY + 75);
 
-      // Define the file name
-      const fileName = `Daily_Revenue_Report_${this.selectedDate.replace(/-/g, '')}.pdf`;
+      // Add footer in English
+      doc.setFontSize(10);
+      doc.setTextColor('#999999');
+      doc.text('© ' + new Date().getFullYear() + ' HEALZY. All rights reserved.',
+        doc.internal.pageSize.getWidth() / 2,
+        doc.internal.pageSize.getHeight() - 20,
+        { align: 'center' }
+      );
 
-      // Convert PDF to Blob and then to Base64
-      const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
-      const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
+      // Generate filename
+      const filename = `Daily_Revenue_Report_${this.selectedDate.replace(/-/g, '_')}.pdf`;
 
-      // Use Capacitor Filesystem to write the file
-      await Filesystem.writeFile({
-        path: fileName,
-        data: base64Data,
-        directory: Directory.Documents, // A suitable directory for user documents
-        // encoding property is not needed for base64 data as inferred by Capacitor
-      });
+      // Platform Detection: Browser vs Mobile
+      const isMobile = this.isMobilePlatform();
+      
+      if (isMobile) {
+        // Mobile behavior: Use Capacitor Filesystem and Share
+        const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+        const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
 
-      // Optional: Share the PDF after saving
-      const fileUriResult = await Filesystem.getUri({
-        directory: Directory.Documents,
-        path: fileName
-      });
+        // Use Capacitor Filesystem to write the file
+        await Filesystem.writeFile({
+          path: filename,
+          data: base64Data,
+          directory: Directory.Documents,
+        });
 
-      if (fileUriResult && fileUriResult.uri) {
+        // Get the URI to share the file
+        const fileUriResult = await Filesystem.getUri({
+          directory: Directory.Documents,
+          path: filename
+        });
+
+        if (fileUriResult && fileUriResult.uri) {
           await Share.share({
-            title: 'Daily Revenue Report',
-            text: `Here is your Daily Revenue Report for ${this.selectedDate}.`,
+            title: translations.title,
+            text: `Daily revenue report for ${this.selectedDate}`,
             url: fileUriResult.uri,
-            dialogTitle: 'Share PDF Report'
+            dialogTitle: 'Share Revenue Report'
           });
-          this.toastr.success('PDF exported and saved successfully!');
+          this.toastr.success('PDF saved and shared successfully');
+        } else {
+          this.toastr.success('PDF saved successfully');
+        }
       } else {
-          this.toastr.success('PDF exported successfully. Could not get file URI for sharing.');
+        // Browser behavior: Direct download
+        doc.save(filename);
+        this.toastr.success('PDF saved successfully');
       }
 
     } catch (error) {
-      console.error('Error generating or saving PDF:', error);
-      this.toastr.error('Failed to generate or save PDF');
+      console.error('Error generating PDF:', error);
+      this.toastr.error('Failed to generate PDF');
     } finally {
       this.isGeneratingPDF = false;
     }
+  }
+
+  // Helper method to detect mobile platforms
+  private isMobilePlatform(): boolean {
+    // Check if Capacitor is available and we're running on a mobile device
+    const capacitor = (window as any).Capacitor;
+    if (capacitor && capacitor.isNativePlatform && capacitor.isNativePlatform()) {
+      return true;
+    }
+    
+    // Additional check for common mobile user agents
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
   }
 
   // Helper function to convert Blob to Base64
@@ -266,32 +322,14 @@ export class DRevenueComponent implements OnInit {
     const reader = new FileReader();
     reader.onerror = reject;
     reader.onload = () => {
-        // The result will be a Data URL (e.g., "data:application/pdf;base64,...")
-        // We need to extract just the base64 part
-        const dataUrl = reader.result as string;
-        resolve(dataUrl.split(',')[1]);
+      const dataUrl = reader.result as string;
+      resolve(dataUrl.split(',')[1]); // Return only the base64 data without the data URL prefix
     };
     reader.readAsDataURL(blob);
   });
 
-  // The isMobileApp check is no longer strictly necessary for the PDF export logic
-  // as the Capacitor Filesystem API will handle it, but you can keep it for other purposes if needed.
-  private isMobileApp(): boolean {
-    interface CustomWindow extends Window {
-      cordova?: any;
-      Capacitor?: any;
-      phonegap?: any;
-      PhoneGap?: any;
-    }
-
-    const customWindow = window as unknown as CustomWindow;
-
-    return !!(
-      customWindow.cordova ||
-      customWindow.Capacitor ||
-      customWindow.phonegap ||
-      customWindow.PhoneGap ||
-      navigator.userAgent.match(/(Android|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i)
-    );
+  // Helper method to format currency - always use EGP for PDF
+  private formatCurrency(amount: number): string {
+    return `${amount.toFixed(2)} EGP`;
   }
 }

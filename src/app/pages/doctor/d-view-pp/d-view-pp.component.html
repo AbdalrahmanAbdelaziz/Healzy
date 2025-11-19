@@ -25,11 +25,24 @@
 
   <div class="profile-content" *ngIf="!isLoading;">
     <div class="patient-overview">
-      <div class="patient-avatar">
-        <div class="avatar-placeholder">
-          {{patientDetails?.firstName?.charAt(0) || 'P'}}{{patientDetails?.lastName?.charAt(0) || 'P'}}
-        </div>
-      </div>
+   <div class="patient-avatar">
+  <!-- If patient profile picture exists -->
+  <ng-container *ngIf="patientDetails?.profilePicture; else initialsTemplate">
+    <img [src]="BASE__URL + '/' + patientDetails.profilePicture"
+         alt="Patient Profile Picture"
+         class="avatar-img" 
+         (error)="onImageError($event)" />
+  </ng-container>
+
+  <!-- If no profile picture, show initials -->
+  <ng-template #initialsTemplate>
+    <div class="avatar-placeholder">
+      {{patientDetails?.firstName?.charAt(0) || 'P'}}
+      {{patientDetails?.lastName?.charAt(0) || 'P'}}
+    </div>
+  </ng-template>
+</div>
+
       <div class="patient-basic-info">
         <h3>{{patientDetails?.firstName}} {{patientDetails?.lastName}}</h3>
         <p><strong>{{ 'patient_profile.id' | transloco }}:</strong> {{patientDetails?.id}}</p>
@@ -82,147 +95,133 @@
       </div>
 
       <!-- Inside your history tab content -->
-      <div *ngIf="currentTab === 'history'" class="history-tab">
-        <div class="history-header">
-          <h3>{{ 'patient_profile.visit_history' | transloco }}</h3>
-          <div class="search-filter">
-            
-            <select
-              id="sortHistorySelect"
-              [(ngModel)]="historySortBy"
-              (change)="sortHistory()"
-            >
-              <option value="dateDesc">{{ 'patient_profile.newest_first' | transloco }}</option>
-              <option value="dateAsc">{{ 'patient_profile.oldest_first' | transloco }}</option>
-            </select>
-          </div>
+     <div *ngIf="currentTab === 'history'" class="history-tab">
+  <div class="history-header">
+    <h3>{{ 'patient_profile.visit_history' | transloco }}</h3>
+    <div class="search-filter">
+      <select
+        id="sortHistorySelect"
+        [(ngModel)]="historySortBy"
+        (change)="sortHistory()"
+      >
+        <option value="dateDesc">{{ 'patient_profile.newest_first' | transloco }}</option>
+        <option value="dateAsc">{{ 'patient_profile.oldest_first' | transloco }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="history-list" *ngIf="filteredVisitHistory.length > 0; else noHistory">
+    <div
+      class="history-item"
+      *ngFor="let visit of filteredVisitHistory"
+      [class.current-appointment]="visit.isCurrentAppointment"
+    >
+      <div class="visit-header" (click)="toggleVisitDetails(visit.id || visit.appointmentId)">
+        <div class="visit-date">
+          <i class="fas fa-calendar-alt"></i>
+          {{ formatDate(visit.entryDate) }}
         </div>
-
-        <div class="history-list" *ngIf="filteredVisitHistory.length > 0; else noHistory">
-          <div class="history-item" *ngFor="let visit of filteredVisitHistory" 
-                [class.current-appointment]="visit.isCurrentAppointment">
-            <div class="visit-header" (click)="toggleVisitDetails(visit.id || visit.appointmentId)">
-              <div class="visit-date">
-                <i class="fas fa-calendar-alt"></i>
-                {{formatDate(visit.entryDate)}}
-              </div>
-              <div class="visit-doctor">
-                <i class="fas fa-user-md"></i>
-                Dr. {{visit.doctorName || 'Unknown'}}
-              </div>
-              <div class="visit-arrow">
-                <i class="fas" 
-                    [class.fa-chevron-down]="!expandedVisits[visit.id || visit.appointmentId]" 
-                    [class.fa-chevron-up]="expandedVisits[visit.id || visit.appointmentId]"></i>
-              </div>
-            </div>
-
-            <div class="visit-details" *ngIf="expandedVisits[visit.id || visit.appointmentId]">
-              <div class="diagnosis-section" *ngIf="visit.diagnosis && visit.diagnosis !== 'No diagnosis provided'">
-                <h4>{{ 'patient_profile.diagnosis' | transloco }}</h4>
-                <p>{{visit.diagnosis}}</p>
-              </div>
-
-              <div class="treatment-section" *ngIf="visit.treatment && visit.treatment !== 'No treatment specified'">
-                <h4>{{ 'patient_profile.treatment' | transloco }}</h4>
-                <p>{{visit.treatment}}</p>
-              </div>
-
-              <div class="signs-section" *ngIf="visit.signs">
-                <h4>{{ 'patient_profile.signs' | transloco }}</h4>
-                <p>{{visit.signs}}</p>
-              </div>
-
-              <div class="prescription-section" *ngIf="visit.prescriptions && visit.prescriptions !== 'No prescriptions'">
-                <h4>{{ 'patient_profile.prescription' | transloco }}</h4>
-                <p>{{visit.prescriptions}}</p>
-              </div>
-
-              <!-- Services Section -->
-              <div class="services-section" *ngIf="visit.services && visit.services.length > 0">
-                <h4>{{ 'patient_profile.services_provided' | transloco }}</h4>
-                <div class="services-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>{{ 'patient_profile.service_name' | transloco }}</th>
-                        <th>{{ 'patient_profile.quantity' | transloco }}</th>
-                        <!-- <th>{{ 'patient_profile.price' | transloco }}</th>
-                        <th>{{ 'patient_profile.total' | transloco }}</th> -->
-                      </tr> 
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let service of visit.services">
-                        <td>
-                          <strong>{{service.name}}</strong>
-                          <!-- <div *ngIf="service.description" class="service-description">{{service.description}}</div> -->
-                        </td>
-                        <td>{{service.quantity}}</td>
-                        <!-- <td>{{service.price | currency:'EGP '}}</td>
-                        <td>{{service.total | currency:'EGP '}}</td> -->
-                      </tr>
-                    </tbody>
-                    <!-- <tfoot>
-                      <tr>
-                        <td colspan="3" class="total-label">{{ 'patient_profile.total' | transloco }}</td>
-                        <td class="total-amount">{{visit.paymentInfo.totalPrice | currency:'EGP '}}</td>
-                      </tr>
-                      <tr *ngIf="visit.paymentInfo.paidCash > 0">
-                        <td colspan="3">{{ 'patient_profile.paid_cash' | transloco }}</td>
-                        <td>{{visit.paymentInfo.paidCash | currency:'EGP '}}</td>
-                      </tr>
-                      <tr *ngIf="visit.paymentInfo.paidVisa > 0">
-                        <td colspan="3">{{ 'patient_profile.paid_visa' | transloco }}</td>
-                        <td>{{visit.paymentInfo.paidVisa | currency:'EGP '}}</td>
-                      </tr>
-                      <tr *ngIf="visit.paymentInfo.paidWallet > 0">
-                        <td colspan="3">{{ 'patient_profile.paid_wallet' | transloco }}</td>
-                        <td>{{visit.paymentInfo.paidWallet | currency:'EGP '}}</td>
-                      </tr>
-                      <tr *ngIf="visit.paymentInfo.paidInstapay > 0">
-                        <td colspan="3">{{ 'patient_profile.paid_instapay' | transloco }}</td>
-                        <td>{{visit.paymentInfo.paidInstapay | currency:'EGP '}}</td>
-                      </tr>
-                      <tr *ngIf="visit.paymentInfo.remainingToPay > 0">
-                        <td colspan="3" class="remaining-label">{{ 'patient_profile.remaining' | transloco }}</td>
-                        <td class="remaining-amount">{{visit.paymentInfo.remainingToPay | currency:'EGP '}}</td>
-                      </tr>
-                    </tfoot> -->
-                  </table>
-                </div>
-              </div>
-
-              <div class="attachments-section" *ngIf="visit.attachments && visit.attachments.length > 0">
-                <h4>{{ 'patient_profile.attachments' | transloco }}</h4>
-                <div class="attachments-grid">
-                  <div class="attachment-item" *ngFor="let attachment of visit.attachments">
-                    <div class="attachment-icon">
-                      <i class="fas" 
-                          [class.fa-file-image]="attachment.type?.includes('image')" 
-                          [class.fa-file-pdf]="attachment.type?.includes('pdf')" 
-                          [class.fa-file-alt]="!attachment.type?.includes('image') && !attachment.type?.includes('pdf')"></i>
-                    </div>
-                    <div class="attachment-info">
-                      <span>{{attachment.name}}</span>
-                      <span class="file-size">{{attachment.size | fileSize}}</span>
-                    </div>
-                    <button class="view-btn" (click)="viewImage(attachment)" title="{{ 'patient_profile.view_file' | transloco }}">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="visit-doctor">
+          <i class="fas fa-user-md"></i>
+          Dr. {{ visit.doctorName || 'Unknown' }}
         </div>
-
-        <ng-template #noHistory>
-          <div class="no-history">
-            <i class="fas fa-history"></i>
-            <p>{{ 'patient_profile.no_history' | transloco }}</p>
-          </div>
-        </ng-template>
+        <div class="visit-arrow">
+          <i
+            class="fas"
+            [class.fa-chevron-down]="!expandedVisits[visit.id || visit.appointmentId]"
+            [class.fa-chevron-up]="expandedVisits[visit.id || visit.appointmentId]"
+          ></i>
+        </div>
       </div>
+
+      <div class="visit-details" *ngIf="expandedVisits[visit.id || visit.appointmentId]">
+        <div class="diagnosis-section" *ngIf="visit.diagnosis && visit.diagnosis !== 'No diagnosis provided'">
+          <h4>{{ 'patient_profile.diagnosis' | transloco }}</h4>
+          <p>{{ visit.diagnosis }}</p>
+        </div>
+
+        <!-- <div class="treatment-section" *ngIf="visit.treatment && visit.treatment !== 'No treatment specified'">
+          <h4>{{ 'patient_profile.treatment' | transloco }}</h4>
+          <p>{{ visit.treatment }}</p>
+        </div> -->
+
+        <div class="signs-section" *ngIf="visit.signs">
+          <h4>{{ 'patient_profile.signs' | transloco }}</h4>
+          <p>{{ visit.signs }}</p>
+        </div>
+
+        <div class="prescription-section" *ngIf="visit.prescriptions && visit.prescriptions !== 'No prescriptions'">
+          <h4>{{ 'patient_profile.prescription' | transloco }}</h4>
+          <p>{{ visit.prescriptions }}</p>
+        </div>
+
+        <!-- Services Section -->
+        <div class="services-section" *ngIf="visit.services && visit.services.length > 0">
+          <h4>{{ 'patient_profile.services_provided' | transloco }}</h4>
+          <div class="services-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ 'patient_profile.service_name' | transloco }}</th>
+                  <th>{{ 'patient_profile.quantity' | transloco }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let service of visit.services">
+                  <td><strong>{{ service.name }}</strong></td>
+                  <td>{{ service.quantity }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Attachments Section -->
+        <div class="attachments-section" *ngIf="visit.attachments && visit.attachments.length > 0">
+          <h4>{{ 'patient_profile.attachments' | transloco }}</h4>
+          <div class="attachments-grid">
+            <div class="attachment-item" *ngFor="let attachment of visit.attachments">
+              
+              <!-- If image: show thumbnail -->
+              <ng-container *ngIf="attachment.url && (attachment.url.endsWith('.jpg') || attachment.url.endsWith('.jpeg') || attachment.url.endsWith('.png') || attachment.url.endsWith('.gif') || attachment.url.endsWith('.webp')); else nonImageFile">
+                <img [src]="attachment.url"
+                     [alt]="attachment.name"
+                     class="attachment-thumb"
+                     (click)="viewImage(attachment)"
+                     title="{{ 'patient_profile.view_file' | transloco }}" />
+              </ng-container>
+
+              <!-- Non-image files -->
+              <ng-template #nonImageFile>
+                <div class="attachment-icon">
+                  <i class="fas"
+                     [class.fa-file-pdf]="attachment.type?.includes('pdf')"
+                     [class.fa-file-alt]="!attachment.type?.includes('pdf')"></i>
+                </div>
+                <div class="attachment-info">
+                  <span>{{ attachment.name }}</span>
+                  <span class="file-size">{{ attachment.size | fileSize }}</span>
+                </div>
+                <button class="view-btn" (click)="viewImage(attachment)" title="{{ 'patient_profile.view_file' | transloco }}">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </ng-template>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noHistory>
+    <div class="no-history">
+      <i class="fas fa-history"></i>
+      <p>{{ 'patient_profile.no_history' | transloco }}</p>
+    </div>
+  </ng-template>
+</div>
+
 
 <div *ngIf="currentTab === 'current'" class="current-visit">
   <div class="receipt-container">

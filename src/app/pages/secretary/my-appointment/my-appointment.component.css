@@ -3,7 +3,6 @@
 /* General Styles */
 body {
   font-family: 'Poppins', sans-serif;
-  background: #f4f6f9;
   margin: 0;
   padding: 0;
   color: #333; /* Darker default text for better contrast */
@@ -25,6 +24,9 @@ body {
   font-weight: 700;
   margin-bottom: 30px;
   letter-spacing: 0.5px;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Dropdown Styling */
@@ -75,7 +77,8 @@ body {
 }
 
 .appointment-table thead {
-  background: #24CC81; /* Primary header background */
+ background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+
 }
 
 .appointment-table th,
@@ -143,7 +146,7 @@ body {
 }
 
 .btn-reschedule {
-  background: #00BCD4; /* Cyan */
+  background: #007bff; /* Cyan */
   color: white;
 }
 

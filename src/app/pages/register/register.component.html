@@ -41,12 +41,17 @@
         <label for="username">{{ 'register.form.username' | transloco }} <span class="required">*</span></label>
         <input id="username" type="text" formControlName="username" [placeholder]="'register.form.usernamePlaceholder' | transloco" />
         <div *ngIf="formControls['username'].touched && formControls['username'].invalid" class="error">
-          <div *ngIf="formControls['username'].errors?.['required']">
-            {{ 'register.formErrors.usernameRequired' | transloco }}
-          </div>
-          <div *ngIf="formControls['username'].errors?.['minlength']">
-            {{ 'register.formErrors.usernameMinLength' | transloco: { length: formControls['username'].errors?.['minlength'].requiredLength } }}
-          </div>
+<div *ngIf="formControls['username'].touched && formControls['username'].invalid" class="error">
+  <div *ngIf="formControls['username'].errors?.['required']">
+    {{ 'register.formErrors.usernameRequired' | transloco }}
+  </div>
+
+  <div *ngIf="formControls['username'].errors?.['pattern']">
+    {{ 'register.formErrors.usernamePattern' | transloco }}
+  </div>
+</div>
+
+          
         </div>
       </div>
 
@@ -55,12 +60,24 @@
         <label for="password">{{ 'register.form.password' | transloco }} <span class="required">*</span></label>
         <input id="password" type="password" formControlName="password" [placeholder]="'register.form.passwordPlaceholder' | transloco" />
         <div *ngIf="formControls['password'].touched && formControls['password'].invalid" class="error">
-          <div *ngIf="formControls['password'].errors?.['required']">
-            {{ 'register.formErrors.passwordRequired' | transloco }}
-          </div>
-          <div *ngIf="formControls['password'].errors?.['minlength']">
-            {{ 'register.formErrors.passwordMinLength' | transloco: { length: formControls['password'].errors?.['minlength'].requiredLength } }}
-          </div>
+         <div *ngIf="formControls['password'].touched && formControls['password'].invalid" class="error">
+  <div *ngIf="formControls['password'].errors?.['required']">
+    {{ 'register.formErrors.passwordRequired' | transloco }}
+  </div>
+  <div *ngIf="formControls['password'].errors?.['minLength']">
+    {{ 'register.formErrors.passwordMinLength' | transloco:{length: 8} }}
+  </div>
+  <div *ngIf="formControls['password'].errors?.['uppercase']">
+    {{ 'register.formErrors.passwordUppercase' | transloco }}
+  </div>
+  <div *ngIf="formControls['password'].errors?.['digit']">
+    {{ 'register.formErrors.passwordDigit' | transloco }}
+  </div>
+  <div *ngIf="formControls['password'].errors?.['nonAlpha']">
+    {{ 'register.formErrors.passwordNonAlpha' | transloco }}
+  </div>
+</div>
+
         </div>
       </div>
 
@@ -81,10 +98,22 @@
         <input id="email" type="email" formControlName="email" [placeholder]="'register.form.emailPlaceholder' | transloco" />
       </div>
 
-      <div class="form-group optional">
-        <label for="dateOfBirth">{{ 'register.form.dateOfBirth' | transloco }}</label>
-        <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
-      </div>
+ <div class="form-group optional">
+  <label for="dateOfBirth">{{ 'register.form.dateOfBirth' | transloco }}</label>
+  <input 
+    id="dateOfBirth" 
+    type="date" 
+    formControlName="dateOfBirth" 
+    [max]="maxDate" 
+  />
+  <div *ngIf="formControls['dateOfBirth'].touched && formControls['dateOfBirth'].invalid" class="error">
+    <div *ngIf="formControls['dateOfBirth'].errors?.['futureDate']">
+      {{ 'register.formErrors.dateOfBirthFuture' | transloco }}
+    </div>
+  </div>
+</div>
+
+
 
       <div class="form-group optional">
         <label for="genderId">{{ 'register.form.gender' | transloco }}</label>

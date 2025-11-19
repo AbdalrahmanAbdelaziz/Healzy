@@ -4,54 +4,57 @@
 
   <div class="content">
     <div class="booking-container">
-      <h2>{{ 'booking.confirmTitle' | transloco }}</h2>
+      <h2 class="page-title">{{ 'booking.confirmTitle' | transloco }}</h2>
 
       <!-- Doctor Details -->
-      <div class="doctor-card">
+      <div class="info-card">
         <img 
-    [src]="(BASE_URL + '/' + selectedDoctor?.profilePicture) || 'default-profile.png'"
-    alt="Doctor profile picture"
-    title="Doctor profile picture"
-    class="doctor-image"
-  />
+          [src]="(BASE_URL + '/' + selectedDoctor?.profilePicture) || 'default-profile.png'"
+          alt="Doctor profile picture"
+          class="doctor-image"
+        />
         <h3>{{ selectedDoctor?.firstName }} {{ selectedDoctor?.lastName }}</h3>
-        <p class="specialization">{{ 'booking.specialization' | transloco }}: {{ specialization }}</p>
-        <p class="price">{{ 'booking.price' | transloco }}: <span>{{ selectedDoctor?.checkPrice }}</span> {{ 'booking.currency' | transloco }}</p>
+        <p class="specialization">
+          {{ 'booking.specialization' | transloco }}: {{ specialization }}
+        </p>
+        <p class="price">
+          {{ 'booking.price' | transloco }}:
+          <span>{{ selectedDoctor?.checkPrice }}</span>
+          {{ 'booking.currency' | transloco }}
+        </p>
       </div>
 
       <!-- Patient Details -->
-      <div class="doctor-card">
+      <div class="info-card">
         <h3>{{ 'booking.patientInfo' | transloco }}</h3>
         <p><strong>{{ 'booking.name' | transloco }}:</strong> {{ patient.firstName }} {{ patient.lastName }}</p>
         <p><strong>{{ 'booking.phone' | transloco }}:</strong> {{ patient.phoneNumber }}</p>
       </div>
 
       <!-- Appointment Details -->
-     <!-- Appointment Details -->
-<div class="doctor-card">
-  <h3>{{ 'booking.appointmentDetails' | transloco }}</h3>
-  <p><strong>{{ 'booking.date' | transloco }}:</strong> {{ selectedTimeSlot?.date }}</p>
-  <p><strong>{{ 'booking.from' | transloco }}:</strong> {{ selectedTimeSlot?.startTime }}</p>
-  <p><strong>{{ 'booking.to' | transloco }}:</strong> {{ selectedTimeSlot?.endTime }}</p>
-  <p><strong>{{ 'booking.location' | transloco }}:</strong> 
-    {{ translocoService.getActiveLang() === 'ar' ? 
-       (clinic?.governorate_Ar + ', ' + clinic?.district_Ar) : 
-       (clinic?.district_En + ', ' + clinic?.governorate_En) }}
-  </p>
-</div>
+      <div class="info-card">
+        <h3>{{ 'booking.appointmentDetails' | transloco }}</h3>
+        <p><strong>{{ 'booking.date' | transloco }}:</strong> {{ selectedTimeSlot?.date }}</p>
+        <p><strong>{{ 'booking.from' | transloco }}:</strong> {{ selectedTimeSlot?.startTime }}</p>
+        <p><strong>{{ 'booking.to' | transloco }}:</strong> {{ selectedTimeSlot?.endTime }}</p>
+        <p><strong>{{ 'booking.location' | transloco }}:</strong>
+          {{ translocoService.getActiveLang() === 'ar' ? 
+             (clinic?.governorate_Ar + ', ' + clinic?.district_Ar) : 
+             (clinic?.district_En + ', ' + clinic?.governorate_En) }}
+        </p>
+      </div>
 
       <!-- Notes Field -->
-      <div class="notes-container">
+      <div class="info-card notes-card">
         <h3>{{ 'booking.notesTitle' | transloco }}</h3>
         <textarea 
-        id="appointmentNotes"
-        [(ngModel)]="notes"
-        [placeholder]="'booking.notesPlaceholder' | transloco"
-        [title]="'booking.notesLabel' | transloco"
-        aria-label="Appointment notes"
-        class="form-control"
-      ></textarea>  
-        </div>
+          id="appointmentNotes"
+          [(ngModel)]="notes"
+          [placeholder]="'booking.notesPlaceholder' | transloco"
+          aria-label="Appointment notes"
+          class="form-control"
+        ></textarea>  
+      </div>
 
       <!-- Confirm Booking Button -->
       <button (click)="confirmBooking()" class="confirm-button">
@@ -60,4 +63,3 @@
     </div>
   </div>
 </div>
-

@@ -20,10 +20,9 @@ import { FooterComponent } from '../../footer/footer.component';
      RouterModule,
      FormsModule,
      DHeaderComponent,
-     DSidenavbarComponent,
      ReactiveFormsModule,
-     TranslocoModule,
-     FooterComponent
+     TranslocoModule
+     
    ],
   templateUrl: './d-timeslot-management.component.html',
   styleUrl: './d-timeslot-management.component.css'
@@ -47,8 +46,8 @@ export class DTimeslotManagementComponent implements OnInit {
 
     // Get the doctor ID from the logged-in secretary's data
     const user: LoginResponse | null = this.userService.getUser();
-    if (user && user.data.doctorId) {
-      this.doctorId = user.data.doctorId; // Fetch the doctorId from the secretary's data
+    if (user && user.data.id) {
+      this.doctorId = user.data.id; 
     } else {
       console.error('Error: No doctor ID found in the logged-in secretary\'s data.');
       this.toastr.error('No doctor ID found. Please contact support.');

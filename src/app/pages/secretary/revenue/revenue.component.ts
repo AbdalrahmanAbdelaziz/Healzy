@@ -1,4 +1,3 @@
-// revenue.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,14 +11,16 @@ import { Appointment } from '../../../shared/models/appointment.model';
 import { CheckoutModalComponent } from '../checkout-modal/checkout-modal.component';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
+import { DoctorService } from '../../../services/doctor.service';
+import { Doctor } from '../../../shared/models/doctor.model';
 
 // PDF Generation Imports
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-// Import Capacitor Filesystem and Share
+// Capacitor Imports
 import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Share } from '@capacitor/share'; // Optional: for sharing the PDF
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-revenue',
@@ -53,26 +54,45 @@ export class RevenueComponent implements OnInit {
     private appointmentService: AppointmentService,
     private toastr: ToastrService,
     private userService: UserService,
-    public translocoService: TranslocoService
+    public translocoService: TranslocoService,
+    private doctorService: DoctorService
   ) { }
 
   ngOnInit(): void {
     const user = this.userService.getUser();
-    if (user && user.data.applicationRole_En === 'Secretary' && user.data.doctorId) {
-      this.doctorId = user.data.doctorId;
+
+    if (user?.data.applicationRole_En === 'Secretary') {
+      this.userRole = user.data.applicationRole_En;
+
+      this.doctorService.getDoctorsFromSecretary().subscribe({
+        next: (doctor: Doctor) => {
+          if (doctor && doctor.id) {
+            this.doctorId = doctor.id;
+            this.userService.setDoctorIdForSecretary(this.doctorId);
+            this.fetchAvailableDays();
+          } else {
+            this.toastr.warning(this.translocoService.translate('errors.noDoctorAssigned'));
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching doctor for secretary:', err);
+          this.toastr.error(this.translocoService.translate('error.fetch_doctors_failed'), 'Error');
+        }
+      });
+
+    } else if (user?.data.applicationRole_En === 'Doctor') {
+      this.doctorId = user.data.id;
       this.userRole = user.data.applicationRole_En;
       this.fetchAvailableDays();
     } else {
-      this.toastr.error('No doctor ID found for the secretary.', 'Error');
+      this.toastr.error('No doctor ID found for the current user.', 'Error');
     }
   }
 
-  // Helper method to safely get remaining payment
   getRemainingToPay(appointment: Appointment): number {
     return appointment.remainingToPay ?? 0;
   }
 
-  // Check if there's remaining payment
   hasRemainingPayment(appointment: Appointment): boolean {
     return (appointment.remainingToPay ?? 0) > 0;
   }
@@ -94,6 +114,7 @@ export class RevenueComponent implements OnInit {
 
   fetchAvailableDays(): void {
     const numberOfRequiredDays = 30;
+    if (!this.doctorId) return;
 
     this.appointmentService.getAllDays(this.doctorId, numberOfRequiredDays).subscribe({
       next: (response: any) => {
@@ -107,22 +128,20 @@ export class RevenueComponent implements OnInit {
           this.fetchAppointmentsForDate(this.selectedDate);
         }
       },
-      error: (error) => {
-        this.toastr.error('Failed to fetch available days', 'Error');
-      },
+      error: () => this.toastr.error('Failed to fetch available days', 'Error'),
     });
   }
 
   fetchAppointmentsForDate(date: string): void {
+    if (!this.doctorId) return;
+
     this.appointmentService.searchAppointmentsByOptionalParams(this.doctorId).subscribe({
       next: (response: any) => {
         this.appointments = (response.data || []).filter((appointment: Appointment) => {
           return appointment.timeSlot?.date === date;
         });
       },
-      error: (error) => {
-        this.toastr.error('Failed to fetch appointments', 'Error');
-      },
+      error: () => this.toastr.error('Failed to fetch appointments', 'Error'),
     });
   }
 
@@ -131,9 +150,16 @@ export class RevenueComponent implements OnInit {
     this.fetchAppointmentsForDate(this.selectedDate);
   }
 
+  calculateTotalPaid(appointment: Appointment): number {
+    return (appointment.paidCash || 0) +
+           (appointment.paidWallet || 0) +
+           (appointment.paidInstapay || 0) +
+           (appointment.paidVisa || 0);
+  }
+
   async exportToPDF(): Promise<void> {
     if (this.appointments.length === 0) {
-      this.toastr.warning('No data to export for the selected date.');
+      this.toastr.warning(this.translocoService.translate('revenue.noDataToExport'));
       return;
     }
 
@@ -144,97 +170,93 @@ export class RevenueComponent implements OnInit {
       const margin = 40;
       const pdfWidth = doc.internal.pageSize.getWidth() - (margin * 2);
 
-      // Always use English for PDF export regardless of current language
-      const translations = {
+      // Always use English for PDF regardless of current language
+      const englishLabels = {
         title: 'Daily Revenue Report',
-        report_date: 'Report Date',
+        reportDate: 'Report Date',
         generated: 'Generated',
-        secretary_for_doctor: 'Secretary for Doctor',
-        patient_name: 'Patient Name',
+        secretaryForDoctor: 'Secretary for Doctor',
+        doctor: 'Doctor',
+        patientName: 'Patient Name',
         total: 'Total',
         paid: 'Paid',
         cash: 'Cash',
         wallet: 'Wallet',
-        insta: 'Instapay',
+        instapay: 'Instapay',
         visa: 'Visa',
         remaining: 'Remaining',
         summary: 'Summary',
-        total_collected: 'Total Collected',
-        total_remaining: 'Total Remaining',
-        no_data: 'No appointments for this date.',
+        totalCollected: 'Total Collected',
+        totalRemaining: 'Total Remaining',
+        totalRevenue: 'Total Revenue',
+        currency: 'EGP'
       };
 
       // Add header
       doc.setFontSize(18);
       doc.setTextColor('#24CC81');
-      doc.text(translations.title, margin, margin + 20);
+      doc.text(englishLabels.title, margin, margin + 20);
 
+      // Add report details - always in English
       doc.setFontSize(12);
       doc.setTextColor('#666666');
-      doc.text(`${translations.report_date}: ${this.selectedDate} (${this.availableDays.find(d => d.date === this.selectedDate)?.dayOfWeek || ''})`,
-        margin, margin + 40);
-      doc.text(`${translations.generated}: ${new Date().toLocaleDateString('en-US', {
+      
+      const selectedDay = this.availableDays.find(d => d.date === this.selectedDate);
+      doc.text(`${englishLabels.reportDate}: ${this.selectedDate} (${selectedDay?.dayOfWeek || ''})`, 
+               margin, margin + 40);
+      
+      // Always use English locale for date formatting
+      doc.text(`${englishLabels.generated}: ${new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       })}`, margin, margin + 60);
 
-      // Add secretary/doctor information
+      // Add user/doctor information
       const user = this.userService.getUser();
       if (user) {
-        // Updated to include first and last name for doctorName
         const doctorFirstName = user.data.firstName || '';
         const doctorLastName = user.data.lastName || '';
         const doctorName = (doctorFirstName + ' ' + doctorLastName).trim() || 'N/A';
-        doc.text(`${translations.secretary_for_doctor}: ${doctorName}`, margin, margin + 80);
+        
+        if (this.userRole === 'Secretary') {
+          doc.text(`${englishLabels.secretaryForDoctor}: ${doctorName}`, margin, margin + 80);
+        } else if (this.userRole === 'Doctor') {
+          doc.text(`${englishLabels.doctor}: ${doctorName}`, margin, margin + 80);
+        }
       }
 
       // Prepare table data
-      const tableColumn = [
-        '#',
-        translations.patient_name,
-        translations.total,
-        translations.cash,
-        translations.wallet,
-        translations.insta,
-        translations.visa,
-        translations.remaining
-      ];
+      const tableData = this.appointments.map((appointment, index) => [
+        (index + 1).toString(),
+        appointment.patientName || 'N/A',
+        this.formatCurrency(appointment.totalPrice || 0, englishLabels.currency),
+        this.formatCurrency(appointment.paidCash || 0, englishLabels.currency),
+        this.formatCurrency(appointment.paidWallet || 0, englishLabels.currency),
+        this.formatCurrency(appointment.paidInstapay || 0, englishLabels.currency),
+        this.formatCurrency(appointment.paidVisa || 0, englishLabels.currency),
+        this.formatCurrency(this.getRemainingToPay(appointment), englishLabels.currency)
+      ]);
 
-      const tableRows: any[] = [];
-      let totalCollected = 0;
-      let totalRemaining = 0;
-
-      this.appointments.forEach((appointment, index) => {
-        const remaining = this.getRemainingToPay(appointment);
-        const collected = (appointment.paidCash || 0) + (appointment.paidInstapay || 0) + (appointment.paidWallet || 0) + (appointment.paidVisa || 0);
-
-        totalCollected += collected;
-        totalRemaining += remaining;
-
-        tableRows.push([
-          index + 1,
-          appointment.patientName,
-          (appointment.totalPrice || 0).toFixed(2),
-          (appointment.paidCash || 0).toFixed(2),
-          (appointment.paidWallet || 0).toFixed(2),
-          (appointment.paidInstapay || 0).toFixed(2),
-          (appointment.paidVisa || 0).toFixed(2),
-          remaining.toFixed(2)
-        ]);
-      });
-
-      // Add table
+      // Add table using autoTable - always in English
       autoTable(doc, {
         startY: margin + 100,
-        head: [tableColumn],
-        body: tableRows,
+        head: [[
+          '#', 
+          englishLabels.patientName, 
+          englishLabels.total, 
+          englishLabels.cash,
+          englishLabels.wallet, 
+          englishLabels.instapay, 
+          englishLabels.visa, 
+          englishLabels.remaining
+        ]],
+        body: tableData,
         headStyles: {
           fillColor: '#24CC81',
           textColor: '#ffffff',
-          fontStyle: 'bold',
-          halign: 'center'
+          fontStyle: 'bold'
         },
         alternateRowStyles: {
           fillColor: '#f9f9f9'
@@ -246,74 +268,102 @@ export class RevenueComponent implements OnInit {
           halign: 'center'
         },
         columnStyles: {
-          0: { halign: 'center' },
-          1: { halign: 'left' },
-          // Align currency columns to right
-          2: { halign: 'right' },
-          3: { halign: 'right' },
-          4: { halign: 'right' },
-          5: { halign: 'right' },
-          6: { halign: 'right' },
-          7: { halign: 'right' },
+          0: { halign: 'center', cellWidth: 40 },
+          1: { halign: 'left', cellWidth: 'auto' },
+          2: { halign: 'right', cellWidth: 70 },
+          3: { halign: 'right', cellWidth: 60 },
+          4: { halign: 'right', cellWidth: 60 },
+          5: { halign: 'right', cellWidth: 60 },
+          6: { halign: 'right', cellWidth: 60 },
+          7: { halign: 'right', cellWidth: 70 }
         }
       });
 
-      // Add summary section
-      const finalY = (doc as any).lastAutoTable.finalY + 20;
+      // Add summary section - always in English
+      const finalY = (doc as any).lastAutoTable.finalY + 30;
+      const totalRevenue = this.appointments.reduce((sum, a) => sum + (a.totalPrice || 0), 0);
+      const totalCollected = this.appointments.reduce((sum, a) => sum + this.calculateTotalPaid(a), 0);
+      const totalRemaining = this.appointments.reduce((sum, a) => sum + this.getRemainingToPay(a), 0);
+
       doc.setFontSize(14);
       doc.setTextColor('#24CC81');
-      doc.text(translations.summary, margin, finalY);
+      doc.text(englishLabels.summary, margin, finalY);
 
       doc.setFontSize(12);
       doc.setTextColor('#000000');
-      doc.text(`${translations.total_collected}: ${totalCollected.toFixed(2)}`, margin, finalY + 25);
-      doc.text(`${translations.total_remaining}: ${totalRemaining.toFixed(2)}`, margin, finalY + 45);
+      doc.text(`${englishLabels.totalRevenue}: ${this.formatCurrency(totalRevenue, englishLabels.currency)}`, margin, finalY + 25);
+      doc.text(`${englishLabels.totalCollected}: ${this.formatCurrency(totalCollected, englishLabels.currency)}`, margin, finalY + 50);
+      doc.text(`${englishLabels.totalRemaining}: ${this.formatCurrency(totalRemaining, englishLabels.currency)}`, margin, finalY + 75);
 
-
-      // Add footer
+      // Add footer - always in English
       doc.setFontSize(10);
       doc.setTextColor('#999999');
-      doc.text('© ' + new Date().getFullYear() + ' Your Clinic Name. All rights reserved.',
+      doc.text('© ' + new Date().getFullYear() + ' HEALZY. All rights reserved.',
         doc.internal.pageSize.getWidth() / 2,
         doc.internal.pageSize.getHeight() - 20,
         { align: 'center' }
       );
 
-      // Convert PDF to ArrayBuffer and then to Blob
-      const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+      // Generate filename - always in English
+      const filename = `Revenue_Report_${this.selectedDate.replace(/-/g, '_')}.pdf`;
 
-      // Convert Blob to Base64 (Capacitor prefers base64 strings for writeFile)
-      const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
+      // --- Platform Detection: Browser vs Mobile ---
+      const isMobile = this.isMobilePlatform();
+      
+      if (isMobile) {
+        // Mobile behavior: Use Capacitor Filesystem and Share
+        const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+        const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
 
-      const fileName = `Revenue_Report_${this.selectedDate.replace(/-/g, '')}.pdf`;
+        // Use Capacitor Filesystem to write the file
+        await Filesystem.writeFile({
+          path: filename,
+          data: base64Data,
+          directory: Directory.Documents,
+        });
 
-      // Use Capacitor Filesystem to write the file
-      await Filesystem.writeFile({
-        path: fileName,
-        data: base64Data,
-        directory: Directory.Documents, // Or Directory.ExternalStorage for broader access on Android
-      });
+        // Get the URI to share the file
+        const fileUriResult = await Filesystem.getUri({
+          directory: Directory.Documents,
+          path: filename
+        });
 
-      // Optional: Share the PDF after saving
-      const fileUri = (await Filesystem.getUri({
-        directory: Directory.Documents,
-        path: fileName
-      })).uri;
+        if (fileUriResult && fileUriResult.uri) {
+          await Share.share({
+            title: englishLabels.title,
+            text: `Revenue report for ${this.selectedDate}`,
+            url: fileUriResult.uri,
+            dialogTitle: 'Share Revenue Report'
+          });
+          this.toastr.success(this.translocoService.translate('revenue.pdfSavedAndShared'));
+        } else {
+          this.toastr.success(this.translocoService.translate('revenue.pdfSavedOnly'));
+        }
+      } else {
+        // Browser behavior: Direct download
+        doc.save(filename);
+        this.toastr.success(this.translocoService.translate('revenue.pdfSavedOnly'));
+      }
 
-      await Share.share({
-        title: translations.title,
-        text: `Here is your ${translations.title} for ${this.selectedDate}.`,
-        url: fileUri,
-        dialogTitle: 'Share PDF'
-      });
-
-      this.toastr.success('PDF exported and saved successfully!');
     } catch (error) {
-      console.error('Error generating or saving PDF:', error);
-      this.toastr.error('Failed to generate or save PDF');
+      console.error('Error generating PDF:', error);
+      this.toastr.error(this.translocoService.translate('errors.pdfGenerationError'));
     } finally {
       this.isGeneratingPDF = false;
     }
+  }
+
+  // Add this helper method to detect mobile platforms
+  private isMobilePlatform(): boolean {
+    // Check if Capacitor is available and we're running on a mobile device
+    const capacitor = (window as any).Capacitor;
+    if (capacitor && capacitor.isNativePlatform && capacitor.isNativePlatform()) {
+      return true;
+    }
+    
+    // Additional check for common mobile user agents
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
   }
 
   // Helper function to convert Blob to Base64
@@ -321,8 +371,14 @@ export class RevenueComponent implements OnInit {
     const reader = new FileReader();
     reader.onerror = reject;
     reader.onload = () => {
-      resolve(reader.result);
+      const dataUrl = reader.result as string;
+      resolve(dataUrl.split(',')[1]); // Return only the base64 data without the data URL prefix
     };
     reader.readAsDataURL(blob);
   });
+
+  // Helper method to format currency - always uses EGP
+  private formatCurrency(amount: number, currency: string = 'EGP'): string {
+    return `${amount.toFixed(2)} ${currency}`;
+  }
 }

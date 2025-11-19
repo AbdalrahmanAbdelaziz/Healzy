@@ -1,17 +1,25 @@
-<!-- appointments-list.component.html -->
 <app-d-header></app-d-header>
 
 <div class="appointment-container">
-  <h2>{{ 'appointments.doctor_appointments' | transloco }}</h2>
+  <!-- Page Title -->
+  <h2 class="page-title">{{ 'appointments.doctor_appointments' | transloco }}</h2>
+
+  <!-- Date Filter -->
   <div class="dropdown-container">
-    <label for="dateDropdown">{{ 'appointments.select_date' | transloco }}:</label>
-    <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="onDateSelect($event)">
+    <label for="dateDropdown" class="dropdown-label">{{ 'appointments.select_date' | transloco }}</label>
+    <select
+      id="dateDropdown"
+      [(ngModel)]="selectedDate"
+      (change)="onDateSelect($event)"
+      class="date-dropdown"
+    >
       <option *ngFor="let day of availableDays" [value]="day.date">
         {{ day.date }} ({{ day.dayOfWeek }})
       </option>
     </select>
   </div>
 
+  <!-- Appointments Table -->
   <div *ngIf="appointments && appointments.length > 0; else emptyState">
     <div class="table-responsive">
       <table class="appointment-table">
@@ -25,59 +33,93 @@
             <th>{{ 'appointments.actions' | transloco }}</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let appointment of appointments"
-              [class]="getStatusClass(appointment.appointmentStatus_En)"
-              [class.clickable-row]="isRowClickable(appointment.appointmentStatus_En)"
-              (click)="isRowClickable(appointment.appointmentStatus_En) ? navigateToPatientProfile(appointment) : null">
-            <td [attr.data-label]="'appointments.patient_name' | transloco">{{ appointment.patientName }}</td>
-            <td [attr.data-label]="'appointments.time_slot' | transloco">{{ appointment.timeSlot.startTime }} - {{ appointment.timeSlot.endTime }}</td>
-            <td [attr.data-label]="'appointments.status' | transloco">
-              <span class="status-badge">{{ appointment.appointmentStatus_En }}</span>
-            </td>
-            <td [attr.data-label]="'appointments.booking_way' | transloco">{{ appointment.bookingWay_En || 'N/A' }}</td>
-            <td [attr.data-label]="'appointments.arrival_time' | transloco">{{ formatTime(appointment.patientArrivalTime) }}</td>
-            <td class="actions" [attr.data-label]="'appointments.actions' | transloco">
-              <button class="btn btn-cancel" 
-                      *ngIf="canCancelAppointment(appointment.appointmentStatus_En)" 
-                      (click)="$event.stopPropagation(); openCancelModal(appointment.id)">
+       <tbody>
+  <tr
+    *ngFor="let appointment of appointments"
+    [ngClass]="appointment.appointmentStatus_En.toLowerCase()"
+    [class.clickable-row]="isRowClickable(appointment.appointmentStatus_En)"
+    (click)="isRowClickable(appointment.appointmentStatus_En) ? navigateToPatientProfile(appointment) : null"
+  >
+    <td [attr.data-label]="'appointments.patient_name' | transloco">
+      {{ appointment.patientName }}
+    </td>
+    <td [attr.data-label]="'appointments.time_slot' | transloco">
+      {{ appointment.timeSlot.startTime }} - {{ appointment.timeSlot.endTime }}
+    </td>
+    <td [attr.data-label]="'appointments.status' | transloco">
+      <span class="status-badge">{{ appointment.appointmentStatus_En }}</span>
+    </td>
+    <td [attr.data-label]="'appointments.booking_way' | transloco">
+      {{ appointment.bookingWay_En || 'N/A' }}
+    </td>
+    <td [attr.data-label]="'appointments.arrival_time' | transloco">
+      {{ formatTime(appointment.patientArrivalTime) }}
+    </td>
+    <td class="actions" [attr.data-label]="'appointments.actions' | transloco">
+       <button
+                class="btn btn-cancel"
+                *ngIf="canCancelAppointment(appointment.appointmentStatus_En)"
+                (click)="$event.stopPropagation(); openCancelModal(appointment.id)"
+              >
                 {{ 'myAppointments.cancel' | transloco }}
               </button>
 
-              <button *ngIf="canRescheduleAppointment(appointment.appointmentStatus_En)"
-                      class="btn btn-reschedule"
-                      (click)="$event.stopPropagation(); reschedule(appointment.id, userId)">
+              <!-- Reschedule -->
+              <button
+                *ngIf="canRescheduleAppointment(appointment.appointmentStatus_En)"
+                class="btn btn-reschedule"
+                (click)="$event.stopPropagation(); reschedule(appointment.id, userId)"
+              >
                 {{ 'appointments.reschedule' | transloco }}
               </button>
 
-              <button *ngIf="canMarkInProgress(appointment.appointmentStatus_En)" 
-                      class="btn btn-progress" 
-                      (click)="$event.stopPropagation(); markAsInProgress(appointment.id)">
+              <!-- Mark as In Progress -->
+              <button
+                *ngIf="canMarkInProgress(appointment.appointmentStatus_En)"
+                class="btn btn-progress"
+                (click)="$event.stopPropagation(); markAsInProgress(appointment.id)"
+              >
                 {{ 'myAppointments.enter' | transloco }}
               </button>
 
-              <span *ngIf="!canCancelAppointment(appointment.appointmentStatus_En) && 
-                           !canRescheduleAppointment(appointment.appointmentStatus_En) && 
-                           !canMarkInProgress(appointment.appointmentStatus_En)" 
-                    class="no-actions">
+              <!-- No Actions -->
+              <span
+                *ngIf="!canCancelAppointment(appointment.appointmentStatus_En) &&
+                         !canRescheduleAppointment(appointment.appointmentStatus_En) &&
+                         !canMarkInProgress(appointment.appointmentStatus_En)"
+                class="no-actions"
+              >
                 {{ 'appointments.no_actions' | transloco }}
               </span>
-            </td>
-          </tr>
-        </tbody>
+    </td>
+  </tr>
+</tbody>
       </table>
     </div>
   </div>
 
+  <!-- Empty State -->
   <ng-template #emptyState>
     <div class="no-appointments">
       <div class="empty-state">
-        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="empty-image">
-          <path d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z"
-                stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M16 3V7" stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M8 3V7" stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M3 11H21" stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          width="60"
+          height="60"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="empty-image"
+        >
+          <path
+            d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z"
+            stroke="#165B40"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M16 3V7" stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M8 3V7" stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M3 11H21" stroke="#165B40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <h3>{{ 'appointments.no_patients_today' | transloco }}</h3>
         <p>{{ 'myAppointments.noAppointmentsMessage' | transloco }}</p>
@@ -86,6 +128,7 @@
   </ng-template>
 </div>
 
+<!-- Cancel Confirmation Modal -->
 <app-confirmation-modal
   [isVisible]="isCancelModalOpen"
   (confirmed)="confirmCancel()"

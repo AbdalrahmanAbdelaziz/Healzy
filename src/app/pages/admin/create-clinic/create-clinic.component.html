@@ -8,12 +8,14 @@
     </div>
 
     <form [formGroup]="clinicForm" (ngSubmit)="onSubmit()">
+      <!-- Clinic Name -->
       <div class="form-group">
         <label for="name">{{ 'clinic_form.name' | transloco }} *</label>
         <input 
-          type="text" 
-          id="name" 
-          formControlName="name" 
+          type="text"
+          id="name"
+          formControlName="name"
+          pattern="[a-zA-Z\u0600-\u06FF\s]+"
           [placeholder]="'clinic_form.name_placeholder' | transloco"
           [class.invalid]="formControls['name'].invalid && formControls['name'].touched">
         <div class="error-message" *ngIf="formControls['name'].invalid && formControls['name'].touched">
@@ -22,11 +24,12 @@
       </div>
 
       <div class="form-row">
+        <!-- Country -->
         <div class="form-group">
           <label for="countryId">{{ 'clinic_form.country' | transloco }} *</label>
           <select 
-            id="countryId" 
-            formControlName="countryId" 
+            id="countryId"
+            formControlName="countryId"
             (change)="updateGovernorates($event)"
             [class.invalid]="formControls['countryId'].invalid && formControls['countryId'].touched">
             <option value="">{{ 'clinic_form.select_country' | transloco }}</option>
@@ -39,11 +42,12 @@
           </div>
         </div>
 
+        <!-- Governorate -->
         <div class="form-group">
           <label for="governorateId">{{ 'clinic_form.governorate' | transloco }} *</label>
           <select 
-            id="governorateId" 
-            formControlName="governorateId" 
+            id="governorateId"
+            formControlName="governorateId"
             [disabled]="!formControls['countryId'].value"
             (change)="updateDistricts($event)"
             [class.invalid]="formControls['governorateId'].invalid && formControls['governorateId'].touched">
@@ -57,11 +61,12 @@
           </div>
         </div>
 
+        <!-- District -->
         <div class="form-group">
           <label for="districtId">{{ 'clinic_form.district' | transloco }} *</label>
           <select 
-            id="districtId" 
-            formControlName="districtId" 
+            id="districtId"
+            formControlName="districtId"
             [disabled]="!formControls['governorateId'].value"
             [class.invalid]="formControls['districtId'].invalid && formControls['districtId'].touched">
             <option value="">{{ 'clinic_form.select_district' | transloco }}</option>
@@ -75,25 +80,29 @@
         </div>
       </div>
 
+      <!-- Phone -->
       <div class="form-group">
         <label for="phone">{{ 'clinic_form.phone' | transloco }} *</label>
         <input 
-          type="tel" 
-          id="phone" 
-          formControlName="phone" 
+          type="tel"
+          id="phone"
+          formControlName="phone"
+          inputmode="numeric"
+          pattern="[0-9]*"
           [placeholder]="'clinic_form.phone_placeholder' | transloco"
           [class.invalid]="formControls['phone'].invalid && formControls['phone'].touched">
         <div class="error-message" *ngIf="formControls['phone'].invalid && formControls['phone'].touched">
           {{ 'validation.phone_required' | transloco }}
         </div>
       </div>
-      
+
+      <!-- Email -->
       <div class="form-group">
         <label for="email">{{ 'clinic_form.email' | transloco }} *</label>
         <input 
-          type="email" 
-          id="email" 
-          formControlName="email" 
+          type="email"
+          id="email"
+          formControlName="email"
           [placeholder]="'clinic_form.email_placeholder' | transloco"
           [class.invalid]="formControls['email'].invalid && formControls['email'].touched">
         <div class="error-message" *ngIf="formControls['email'].invalid && formControls['email'].touched">
@@ -101,14 +110,15 @@
         </div>
       </div>
 
+      <!-- Gallery -->
       <div class="form-group">
         <label>{{ 'clinic_form.gallery_label' | transloco }}</label>
         <div class="file-upload-wrapper">
           <input 
-            type="file" 
-            id="gallery" 
-            (change)="onGalleryChange($event)" 
-            multiple 
+            type="file"
+            id="gallery"
+            (change)="onGalleryChange($event)"
+            multiple
             accept="image/*">
           <label for="gallery" class="file-upload-label">
             <span class="upload-icon">+</span>
@@ -123,9 +133,10 @@
         </div>
       </div>
 
+      <!-- Actions -->
       <div class="form-actions">
         <button 
-          type="submit" 
+          type="submit"
           class="submit-btn"
           [disabled]="clinicForm.invalid || isLoading">
           <span *ngIf="!isLoading">{{ 'clinic_form.create_button' | transloco }}</span>

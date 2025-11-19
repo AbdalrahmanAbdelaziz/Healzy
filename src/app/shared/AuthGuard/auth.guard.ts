@@ -13,8 +13,16 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const user = this.userService.getUser();
-    
+    let user = this.userService.getUser();
+
+    // ✅ Try restoring from localStorage if UserService is empty
+    if (!user) {
+      user = this.userService.getUserFromLocalStorage();
+      if (user) {
+        this.userService.setUserToLocalStorage(user);
+      }
+    }
+
     if (user?.data?.token) {
       return true;
     }

@@ -1,153 +1,63 @@
 .modal-container {
-    padding: 32px;
-    max-width: 600px;
-    font-family: 'Roboto', sans-serif;
-    background-color: #fefefe;
-    border-radius: 16px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
-    animation: fadeInScale 0.3s ease;
-  }
-  
-  @keyframes fadeInScale {
-    from {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-  
-  .modal-header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  
-  .modal-header h2 {
-    color: #24CC81;
-    font-size: 2rem;
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
-  
-  .modal-header p {
-    color: #165B40;
-    font-size: 1rem;
-    margin: 0;
-  }
-  
-  .options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-  
-  .option-card {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-radius: 12px;
-    border-left: 5px solid;
-    background-color: #ffffff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  
-  .option-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-  }
-  
-  .option-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-    color: #fff;
-  }
-  
-  .option-icon mat-icon {
-    font-size: 28px;
-  }
-  
-  .option-content {
-    flex: 1;
-  }
-  
-  .option-content h3 {
-    margin: 0;
-    font-size: 1.25rem;
-    color: #222;
-    font-weight: 500;
-  }
-  
-  .option-content p {
-    margin: 4px 0 0;
-    color: #666;
-    font-size: 0.95rem;
-  }
-  
-  .arrow-icon {
-    color: #1A9A63;
-    font-size: 24px;
-    margin-left: 20px;
-  }
-  
-  .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .modal-actions button {
-    font-weight: 500;
-    padding: 6px 16px;
-    border-radius: 8px;
-    background-color: #165B40;
-    color: #ffffff;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .modal-actions button:hover {
-    background-color: #1A9A63;
-    color: #000;
-  }
-  
-  
-  
-  /* Optional: global style override for dialog container */
-  .user-type-modal .mat-dialog-container {
-    padding: 0 !important;
-    border-radius: 16px !important;
-    overflow: hidden;
-    background-color: transparent;
-  }
-
-[dir="rtl"] {
-  .modal-header {
-    text-align: right;
-  }
-
-  .option-content {
-    text-align: right;
-    margin-right: 16px;
-    margin-left: 0;
-  }
-
-  .arrow-icon {
-    transform: rotate(180deg);
-    margin-left: 0;
-    margin-right: auto;
-  }
-
-  .option-icon {
-    margin-left: 16px;
-    margin-right: 0;
-  }
+  text-align: center;
+  padding: 20px;
+  max-width: 500px;
 }
-  
+
+h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.option-card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.option-card.doctor {
+  border-top: 4px solid #2196f3;
+}
+
+.option-card.secretary {
+  border-top: 4px solid #4caf50;
+}
+
+.icon {
+  font-size: 48px;
+  color: #2196f3;
+  margin-bottom: 10px;
+}
+
+.option-card.secretary .icon {
+  color: #4caf50;
+}
+
+h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  font-weight: 600;
+}
+

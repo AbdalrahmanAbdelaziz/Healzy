@@ -3,6 +3,8 @@ import { UserService } from '../../../services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { BASE_URL } from '../../../shared/constants/urls';
+import { DoctorNotificationService } from '../../../services/doctor-notification.service';
 
 
 @Component({
@@ -19,12 +21,14 @@ export class DHeaderComponent implements OnInit , OnDestroy {
    currentLang: string = 'en';
    isMobileView = false;
    private darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+   BASE_URL = BASE_URL; 
  
    constructor(
      private userService: UserService, 
      private router: Router, 
      private renderer: Renderer2,
-     public translocoService: TranslocoService
+     public translocoService: TranslocoService,
+     private doctorNotifService: DoctorNotificationService
    ) {
      this.userService.userObservable.subscribe((newUser) => {
        if (newUser) {
@@ -47,6 +51,7 @@ export class DHeaderComponent implements OnInit , OnDestroy {
    }
  
    ngOnInit(): void {
+     this.doctorNotifService.startDoctorPolling();
      const savedLang = localStorage.getItem('language') || 'en';
      this.currentLang = savedLang;
      this.translocoService.setActiveLang(savedLang);

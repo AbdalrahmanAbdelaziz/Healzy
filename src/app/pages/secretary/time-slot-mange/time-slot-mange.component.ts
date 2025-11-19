@@ -12,6 +12,7 @@ import { UserService } from '../../../services/user.service';
 import { MangeTimeslotService } from '../../../services/mange-timeslot.service';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-time-slot-mange',
@@ -44,26 +45,52 @@ export class TimeSlotMangeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.generateWeekDays();
+  this.generateWeekDays();
 
-    // Get the doctor ID from the logged-in secretary's data
-    const user: LoginResponse | null = this.userService.getUser();
-    if (user && user.data.doctorId) {
-      this.doctorId = user.data.doctorId; // Fetch the doctorId from the secretary's data
-    } else {
-      console.error('Error: No doctor ID found in the logged-in secretary\'s data.');
-      this.toastr.error('No doctor ID found. Please contact support.');
-    }
-
-    // Initialize form
-    this.timeSlotForm = this.fb.group({
-      selectedDay: [null, Validators.required],
-      workingFrom: ['', Validators.required],  // 00:00:00 format
-      workingTo: ['', Validators.required],
-      slotInterval: [null, [Validators.required, Validators.min(1)]], // Default 15 mins
-      repeatWeeks: [null, [Validators.required, Validators.min(1)]], // Default 1 week
-    });
+  const user: LoginResponse | null = this.userService.getUser();
+  if (!user) {
+    console.error('Error: No user data found.');
+    this.toastr.error('User not found. Please login again.');
+    return;
   }
+
+  if (user.data.applicationRole_En === 'Secretary') {
+    // Secretary: fetch doctor assigned
+    this.doctorService.getDoctorsFromSecretary().pipe(take(1)).subscribe({
+      next: (doctor) => {
+        if (doctor && doctor.id) {
+          this.doctorId = doctor.id;
+          this.userService.setDoctorIdForSecretary(this.doctorId);
+
+         
+        } else {
+          this.toastr.warning(this.translocoService.translate('errors.noDoctorAssigned'));
+          console.error('No doctor assigned to this secretary.');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching doctor for secretary:', err);
+        this.toastr.error(this.translocoService.translate('error.fetch_doctors_failed'));
+      }
+    });
+  } else if (user.data.applicationRole_En === 'Doctor') {
+    // Doctor: use own ID
+    this.doctorId = user.data.id;
+
+ 
+ 
+  }
+
+  // Initialize the time slot form
+  this.timeSlotForm = this.fb.group({
+    selectedDay: [null, Validators.required],
+    workingFrom: ['', Validators.required],
+    workingTo: ['', Validators.required],
+    slotInterval: [null, [Validators.required, Validators.min(1)]],
+    repeatWeeks: [null, [Validators.required, Validators.min(1)]],
+  });
+}
+
 
   // Generate the next 7 days dynamically
   generateWeekDays() {

@@ -1,4 +1,4 @@
-/* General Styling */
+/* General Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,65 +11,73 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 100px 20px 40px; /* Space below navbar */
+  padding: 100px 20px 40px;
 }
 
 /* Appointments Container */
 .appointments-container {
-  background: #24CC81;
+  background: #ffffff;
   padding: 2.5rem;
-  border-radius: 15px;
-  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
   width: 85%;
-  max-width: 800px;
+  max-width: 900px;
   text-align: center;
   margin-top: 20px;
+  transition: 0.3s ease;
+  box-shadow: 0 10px 25px #24CC81;
+}
+
+.appointments-container:hover {
+  transform: translateY(-2px);
 }
 
 /* Date Title */
 .date-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: white;
-  margin-bottom: 20px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(90deg, #24CC81, #165B40);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.05);
 }
 
 /* Slots Grid */
 .slots-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
-  padding: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 20px;
+  padding: 10px;
 }
 
-/* Time Slot Card */
+/* Slot Card */
 .slot-card {
-  background: white;
-  padding: 16px;
-  border-radius: 12px;
+  background: #f8fdfb;
+  padding: 18px;
+  border-radius: 14px;
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: 600;
   color: #24CC81;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  cursor: pointer;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
   text-align: center;
   position: relative;
+  border: 2px solid transparent;
+  box-shadow: 0 10px 25px #24CC81;
 }
 
-/* Hover Effect */
 .slot-card:hover {
-  background: #165B40;
+  background: #24CC81;
   color: white;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  border-color: #1A9A63;
 }
 
 /* Time Range */
 .time-range {
   display: block;
   font-size: 1.2rem;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 /* Reserved Status */
@@ -78,15 +86,17 @@
   color: white;
   padding: 6px 12px;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 /* Booked Slot */
 .booked-slot {
-  background: #D32F2F !important;
-  color: white;
-  border-color: #D32F2F;
+  background: #fce4e4 !important;
+  color: #b71c1c;
   cursor: not-allowed;
+  box-shadow: none;
+  border: 2px solid #f5baba;
 }
 
 /* Reserve Button */
@@ -96,6 +106,7 @@
   border: none;
   padding: 10px 15px;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   border-radius: 8px;
   transition: 0.3s ease;
@@ -110,18 +121,17 @@
 .no-appointments {
   text-align: center;
   padding: 2rem;
-  color: white;
-  font-size: 1.3rem;
+  color: #444;
+  font-size: 1.2rem;
 }
 
-/* No Slots Image */
 .no-appointments img {
-  width: 120px;
+  width: 140px;
   margin-bottom: 15px;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .appointments-container {
     padding: 2rem;
@@ -133,22 +143,13 @@
   }
 
   .slots-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  }
-
-  .slot-card {
-    font-size: 1rem;
-  }
-
-  .reserve-btn {
-    font-size: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 }
 
 @media (max-width: 480px) {
   .appointments-container {
     padding: 1.5rem;
-    width: 100%;
   }
 
   .date-title {
@@ -160,40 +161,17 @@
   }
 
   .slot-card {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   .reserve-btn {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     padding: 8px 12px;
   }
 }
 
-[dir="rtl"] .appointments-container {
-  /* text-align: right; */
-}
-
-[dir="rtl"] .slots-grid {
-  direction: ltr; /* Keep time format in LTR */
-}
-
+/* RTL Fix */
+[dir="rtl"] .slots-grid,
 [dir="rtl"] .slot-card {
-  direction: ltr; /* Keep time format consistent */
-}
-
-[dir="rtl"] .time-range {
-  text-align: center;
-}
-
-/* Responsive adjustments for RTL */
-@media (max-width: 768px) {
-  [dir="rtl"] .appointments-container {
-    padding: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  [dir="rtl"] .appointments-container {
-    padding: 1.5rem;
-  }
+  direction: ltr;
 }

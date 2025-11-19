@@ -1,5 +1,4 @@
 <app-s-header></app-s-header>
-<app-s-sidenavbar></app-s-sidenavbar>
 
 <div class="appointment-container">
   <h2>{{ 'myAppointments.title' | transloco }}</h2>
@@ -35,7 +34,12 @@
               appointment.bookingWay_En
             }}
           </td>
-          <td>{{ appointment.notes }}</td>
+          <td>
+  {{ appointment.notes && appointment.notes.trim() !== '' 
+      ? appointment.notes 
+      : ( 'myAppointments.noNotes' | transloco ) }}
+</td>
+
           <td>
             {{
               translocoService.getActiveLang() === 'ar' ?

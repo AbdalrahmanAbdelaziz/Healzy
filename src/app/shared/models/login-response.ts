@@ -10,7 +10,7 @@ export interface LoginResponse {
     firstName: string;
     lastName: string;
     dateOfBirth: string;
-    profilePicture: string;
+    profilePicture: string | null;
     lastLogin: string;
     gender_En: string;
     gender_Ar: string;
@@ -27,7 +27,11 @@ export interface LoginResponse {
     applicationRole_ID: number;
     doctorId: number | null;
     specializationId: number | null;
-    checkPrice: number
+    checkPrice: number,
+    genderId: number,
+countryId: number,
+governorateId: number,
+districtId: number
   };
   statusCode: number;
   succeeded: boolean;

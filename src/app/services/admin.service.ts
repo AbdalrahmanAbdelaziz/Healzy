@@ -14,7 +14,7 @@ export class AdminService {
 
   createDoctor(formData: FormData): Observable<APIResponse<any>> {
     return this._httpClient.post<APIResponse<any>>(
-      this._envService.getApiUrl() + '/api/Authentiction/createDoctor',
+      this._envService.getApiUrl() + '/api/Authentication/createDoctor',
       formData
     ).pipe(
       catchError((e) => throwError(() => e))
@@ -40,7 +40,7 @@ export class AdminService {
   // Add this method to your existing AdminService
 createSecretary(formData: FormData): Observable<APIResponse<any>> {
     return this._httpClient.post<APIResponse<any>>(
-      this._envService.getApiUrl() + '/api/Authentiction/createSecretary',
+      this._envService.getApiUrl() + '/api/Authentication/createSecretary',
       formData
     ).pipe(
       catchError((e) => throwError(() => e))

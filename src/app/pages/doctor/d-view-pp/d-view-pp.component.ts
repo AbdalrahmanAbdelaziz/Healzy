@@ -14,6 +14,7 @@ import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { DoctorService } from '../../../services/doctor.service';
 import { forkJoin } from 'rxjs';
 import { normalizeAppointmentData } from '../../../shared/appointment.utils';
+import { BASE_URL } from '../../../shared/constants/urls';
 
 @Component({
   selector: 'app-d-view-pp',
@@ -62,8 +63,9 @@ quantity: number = 1;
 checkPrice: number = 0;
 
 visitDetailsSubmitted: boolean = false;
+BASE__URL = BASE_URL; 
 
-
+private BASE_URL = 'https://api.healzyapp.com';
  
 
   constructor(
@@ -298,31 +300,60 @@ loadDoctorServices() {
 
 
 
-  transformFileUrlToAttachment(fileUrl: string): any {
-    const fileName = fileUrl.split('\\').pop() || fileUrl.split('/').pop() || 'file';
-    const extension = fileName.split('.').pop()?.toLowerCase();
-    let fileType = 'application/octet-stream';
-    
-    if (extension === 'jpg' || extension === 'jpeg' || extension === 'png') {
-      fileType = 'image/' + extension;
-    } else if (extension === 'pdf') {
-      fileType = 'application/pdf';
-    } else if (extension === 'txt') {
-      fileType = 'text/plain';
-    }
-    
-    const baseUrl = 'https://hogozati.rossodirect.com:1234/';
-    const properUrl = fileUrl.startsWith('wwwroot') 
-      ? baseUrl + fileUrl.replace(/\\/g, '/').replace('wwwroot/', '')
-      : fileUrl;
-    
-    return {
-      name: fileName,
-      type: fileType,
-      url: properUrl,
-      size: 0
+transformFileUrlToAttachment(raw: string | { url?: string, fileUrl?: string }): any {
+  const rawUrl = typeof raw === 'string' ? raw : (raw?.url || raw?.fileUrl || '');
+  const fileName = this.getFileName(rawUrl);
+  const extension = (fileName.split('.').pop() || '').toLowerCase();
+  let fileType = 'application/octet-stream';
+  if (['jpg','jpeg','png','gif','webp'].includes(extension)) fileType = 'image/' + (extension === 'jpg' ? 'jpeg' : extension);
+  else if (extension === 'pdf') fileType = 'application/pdf';
+  else if (extension === 'txt') fileType = 'text/plain';
+
+  const candidates = this.buildAttachmentCandidates(rawUrl);
+
+  return {
+    original: rawUrl,
+    name: fileName,
+    type: fileType,
+    url: candidates.length ? candidates[0] : rawUrl, // best guess
+    size: 0,
+    urlCandidates: candidates
+  };
+}
+
+async resolveAttachmentUrl(attachment: any): Promise<string> {
+  const candidates: string[] = attachment.urlCandidates || (attachment.url ? [attachment.url] : []);
+  if (!candidates.length) return attachment.url;
+
+  return new Promise((resolve) => {
+    let i = 0;
+    const tryNext = () => {
+      if (i >= candidates.length) {
+        // none loaded; fallback to first candidate
+        attachment.url = candidates[0];
+        resolve(attachment.url);
+        return;
+      }
+
+      const testUrl = candidates[i];
+      // preload image to check if reachable
+      const img = new Image();
+      img.onload = () => {
+        attachment.url = testUrl;
+        resolve(testUrl);
+      };
+      img.onerror = () => {
+        i++;
+        tryNext();
+      };
+
+      // start loading (this will trigger browser requests and show 404 if not found)
+      img.src = testUrl;
     };
-  }
+
+    tryNext();
+  });
+}
 
   viewImage(file: any): void {
     const imageUrl = file.url || file.previewUrl;
@@ -407,47 +438,67 @@ loadDoctorServices() {
     this.showTranslatedToastr('info', 'draft_saved', 'Draft saved locally');
   }
 
-  submitVisitDetails(): void {
-    if (!this.currentDiagnosis && !this.currentSigns && !this.currentPrescription && this.uploadedFiles.length === 0) {
-      this.showTranslatedToastr('warning', 'missing_details', 'Please add at least one detail (diagnosis, signs, prescription) or upload files');
-      return;
-    }
+ submitVisitDetails(): void {
+  // Always ensure all fields have values (default if empty)
+  this.currentDiagnosis =
+    this.currentDiagnosis?.trim() ||
+    this.translocoService.translate('patient_profile.no_diagnosis_provided') ||
+    'No diagnosis provided';
 
-    this.isSubmitting = true;
+  this.currentSigns =
+    this.currentSigns?.trim() ||
+    this.translocoService.translate('patient_profile.no_signs_provided') ||
+    'No signs provided';
 
-    const files = this.uploadedFiles.map(file => file.file);
+  this.currentPrescription =
+    this.currentPrescription?.trim() ||
+    this.translocoService.translate('patient_profile.no_prescription_provided') ||
+    'No prescription provided';
 
-     this.patientService.addMedicalRecord(
+  // Handle files: if none uploaded, send empty array
+  const files = this.uploadedFiles.length > 0
+    ? this.uploadedFiles.map(file => file.file)
+    : [];
+
+  this.isSubmitting = true;
+
+  this.patientService.addMedicalRecord(
     this.patientDetails.id,
-    this.currentDiagnosis || '',
+    this.currentDiagnosis,
     '',
-    this.currentSigns || '',
-    this.currentPrescription || '',
+    this.currentSigns,
+    this.currentPrescription,
     files,
     this.appointmentId
   ).subscribe({
     next: (response) => {
       this.isSubmitting = false;
-      this.showTranslatedToastr('success', 'medical_record_added', 'Medical record added successfully');
-      
-      // Set the flag to indicate visit details have been submitted
-      this.visitDetailsSubmitted = true;
-      
-        // this.loadCurrentAppointmentMedicalRecord(this.patientDetails.id);
-        // this.changeTab('history');
+      this.showTranslatedToastr(
+        'success',
+        'medical_record_added',
+        'Medical record added successfully'
+      );
 
-        this.currentDiagnosis = '';
-        this.currentSigns = '';
-        this.currentPrescription = '';
-        this.uploadedFiles = [];
-      },
-      error: (err) => {
-        this.isSubmitting = false;
-        this.showTranslatedToastr('error', 'medical_record_error', 'Error adding medical record');
-        console.error('Error adding medical record:', err);
-      }
-    });
-  }
+      // Mark visit details as submitted
+      this.visitDetailsSubmitted = true;
+
+      // Reset form
+      this.currentDiagnosis = '';
+      this.currentSigns = '';
+      this.currentPrescription = '';
+      this.uploadedFiles = [];
+    },
+    error: (err) => {
+      this.isSubmitting = false;
+      this.showTranslatedToastr(
+        'error',
+        'medical_record_error',
+        'Error adding medical record'
+      );
+      console.error('Error adding medical record:', err);
+    }
+  });
+}
 
   changeTab(tab: string): void {
     this.currentTab = tab;
@@ -603,7 +654,7 @@ setCheckPrice(): void {
   
   this.appointmentService.setAppointmentCheckPrice(
     this.appointmentId, 
-    this.checkPrice // Use the price fetched from the API
+    this.checkPrice 
   ).subscribe({
     next: () => {
       this.isSettingCheckPrice = false;
@@ -1043,6 +1094,51 @@ private showFileReadError(fileName: string): void {
     }
   );
 }
+private safeJoin(base: string, path: string) {
+  return base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '');
+}
+
+private getFileName(fileUrl: string) {
+  if (!fileUrl) return 'file';
+  const cleaned = fileUrl.replace(/\\/g, '/').split('/').pop() || fileUrl;
+  return cleaned;
+}
+
+buildAttachmentCandidates(fileUrl: string): string[] {
+  if (!fileUrl) return [];
+
+  let url = String(fileUrl).trim();
+  url = url.replace(/^["']|["']$/g, '');          // strip quotes
+  url = url.replace(/\\/g, '/');                  // backslashes -> forward
+
+  // if absolute already, return it immediately
+  if (/^https?:\/\//i.test(url)) {
+    return [url];
+  }
+
+  // normalize relative prefixes
+  url = url.replace(/^\.?\//, '');                // remove leading ./ or /
+  url = url.replace(/^wwwroot\//i, '');           // remove wwwroot/ if present
+
+  const filename = this.getFileName(url);
+
+  // common candidate locations (ordered by likelihood)
+  const candidates = [
+    // if url already contains a path, prefer appending it directly to base
+    url.includes('/') ? this.safeJoin(this.BASE_URL, url) : null,
+    // common app upload folder
+    this.safeJoin(this.BASE_URL, 'uploads/' + url),
+    // sometimes images are stored in a medicalRecords folder
+    this.safeJoin(this.BASE_URL, 'uploads/medicalRecords/' + filename),
+    // some deployments expose under 'wwwroot' path
+    this.safeJoin(this.BASE_URL, url), // base + url (safeJoin handles leading/trailing slashes)
+    // fallback: base root + filename
+    this.safeJoin(this.BASE_URL, filename)
+  ].filter(Boolean) as string[]; // remove nulls
+
+  // dedupe
+  return Array.from(new Set(candidates));
+}
 
 removeFile(index: number): void {
   const fileName = this.uploadedFiles[index].name;
@@ -1069,52 +1165,65 @@ removeFile(index: number): void {
 }
 
 async handleCompleteVisit(): Promise<void> {
-  // Check if current appointment medical record already exists
-  if (this.currentAppointmentMedicalRecord) {
-    // If record already exists, just complete the visit and navigate
-    this.completeVisit();
-    return;
-  }
+  // Always ensure all fields have values (default if empty)
+  this.currentDiagnosis =
+    this.currentDiagnosis?.trim() ||
+    this.translocoService.translate('patient_profile.no_diagnosis_provided') ||
+    'No diagnosis provided';
 
-  // If no medical record exists, fill empty fields with default values
-  const hasExistingData = this.currentDiagnosis || this.currentSigns || this.currentPrescription;
-  
-  if (!hasExistingData) {
-    // Fill empty fields with default messages
-    this.currentDiagnosis = this.currentDiagnosis || this.translocoService.translate('patient_profile.no_diagnosis_provided') || 'No diagnosis provided';
-    this.currentSigns = this.currentSigns || this.translocoService.translate('patient_profile.no_signs_provided') || 'No signs provided';
-    this.currentPrescription = this.currentPrescription || this.translocoService.translate('patient_profile.no_prescription_provided') || 'No prescription provided';
-  }
+  this.currentSigns =
+    this.currentSigns?.trim() ||
+    this.translocoService.translate('patient_profile.no_signs_provided') ||
+    'No signs provided';
 
-  // Submit the visit details first
+  this.currentPrescription =
+    this.currentPrescription?.trim() ||
+    this.translocoService.translate('patient_profile.no_prescription_provided') ||
+    'No prescription provided';
+
+  // Handle files: if none uploaded, send empty array
+  const files = this.uploadedFiles.length > 0
+    ? this.uploadedFiles.map(file => file.file)
+    : [];
+
   this.isSubmitting = true;
 
   try {
-    const files = this.uploadedFiles.map(file => file.file);
-    
     await this.patientService.addMedicalRecord(
       this.patientDetails.id,
-      this.currentDiagnosis || '',
+      this.currentDiagnosis,
       '',
-      this.currentSigns || '',
-      this.currentPrescription || '',
+      this.currentSigns,
+      this.currentPrescription,
       files,
       this.appointmentId
     ).toPromise();
 
-    this.showTranslatedToastr('success', 'medical_record_added', 'Medical record added successfully');
-    
+    this.showTranslatedToastr(
+      'success',
+      'medical_record_added',
+      'Medical record added successfully'
+    );
+
     // After submitting medical record, complete the visit
     this.completeVisit();
   } catch (err) {
     this.isSubmitting = false;
-    this.showTranslatedToastr('error', 'medical_record_error', 'Error adding medical record');
+    this.showTranslatedToastr(
+      'error',
+      'medical_record_error',
+      'Error adding medical record'
+    );
     console.error('Error adding medical record:', err);
   }
 }
-
 completeVisitNavigationOnly(): void {
   this.router.navigate(['/doctor-home']);
+}
+
+onImageError(event: Event) {
+  const target = event.target as HTMLImageElement;
+  target.style.display = 'none'; // hide broken image
 }
 
 

@@ -5,10 +5,11 @@ import { TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from './pages/footer/footer.component';
 import { App } from '@capacitor/app';
 import { Platform } from '@angular/cdk/platform';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent],
+  imports: [RouterOutlet, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

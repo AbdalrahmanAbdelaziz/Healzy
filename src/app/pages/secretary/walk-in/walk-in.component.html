@@ -1,36 +1,64 @@
-<app-s-header></app-s-header>
-<app-s-sidenavbar></app-s-sidenavbar>
+<div class="page-wrapper">
 
-<div class="container" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
-  <h2>{{ 'patientCheck.title' | transloco }}</h2>
+  <app-s-header></app-s-header>
+  <app-s-sidenavbar></app-s-sidenavbar>
 
-  <!-- Input field for phone number -->
-  <div class="input-container">
-    <label for="phoneInput" class="visually-hidden">
-      {{ 'patientCheck.phoneLabel' | transloco }}
-    </label>
-    <input 
-      id="phoneInput"
-      type="text" 
-      [(ngModel)]="phoneNumber" 
-      [placeholder]="'patientCheck.phonePlaceholder' | transloco"
-      [attr.aria-label]="'patientCheck.phoneLabel' | transloco"
-      aria-required="true"
-      class="form-control"
-    />
+  <div class="container" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+
+    <div class="card">
+      <h2>{{ 'patientCheck.title' | transloco }}</h2>
+
+      <!-- Input field -->
+      <div class="input-container">
+        <input 
+          id="phoneInput"
+          name="phoneInput"
+          type="text" 
+          [(ngModel)]="phoneNumber" 
+          #phone="ngModel"
+          [placeholder]="'patientCheck.phonePlaceholder' | transloco"
+          aria-label="{{ 'patientCheck.phoneLabel' | transloco }}"
+          required
+          pattern="^[0-9]{11}$"
+        />
+        <!-- <label for="phoneInput">{{ 'patientCheck.phonePlaceholder' | transloco }}</label> -->
+      </div>
+
+      <!-- Validation Errors -->
+      <div class="error-message" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+        <p *ngIf="phone.errors?.['required']" class="text-red">
+          {{ 'patientCheck.validation.required' | transloco }}
+        </p>
+        <p *ngIf="phone.errors?.['pattern']" class="text-red">
+          {{ 'patientCheck.validation.phoneInvalid' | transloco }}
+        </p>
+      </div>
+
+      <button 
+        class="check-btn" 
+        (click)="checkRegistration()" 
+        [disabled]="phone.invalid || !phoneNumber"
+      >
+        {{ 'patientCheck.checkButton' | transloco }}
+      </button>
+
+      <!-- Messages -->
+      <div *ngIf="isRegistered === false" class="message warning">
+        <p>{{ 'patientCheck.notRegistered' | transloco }}</p>
+        <button class="action-btn" (click)="goToRegister()">
+          {{ 'patientCheck.addPatientButton' | transloco }}
+        </button>
+      </div>
+
+      <div *ngIf="isRegistered === true" class="message success">
+        <p>{{ 'patientCheck.registeredMessage' | transloco:{patientId: patientId} }}</p>
+        <button class="action-btn" (click)="goToAppointments()">
+          {{ 'patientCheck.goToAppointments' | transloco }}
+        </button>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- Check button -->
-  <button (click)="checkRegistration()">{{ 'patientCheck.checkButton' | transloco }}</button>
-
-  <!-- Display messages based on registration status -->
-  <div *ngIf="isRegistered === false">
-    <p>{{ 'patientCheck.notRegistered' | transloco }}</p>
-    <button (click)="goToRegister()">{{ 'patientCheck.addPatientButton' | transloco }}</button>
-  </div>
-
-  <div *ngIf="isRegistered === true">
-    <p>{{ 'patientCheck.registeredMessage' | transloco:{patientId: patientId} }}</p>
-    <button (click)="goToAppointments()">{{ 'patientCheck.goToAppointments' | transloco }}</button>
-  </div>
 </div>

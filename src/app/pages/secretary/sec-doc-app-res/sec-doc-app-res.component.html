@@ -1,38 +1,32 @@
-<ng-container *ngIf="patient?.data?.applicationRole_En === 'Patient'; else notPatient">
-  <app-p-header></app-p-header>
+<!-- Header Section -->
+<ng-container [ngSwitch]="patient?.data?.applicationRole_En">
+  <app-p-header *ngSwitchCase="'Patient'"></app-p-header>
+  <app-d-header *ngSwitchCase="'Doctor'"></app-d-header>
+  <app-s-header *ngSwitchDefault></app-s-header>
 </ng-container>
-<ng-template #notPatient>
-  <ng-container *ngIf="patient?.data?.applicationRole_En === 'Doctor'; else secretaryHeader">
-    <app-d-header></app-d-header>
-  </ng-container>
-</ng-template>
-<ng-template #secretaryHeader>
-  <app-s-header></app-s-header>
-</ng-template>
 
 <div class="navbar-spacer"></div>
 
-<!-- Conditional Sidebar -->
-<ng-container *ngIf="patient?.data?.applicationRole_En === 'Patient'; else secretarySidebar">
-  <app-s-sidenavbar></app-s-sidenavbar>
-</ng-container>
-<ng-template #secretarySidebar>
-  <app-s-sidenavbar></app-s-sidenavbar>
-</ng-template>
 
+
+<!-- Main Content -->
 <div class="content" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
   <div class="days-wrapper">
     <h2 class="title">{{ 'appointments.selectDateTitle' | transloco }}</h2>
 
-    <!-- Show when there are available dates -->
+    <!-- Available Days -->
     <div *ngIf="availableDays.length > 0; else noAppointments" class="days-grid">
-      <button *ngFor="let day of availableDays" (click)="goToDayAppointments(day)" class="day-card">
-        <span class="date">{{ day | date: (translocoService.getActiveLang() === 'ar' ? 'dd MMM yyyy' : 'MMM dd, yyyy') }}</span>
-        <span class="day-name">{{ day | date: 'EEEE' }}</span>
+      <button *ngFor="let day of availableDays"
+              (click)="goToDayAppointments(day)"
+              class="day-card">
+        <span class="date">
+          {{ day | date:(translocoService.getActiveLang() === 'ar' ? 'dd MMM yyyy' : 'MMM dd, yyyy') }}
+        </span>
+        <span class="day-name">{{ day | date:'EEEE' }}</span>
       </button>
     </div>
 
-    <!-- Template for No Available Appointments -->
+    <!-- No Available Appointments -->
     <ng-template #noAppointments>
       <div class="no-appointments">
         <p>{{ 'appointments.noAppointmentsMessage' | transloco }}</p>
@@ -40,4 +34,3 @@
     </ng-template>
   </div>
 </div>
-

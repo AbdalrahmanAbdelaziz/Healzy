@@ -73,7 +73,7 @@ html, body {
 }
 
 .hero-text button {
-  background-color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   color: white;
   padding: 12px 30px;
   border: none;

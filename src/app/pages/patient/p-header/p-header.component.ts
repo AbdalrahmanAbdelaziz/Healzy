@@ -5,6 +5,7 @@ import { LoginResponse } from '../../../shared/models/login-response';
 import { CommonModule } from '@angular/common';
 import { TranslocoService } from '@ngneat/transloco';
 import { TranslocoModule } from '@ngneat/transloco';
+import { BASE_URL } from '../../../shared/constants/urls';
 
 @Component({
   selector: 'app-p-header',
@@ -21,6 +22,7 @@ export class PHeaderComponent implements OnInit, OnDestroy {
    currentLang: string = 'en';
    isMobileView = false;
    private darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    BASE_URL = BASE_URL; 
  
    constructor(
      private userService: UserService, 

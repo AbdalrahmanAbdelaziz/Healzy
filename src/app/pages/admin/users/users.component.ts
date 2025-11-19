@@ -262,41 +262,63 @@ export class UsersComponent implements OnInit {
         { align: 'center' }
       );
 
-      // Convert PDF to ArrayBuffer and then to Blob
-      const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
-
-      // Convert Blob to Base64 (Capacitor prefers base64 strings for writeFile)
-      const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
-
+      // Generate filename
       const fileName = `Doctors_Revenue_Report_${monthName}_${this.revenueForm.value.year}.pdf`;
 
-      // Use Capacitor Filesystem to write the file
-      await Filesystem.writeFile({
-        path: fileName,
-        data: base64Data,
-        directory: Directory.Documents,
-      });
+      // --- Platform Detection: Browser vs Mobile ---
+      const isMobile = this.isMobilePlatform();
+      
+      if (isMobile) {
+        // Mobile behavior: Use Capacitor Filesystem and Share
+        const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+        const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
 
-      // Optional: Share the PDF after saving
-      const fileUri = (await Filesystem.getUri({
-        directory: Directory.Documents,
-        path: fileName
-      })).uri;
+        // Use Capacitor Filesystem to write the file
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64Data,
+          directory: Directory.Documents,
+        });
 
-      await Share.share({
-        title: translations.title,
-        text: `Doctors revenue report for ${monthName} ${this.revenueForm.value.year}`,
-        url: fileUri,
-        dialogTitle: 'Share PDF'
-      });
+        // Optional: Share the PDF after saving
+        const fileUri = (await Filesystem.getUri({
+          directory: Directory.Documents,
+          path: fileName
+        })).uri;
 
-      this.toastr.success('PDF exported and saved successfully!');
+        await Share.share({
+          title: translations.title,
+          text: `Doctors revenue report for ${monthName} ${this.revenueForm.value.year}`,
+          url: fileUri,
+          dialogTitle: 'Share PDF'
+        });
+
+        this.toastr.success('PDF exported and saved successfully!');
+      } else {
+        // Browser behavior: Direct download
+        doc.save(fileName);
+        this.toastr.success('PDF downloaded successfully!');
+      }
+
     } catch (error) {
       console.error('Error generating or saving PDF:', error);
       this.toastr.error('Failed to generate or save PDF');
     } finally {
       this.isGeneratingPDF = false;
     }
+  }
+
+  // Add this helper method to detect mobile platforms
+  private isMobilePlatform(): boolean {
+    // Check if Capacitor is available and we're running on a mobile device
+    const capacitor = (window as any).Capacitor;
+    if (capacitor && capacitor.isNativePlatform && capacitor.isNativePlatform()) {
+      return true;
+    }
+    
+    // Additional check for common mobile user agents
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
   }
 
   formatCurrency(amount: number): string {

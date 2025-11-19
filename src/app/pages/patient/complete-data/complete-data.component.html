@@ -1,45 +1,161 @@
-<div class="bg-img" [dir]="textDirection">
-  <app-p-header></app-p-header>
-  <app-side-navbar></app-side-navbar>
+<div class="bg-img" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+  
+  <!-- Role-based header -->
+  <ng-container [ngSwitch]="userRole">
+    <app-p-header *ngSwitchCase="'Patient'"></app-p-header>
+    <app-s-header *ngSwitchCase="'Secretary'"></app-s-header>
+    <app-d-header *ngSwitchCase="'Doctor'"></app-d-header>
+    <app-admin-header *ngSwitchDefault></app-admin-header> 
+  </ng-container>
+
   <div class="overlay"></div>
-  <div class="profile-container">
-    <form [formGroup]="profileForm">
-      <!-- Profile Picture -->
-      <div class="form-group">
-        <div class="profile-picture-container">
-          <img [src]="BASE_URL + '/' + profileForm.value.profilePicture || 'assets/default-profile.png'" alt="Profile Picture" class="profile-picture" />
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form-modern">
+
+    <!-- Profile Picture -->
+    <section class="profile-picture-section">
+      <img
+        [src]="selectedPicture 
+                ? profileForm.value.profilePicture 
+                : (profileForm.value.profilePicture 
+                  ? BASE_URL + '/' + profileForm.value.profilePicture 
+                  : 'default-profile.jpg')"
+        alt="Profile Picture"
+        class="profile-picture-modern"
+      />
+      <div class="picture-actions">
+        <input id="profilePicture" type="file" (change)="onFileChange($event)" #picSelector hidden />
+        <button type="button" (click)="picSelector.click()">{{ 'profile.changePicture' | transloco }}</button>
+        <button type="button" class="delete-btn" (click)="removeProfilePicture()">{{ 'profile.deletePicture' | transloco }}</button>
+      </div>
+    </section>
+
+    <!-- Personal Information -->
+    <section>
+      <h3 class="section-title">{{ 'profile.personalInfo' | transloco }}</h3>
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="firstName">{{ 'profile.firstName' | transloco }} <span class="required">*</span></label>
+          <input id="firstName" type="text" formControlName="firstName" />
+          <div *ngIf="formControls['firstName'].touched && formControls['firstName'].invalid" class="error">
+            {{ 'errors.required' | transloco }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">{{ 'profile.lastName' | transloco }} <span class="required">*</span></label>
+          <input id="lastName" type="text" formControlName="lastName" />
+          <div *ngIf="formControls['lastName'].touched && formControls['lastName'].invalid" class="error">
+            {{ 'errors.required' | transloco }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">{{ 'profile.username' | transloco }} <span class="required">*</span></label>
+          <input id="username" type="text" formControlName="username" />
+          <div *ngIf="formControls['username'].touched && formControls['username'].invalid" class="error">
+            {{ 'errors.usernameInvalid' | transloco }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">{{ 'profile.email' | transloco }}</label>
+          <input id="email" type="email" formControlName="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">{{ 'profile.phoneNumber' | transloco }} <span class="required">*</span></label>
+          <input id="phoneNumber" type="text" formControlName="phoneNumber" />
+          <div *ngIf="formControls['phoneNumber'].touched && formControls['phoneNumber'].invalid" class="error">
+            {{ 'errors.required' | transloco }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dateOfBirth">{{ 'profile.dateOfBirth' | transloco }}</label>
+          <input id="dateOfBirth" type="date" formControlName="dateOfBirth" [max]="maxDate" />
+        </div>
+
+        <div class="form-group">
+          <label for="genderId">{{ 'profile.gender' | transloco }}</label>
+          <select id="genderId" formControlName="genderId">
+            <option [ngValue]="null" disabled>{{ 'profile.selectGender' | transloco }}</option>
+            <option *ngFor="let g of genderList" [ngValue]="g.id">{{ currentLang === 'ar' ? g.name_Ar : g.name_En }}</option>
+          </select>
         </div>
       </div>
+    </section>
 
-      <!-- First Name (Readonly) -->
-      <div class="form-group">
-        <label for="firstName">{{ 'profile.firstName' | transloco }}</label>
-        <input id="firstName" type="text" formControlName="firstName" readonly />
-      </div>
+    <!-- Address -->
+    <section>
+      <h3 class="section-title">{{ 'profile.address' | transloco }}</h3>
+      <div class="grid-3">
+        <div class="form-group">
+          <label for="countryId">{{ 'profile.country' | transloco }}</label>
+          <select id="countryId" formControlName="countryId" (change)="updateGovernorates(countrySelector.value)" #countrySelector>
+            <option [ngValue]="null" disabled>{{ 'profile.selectCountry' | transloco }}</option>
+            <option *ngFor="let c of countryList" [ngValue]="c.id">{{ currentLang === 'ar' ? c.name_Ar : c.name_En }}</option>
+          </select>
+        </div>
 
-      <!-- Last Name (Readonly) -->
-      <div class="form-group">
-        <label for="lastName">{{ 'profile.lastName' | transloco }}</label>
-        <input id="lastName" type="text" formControlName="lastName" readonly />
-      </div>
+        <div class="form-group">
+          <label for="governorateId">{{ 'profile.governorate' | transloco }}</label>
+          <select id="governorateId" formControlName="governorateId" (change)="updateDistricts(governorateSelector.value)" #governorateSelector>
+            <option [ngValue]="null" disabled>{{ 'profile.selectGovernorate' | transloco }}</option>
+            <option *ngFor="let g of governorateList" [ngValue]="g.id">{{ currentLang === 'ar' ? g.name_Ar : g.name_En }}</option>
+          </select>
+        </div>
 
-      <!-- Username (Readonly) -->
-      <div class="form-group">
-        <label for="username">{{ 'profile.username' | transloco }}</label>
-        <input id="username" type="text" formControlName="username" readonly />
+        <div class="form-group">
+          <label for="districtId">{{ 'profile.district' | transloco }}</label>
+          <select id="districtId" formControlName="districtId">
+            <option [ngValue]="null" disabled>{{ 'profile.selectDistrict' | transloco }}</option>
+            <option *ngFor="let d of districtList" [ngValue]="d.id">{{ currentLang === 'ar' ? d.name_Ar : d.name_En }}</option>
+          </select>
+        </div>
       </div>
+    </section>
 
-      <!-- Phone Number (Readonly) -->
-      <div class="form-group">
-        <label for="phoneNumber">{{ 'profile.phoneNumber' | transloco }}</label>
-        <input id="phoneNumber" type="text" formControlName="phoneNumber" readonly />
-      </div>
+    <!-- Submit Button -->
+    <div class="form-actions-modern">
+      <button type="submit" class="save-btn">{{ 'profile.saveChanges' | transloco }}</button>
+    </div>
 
-      <!-- Email (Readonly) -->
-      <div class="form-group">
-        <label for="email">{{ 'profile.email' | transloco }}</label>
-        <input id="email" type="email" formControlName="email" readonly />
+  </form>
+
+
+    <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="profile-form-modern">
+    <h3 class="section-title">{{ 'profile.changePassword' | transloco }}</h3>
+
+    <div class="form-group">
+      <label for="currentPassword">{{ 'profile.currentPassword' | transloco }} <span class="required">*</span></label>
+      <input id="currentPassword" type="password" formControlName="currentPassword" />
+      <div *ngIf="passwordControls['currentPassword'].touched && passwordControls['currentPassword'].invalid" class="error">
+        {{ 'errors.required' | transloco }}
       </div>
-    </form>
-  </div>
+    </div>
+
+    <div class="form-group">
+      <label for="newPassword">{{ 'profile.newPassword' | transloco }} <span class="required">*</span></label>
+      <input id="newPassword" type="password" formControlName="newPassword" />
+      <div *ngIf="passwordControls['newPassword'].touched && passwordControls['newPassword'].invalid" class="error">
+        {{ 'errors.passwordMinLength' | transloco }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">{{ 'profile.confirmPassword' | transloco }} <span class="required">*</span></label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+      <div *ngIf="passwordForm.hasError('passwordsMismatch') && passwordControls['confirmPassword'].touched" class="error">
+        {{ 'errors.passwordsMismatch' | transloco }}
+      </div>
+    </div>
+
+    <div class="form-actions-modern">
+      <button type="submit" class="save-btn">{{ 'profile.updatePassword' | transloco }}</button>
+    </div>
+  </form>
 </div>
+
+    
+

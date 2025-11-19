@@ -91,10 +91,27 @@ body.dark-mode .form-control:focus {
 } */
 
 
+/* Prevent Google login from causing horizontal scroll */
+/* body {
+  overflow-x: hidden !important;
+} */
+
+/* Google One Tap prompt styling fix */
+div[role="dialog"][style*="position: fixed"] {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* Fix for hidden iframes injected by Google */
+iframe[src*="google.com"] {
+  max-width: 100% !important;
+}
+
 
 body {
     /* background-color: #F5F5F5; */
-    background-color: #ffffff; 
+    background: #eee;
+    overflow-x: hidden !important;
    /* background: linear-gradient(135deg, #f5fff6, #ceddce);  */
    /* background: linear-gradient(135deg, #24CC81, #0B3A2A); */
    /* background: #24CC81; */
@@ -107,6 +124,7 @@ html, body {
   height: 100%; 
   margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
 }
 
 body:not(.landing-page) {

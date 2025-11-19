@@ -5,6 +5,7 @@
   margin: 0 auto;
   min-height: calc(100vh - 64px);
   position: relative;
+  padding-top: 100px;
 }
 
 .header-section {

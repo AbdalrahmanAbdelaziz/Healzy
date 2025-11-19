@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AdminHeaderComponent } from "../admin-header/admin-header.component";
 import { CommonModule } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { MatDialog } from '@angular/material/dialog';
+import { UserTypeModalComponent } from '../user-type-modal/user-type-modal.component';
 
 @Component({
   selector: 'app-admin-home',
@@ -131,7 +133,9 @@ export class AdminHomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public translocoService: TranslocoService
+    public translocoService: TranslocoService,
+    private dialog: MatDialog
+
   ) {}
 
   @HostListener('window:resize', ['$event'])
@@ -161,9 +165,21 @@ export class AdminHomeComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  cardAction(card: any): void {
-    if (card.route) {
-      this.navigateTo(card.route);
+openUserTypeModal(): void {
+  this.dialog.open(UserTypeModalComponent, {
+    width: '500px',
+    panelClass: 'custom-dialog-container'
+  });
+}
+
+cardAction(card: any): void {
+  if (card.route) {
+    this.navigateTo(card.route);
+  } else if (card.action) {
+    if (card.action === 'openUserTypeModal') {
+      this.openUserTypeModal();
     }
   }
+}
+
 }

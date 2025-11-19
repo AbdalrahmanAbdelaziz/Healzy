@@ -1,197 +1,179 @@
-/* General Styling */
+/* General Reset */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Main Content */
-  .content {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 100px 20px 40px; /* Space below navbar */
-  }
-  
-  /* Appointments Container */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main Content */
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 100px 20px 40px;
+}
+
+/* Appointments Container */
+.appointments-container {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: 85%;
+  max-width: 900px;
+  text-align: center;
+  margin-top: 20px;
+  transition: 0.3s ease;
+  box-shadow: 0 10px 25px #24CC81;
+}
+
+.appointments-container:hover {
+  transform: translateY(-2px);
+}
+
+/* Date Title */
+.date-title {
+  font-size: 2rem;
+  font-weight: bold;
+    background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Slots Grid */
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+/* Slot Card */
+.slot-card {
+  background: #f8fdfb;
+  padding: 18px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #24CC81;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  border: 2px solid transparent;
+  box-shadow: 0 10px 25px #24CC81;
+}
+
+.slot-card:hover {
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+
+  color: white;
+  transform: translateY(-4px);
+  border-color: #1A9A63;
+}
+
+/* Time Range */
+.time-range {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Reserved Status */
+.status.booked {
+  background: #D32F2F;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Booked Slot */
+.booked-slot {
+  background: #fce4e4 !important;
+  color: #b71c1c;
+  cursor: not-allowed;
+  box-shadow: none;
+  border: 2px solid #f5baba;
+}
+
+/* Reserve Button */
+.reserve-btn {
+  background: #1A9A63;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.reserve-btn:hover {
+  background: #24CC81;
+  transform: scale(1.05);
+}
+
+/* No Appointments */
+.no-appointments {
+  text-align: center;
+  padding: 2rem;
+  color: #444;
+  font-size: 1.2rem;
+}
+
+.no-appointments img {
+  width: 140px;
+  margin-bottom: 15px;
+  opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .appointments-container {
-    background: #24CC81;
-    padding: 2.5rem;
-    border-radius: 15px;
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
-    width: 85%;
-    max-width: 800px;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  /* Date Title */
-  .date-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Slots Grid */
-  .slots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    padding: 15px;
-  }
-  
-  /* Time Slot Card */
-  .slot-card {
-    background: white;
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #24CC81;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-  }
-  
-  /* Hover Effect */
-  .slot-card:hover {
-    background: #165B40;
-    color: white;
-    transform: translateY(-3px);
-  }
-  
-  /* Time Range */
-  .time-range {
-    display: block;
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-  }
-  
-  /* Reserved Status */
-  .status.booked {
-    background: #D32F2F;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  
-  /* Booked Slot */
-  .booked-slot {
-    background: #D32F2F !important;
-    color: white;
-    border-color: #D32F2F;
-    cursor: not-allowed;
-  }
-  
-  /* Reserve Button */
-  .reserve-btn {
-    background: #1A9A63;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.3s ease;
-  }
-  
-  .reserve-btn:hover {
-    background: #24CC81;
-    transform: scale(1.05);
-  }
-  
-  /* No Appointments */
-  .no-appointments {
-    text-align: center;
     padding: 2rem;
-    color: white;
-    font-size: 1.3rem;
+    width: 95%;
   }
-  
-  /* No Slots Image */
-  .no-appointments img {
-    width: 120px;
-    margin-bottom: 15px;
-    opacity: 0.9;
+
+  .date-title {
+    font-size: 1.6rem;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .appointments-container {
-      padding: 2rem;
-      width: 95%;
-    }
-  
-    .date-title {
-      font-size: 1.6rem;
-    }
-  
-    .slots-grid {
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
-  
-    .slot-card {
-      font-size: 1rem;
-    }
-  
-    .reserve-btn {
-      font-size: 0.9rem;
-    }
+
+  .slots-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
-  
-  @media (max-width: 480px) {
-    .appointments-container {
-      padding: 1.5rem;
-      width: 100%;
-    }
-  
-    .date-title {
-      font-size: 1.4rem;
-    }
-  
-    .slots-grid {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-  
-    .slot-card {
-      font-size: 0.9rem;
-    }
-  
-    .reserve-btn {
-      font-size: 0.8rem;
-      padding: 8px 12px;
-    }
+}
+
+@media (max-width: 480px) {
+  .appointments-container {
+    padding: 1.5rem;
   }
-  
-  /* RTL Styles */
-  [dir="rtl"] .appointments-container {
-    /* text-align: right; */
+
+  .date-title {
+    font-size: 1.4rem;
   }
-  
-  [dir="rtl"] .slots-grid {
-    direction: ltr; /* Keep time format in LTR */
+
+  .slots-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
-  
-  [dir="rtl"] .slot-card {
-    direction: ltr; /* Keep time format consistent */
+
+  .slot-card {
+    font-size: 0.95rem;
   }
-  
-  /* Responsive adjustments for RTL */
-  @media (max-width: 768px) {
-    [dir="rtl"] .appointments-container {
-      padding: 2rem;
-    }
+
+  .reserve-btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
   }
-  
-  @media (max-width: 480px) {
-    [dir="rtl"] .appointments-container {
-      padding: 1.5rem;
-    }
-  }
-  
+}
+
+/* RTL Fix */
+[dir="rtl"] .slots-grid,
+[dir="rtl"] .slot-card {
+  direction: ltr;
+}

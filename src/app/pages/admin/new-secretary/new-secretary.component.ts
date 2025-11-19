@@ -45,21 +45,74 @@ export class NewSecretaryComponent implements OnInit {
     this.loadLookups();
   }
 
-  private initForm(): void {
-    this.secretaryForm = this.fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      dateOfBirth: ['', [Validators.required]],
-      genderId: ['', [Validators.required]],
-      doctorId: ['', [Validators.required]],
-      hireDate: ['', [Validators.required]],
-      profilePicture: [null]
-    });
-  }
+private initForm(): void {
+  this.secretaryForm = this.fb.group({
+    firstName: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[A-Za-zأ-ي\s]+$/) // letters only (English/Arabic)
+      ]
+    ],
+    lastName: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[A-Za-zأ-ي\s]+$/)
+      ]
+    ],
+    username: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9._-]+$/) // only letters, numbers, . _ -
+      ]
+    ],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.maxLength(100)
+      ]
+    ],
+    phoneNumber: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[0-9]{10,15}$/) // only digits, length 10–15
+      ]
+    ],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/)
+        // At least 1 uppercase, 1 lowercase, 1 digit, 1 special char
+      ]
+    ],
+    dateOfBirth: [
+      '',
+      [
+        Validators.required
+        // Optional: custom validator for min/max age
+      ]
+    ],
+    genderId: ['', [Validators.required]],
+    doctorId: ['', [Validators.required]],
+    hireDate: ['', [Validators.required]],
+    profilePicture: [null] // Optional: custom validator for image type/size
+  });
+}
+
 
   private loadLookups(): void {
     this.lookupService.loadGenders().subscribe(

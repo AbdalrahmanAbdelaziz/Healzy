@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { BASE_URL } from '../../../shared/constants/urls';
 
 @Component({
   selector: 'app-s-header',
@@ -20,6 +21,7 @@ export class SHeaderComponent implements OnInit, OnDestroy {
   currentLang: string = 'en';
   isMobileView = false;
   private darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  BASE_URL = BASE_URL;
 
   constructor(
     private userService: UserService, 

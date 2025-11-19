@@ -6,21 +6,18 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ResetPassword } from '../../shared/models/ResetPassword';
-
 
 @Component({
   selector: 'app-reset-password',
   imports: [RouterModule, CommonModule, HttpClientModule, FormsModule, ReactiveFormsModule, MatSnackBarModule],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
 
   resetPasswordForm!: FormGroup;
   isSubmitted = false;
-  emailToReset!: string;
-  emailToken!: string;
+  passwordResetToken!: string;
 
   constructor(
     private userService: UserService,
@@ -35,17 +32,21 @@ export class ResetPasswordComponent implements OnInit {
     this.initializeForm();
   }
 
-  private parseQueryParams(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.emailToReset = params['email'] || '';
-      const token = params['code'] || '';
-      this.emailToken = token.replace(/  /g, '+'); // Correct possible formatting issues
-    });
-  }
+private parseQueryParams(): void {
+  this.activatedRoute.queryParams.subscribe(params => {
+    const token = params['token'];  // <-- use 'token' not 'code'
+    if (token) {
+      // decode URI components in case + or %20 were replaced
+      this.passwordResetToken = decodeURIComponent(token.replace(/ /g, '+'));
+    }
+  });
+}
+
 
   private initializeForm(): void {
     this.resetPasswordForm = this.formBuilder.group(
       {
+        email: ['', [Validators.required, Validators.email]],
         newPassword: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', [Validators.required]]
       },
@@ -71,14 +72,16 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 
-    const resetPasswordPayload: ResetPassword = {
-      email: this.emailToReset,
-      emailToken: this.emailToken,
-      newPassword: this.fc['newPassword'].value,
-      confirmPassword: this.fc['confirmPassword'].value
-    };
+    if (!this.passwordResetToken) {
+      // Only show toast here on submit if token is missing
+      this.toastr.error('Reset token is missing. Please use the link from your email.');
+      return;
+    }
 
-    this.userService.resetPassword(resetPasswordPayload).subscribe({
+    const email = this.fc['email'].value;
+    const newPassword = this.fc['newPassword'].value;
+
+    this.userService.resetPassword(email, this.passwordResetToken, newPassword).subscribe({
       next: () => {
         this.toastr.success('Password has been reset successfully.');
         this.router.navigate(['/login']);

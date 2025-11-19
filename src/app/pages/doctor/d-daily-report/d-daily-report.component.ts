@@ -14,9 +14,9 @@ import { FooterComponent } from '../../footer/footer.component';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-// Import Capacitor Filesystem and Share
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { Share } from '@capacitor/share'; // Optional: for sharing the PDF
+// Capacitor imports for mobile support
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-d-daily-report',
@@ -84,7 +84,7 @@ export class DDailyReportComponent implements OnInit {
           this.fetchRevenueData(this.selectedDate);
         }
       },
-      error: (error) => {
+      error: () => {
         this.toastr.error('Failed to fetch available days', 'Error');
       },
     });
@@ -102,7 +102,7 @@ export class DDailyReportComponent implements OnInit {
           remainingToPay: response.data?.remainingToPay || 0
         };
       },
-      error: (error) => {
+      error: () => {
         this.toastr.error('Failed to fetch revenue data', 'Error');
         this.revenueData = {
           paidCash: 0,
@@ -122,15 +122,17 @@ export class DDailyReportComponent implements OnInit {
   }
 
   calculateTotalPaid(): number {
-    return (this.revenueData.paidCash || 0) +
-           (this.revenueData.paidInstapay || 0) +
-           (this.revenueData.paidWallet || 0) +
-           (this.revenueData.paidVisa || 0);
+    return (
+      (this.revenueData.paidCash || 0) +
+      (this.revenueData.paidInstapay || 0) +
+      (this.revenueData.paidWallet || 0) +
+      (this.revenueData.paidVisa || 0)
+    );
   }
 
   async exportToPDF(): Promise<void> {
     if (this.calculateTotalPaid() === 0 && this.revenueData.remainingToPay === 0) {
-      this.toastr.warning('No data to export');
+      this.toastr.warning(this.translocoService.translate('revenue.noDataToExport'));
       return;
     }
 
@@ -141,10 +143,10 @@ export class DDailyReportComponent implements OnInit {
       const margin = 40;
       const pdfWidth = doc.internal.pageSize.getWidth() - (margin * 2);
 
-      // Always use English for PDF export regardless of current language
-      const translations = {
+      // Always use English for PDF regardless of current language
+      const englishLabels = {
         title: 'Revenue Report',
-        report_date: 'Report Date',
+        reportDate: 'Report Date',
         generated: 'Generated',
         doctor: 'Doctor',
         total: 'Total',
@@ -155,20 +157,26 @@ export class DDailyReportComponent implements OnInit {
         instapay: 'Instapay',
         remaining: 'Remaining',
         summary: 'Summary',
-        total_revenue: 'Total Revenue',
-        remaining_balance: 'Remaining Balance'
+        totalRevenue: 'Total Revenue',
+        totalRemaining: 'Total Remaining',
+        currency: 'EGP'
       };
 
       // Add header
       doc.setFontSize(18);
       doc.setTextColor('#24CC81');
-      doc.text(translations.title, margin, margin + 20);
+      doc.text(englishLabels.title, margin, margin + 20);
 
+      // Add report details - always in English
       doc.setFontSize(12);
       doc.setTextColor('#666666');
-      doc.text(`${translations.report_date}: ${this.selectedDate} (${this.availableDays.find(d => d.date === this.selectedDate)?.dayOfWeek || ''})`,
+      
+      const selectedDay = this.availableDays.find(d => d.date === this.selectedDate);
+      doc.text(`${englishLabels.reportDate}: ${this.selectedDate} (${selectedDay?.dayOfWeek || ''})`, 
                margin, margin + 40);
-      doc.text(`${translations.generated}: ${new Date().toLocaleDateString('en-US', {
+      
+      // Always use English locale for date formatting
+      doc.text(`${englishLabels.generated}: ${new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -178,35 +186,33 @@ export class DDailyReportComponent implements OnInit {
       // Add doctor information
       const user = this.userService.getUser();
       if (user) {
-        const firstName = user.data.firstName || 'N/A';
-        const lastName = user.data.lastName || '';
-        doc.text(`${translations.doctor}: ${firstName} ${lastName}`.trim(), margin, margin + 80);
+        const doctorFirstName = user.data.firstName || '';
+        const doctorLastName = user.data.lastName || '';
+        const doctorName = (doctorFirstName + ' ' + doctorLastName).trim() || 'N/A';
+        doc.text(`${englishLabels.doctor}: ${doctorName}`, margin, margin + 80);
       }
 
-      // Add table data
-      const tableData = [
-        [
-          this.calculateTotalPaid().toFixed(2),
-          this.revenueData.paidCash.toFixed(2),
-          this.revenueData.paidVisa.toFixed(2),
-          this.revenueData.paidWallet.toFixed(2),
-          this.revenueData.paidInstapay.toFixed(2),
-          this.revenueData.remainingToPay.toFixed(2)
-        ]
-      ];
+      // Prepare table data
+      const tableData = [[
+        this.formatCurrency(this.calculateTotalPaid(), englishLabels.currency),
+        this.formatCurrency(this.revenueData.paidCash, englishLabels.currency),
+        this.formatCurrency(this.revenueData.paidVisa, englishLabels.currency),
+        this.formatCurrency(this.revenueData.paidWallet, englishLabels.currency),
+        this.formatCurrency(this.revenueData.paidInstapay, englishLabels.currency),
+        this.formatCurrency(this.revenueData.remainingToPay, englishLabels.currency)
+      ]];
 
+      // Add table using autoTable - always in English
       autoTable(doc, {
         startY: margin + 100,
-        head: [
-          [
-            translations.total,
-            translations.cash,
-            translations.visa,
-            translations.wallet,
-            translations.instapay,
-            translations.remaining
-          ]
-        ],
+        head: [[
+          englishLabels.paid, 
+          englishLabels.cash, 
+          englishLabels.visa, 
+          englishLabels.wallet, 
+          englishLabels.instapay, 
+          englishLabels.remaining
+        ]],
         body: tableData,
         headStyles: {
           fillColor: '#24CC81',
@@ -223,66 +229,96 @@ export class DDailyReportComponent implements OnInit {
           halign: 'center'
         },
         columnStyles: {
-          0: { halign: 'left', fontStyle: 'bold' }
+          0: { halign: 'right', cellWidth: 80 },
+          1: { halign: 'right', cellWidth: 70 },
+          2: { halign: 'right', cellWidth: 70 },
+          3: { halign: 'right', cellWidth: 70 },
+          4: { halign: 'right', cellWidth: 70 },
+          5: { halign: 'right', cellWidth: 80 }
         }
       });
 
-      // Add summary section
-      const finalY = (doc as any).lastAutoTable.finalY + 20;
+      // Add summary section - always in English
+      const finalY = (doc as any).lastAutoTable.finalY + 30;
+
       doc.setFontSize(14);
       doc.setTextColor('#24CC81');
-      doc.text(translations.summary, margin, finalY);
+      doc.text(englishLabels.summary, margin, finalY);
 
       doc.setFontSize(12);
       doc.setTextColor('#000000');
-      doc.text(`${translations.total_revenue}: ${this.calculateTotalPaid().toFixed(2)}`, margin, finalY + 25);
-      doc.text(`${translations.remaining_balance}: ${this.revenueData.remainingToPay.toFixed(2)}`, margin, finalY + 45);
+      doc.text(`${englishLabels.totalRevenue}: ${this.formatCurrency(this.calculateTotalPaid(), englishLabels.currency)}`, margin, finalY + 25);
+      doc.text(`${englishLabels.totalRemaining}: ${this.formatCurrency(this.revenueData.remainingToPay, englishLabels.currency)}`, margin, finalY + 50);
 
-      // Add footer
+      // Add footer - always in English
       doc.setFontSize(10);
       doc.setTextColor('#999999');
-      doc.text('© ' + new Date().getFullYear() + ' Your Clinic Name. All rights reserved.',
+      doc.text('© ' + new Date().getFullYear() + ' HEALZY. All rights reserved.',
         doc.internal.pageSize.getWidth() / 2,
         doc.internal.pageSize.getHeight() - 20,
         { align: 'center' }
       );
 
-      // Convert PDF to ArrayBuffer and then to Blob
-      const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+      // Generate filename - always in English
+      const filename = `Daily_Revenue_Summary_${this.selectedDate.replace(/-/g, '_')}.pdf`;
 
-      // Convert Blob to Base64 (Capacitor prefers base64 strings for writeFile)
-      const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
+      // --- Platform Detection: Browser vs Mobile ---
+      const isMobile = this.isMobilePlatform();
+      
+      if (isMobile) {
+        // Mobile behavior: Use Capacitor Filesystem and Share
+        const pdfBlob = new Blob([doc.output('arraybuffer')], { type: 'application/pdf' });
+        const base64Data = await this.convertBlobToBase64(pdfBlob) as string;
 
-      const fileName = `Revenue_Report_${this.selectedDate.replace(/-/g, '')}.pdf`;
+        // Use Capacitor Filesystem to write the file
+        await Filesystem.writeFile({
+          path: filename,
+          data: base64Data,
+          directory: Directory.Documents,
+        });
 
-      // Use Capacitor Filesystem to write the file
-      await Filesystem.writeFile({
-        path: fileName,
-        data: base64Data,
-        directory: Directory.Documents, // Or Directory.ExternalStorage for broader access on Android
-        // No encoding needed as we explicitly converted to base64
-      });
+        // Get the URI to share the file
+        const fileUriResult = await Filesystem.getUri({
+          directory: Directory.Documents,
+          path: filename
+        });
 
-      // Optional: Share the PDF after saving
-      const fileUri = (await Filesystem.getUri({
-        directory: Directory.Documents,
-        path: fileName
-      })).uri;
+        if (fileUriResult && fileUriResult.uri) {
+          await Share.share({
+            title: englishLabels.title,
+            text: `Revenue report for ${this.selectedDate}`,
+            url: fileUriResult.uri,
+            dialogTitle: 'Share Revenue Report'
+          });
+          this.toastr.success(this.translocoService.translate('revenue.pdfSavedAndShared'));
+        } else {
+          this.toastr.success(this.translocoService.translate('revenue.pdfSavedOnly'));
+        }
+      } else {
+        // Browser behavior: Direct download
+        doc.save(filename);
+        this.toastr.success(this.translocoService.translate('revenue.pdfSavedOnly'));
+      }
 
-      await Share.share({
-        title: translations.title,
-        text: `Here is your ${translations.title} for ${this.selectedDate}.`,
-        url: fileUri,
-        dialogTitle: 'Share PDF'
-      });
-
-      this.toastr.success('PDF exported and saved successfully!');
     } catch (error) {
-      console.error('Error generating or saving PDF:', error);
-      this.toastr.error('Failed to generate or save PDF');
+      console.error('Error generating PDF:', error);
+      this.toastr.error(this.translocoService.translate('errors.pdfGenerationError'));
     } finally {
       this.isGeneratingPDF = false;
     }
+  }
+
+  // Add this helper method to detect mobile platforms
+  private isMobilePlatform(): boolean {
+    // Check if Capacitor is available and we're running on a mobile device
+    const capacitor = (window as any).Capacitor;
+    if (capacitor && capacitor.isNativePlatform && capacitor.isNativePlatform()) {
+      return true;
+    }
+    
+    // Additional check for common mobile user agents
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
   }
 
   // Helper function to convert Blob to Base64
@@ -290,8 +326,14 @@ export class DDailyReportComponent implements OnInit {
     const reader = new FileReader();
     reader.onerror = reject;
     reader.onload = () => {
-        resolve(reader.result);
+      const dataUrl = reader.result as string;
+      resolve(dataUrl.split(',')[1]); // Return only the base64 data without the data URL prefix
     };
     reader.readAsDataURL(blob);
   });
+
+  // Helper method to format currency - always uses EGP
+  private formatCurrency(amount: number, currency: string = 'EGP'): string {
+    return `${amount.toFixed(2)} ${currency}`;
+  }
 }

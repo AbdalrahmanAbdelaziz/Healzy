@@ -82,21 +82,25 @@ export class NewGovernorateComponent implements OnInit {
     this.submitted = true;
     this.errors = {};
 
-    // Validate form
-    if (!this.governorate.name_En) {
-      this.errors['name_En'] = this.translocoService.translate('new_governorate.errors.name_en_required');
-    }
-    if (!this.governorate.name_Ar) {
-      this.errors['name_Ar'] = this.translocoService.translate('new_governorate.errors.name_ar_required');
-    }
-    if (!this.governorate.countryID) {
-      this.errors['countryID'] = this.translocoService.translate('new_governorate.errors.country_required');
-    }
+ if (!this.governorate.name_En || this.governorate.name_En.trim() === '') {
+    this.errors['name_En'] = this.translocoService.translate('new_governorate.errors.name_en_required');
+  } else if (!/^[A-Za-z\s]+$/.test(this.governorate.name_En)) {
+    this.errors['name_En'] = this.translocoService.translate('new_governorate.errors.name_en_invalid');
+  }
 
-    if (Object.keys(this.errors).length > 0) {
-      return;
-    }
+  if (!this.governorate.name_Ar || this.governorate.name_Ar.trim() === '') {
+    this.errors['name_Ar'] = this.translocoService.translate('new_governorate.errors.name_ar_required');
+  } else if (!/^[\u0600-\u06FF\s]+$/.test(this.governorate.name_Ar)) {
+    this.errors['name_Ar'] = this.translocoService.translate('new_governorate.errors.name_ar_invalid');
+  }
 
+  if (!this.governorate.countryID || this.governorate.countryID === 0) {
+    this.errors['countryID'] = this.translocoService.translate('new_governorate.errors.country_required');
+  }
+
+  if (Object.keys(this.errors).length > 0) {
+    return;
+  }
     this.loading = true;
 
     this.locationService.createGovernorate(this.governorate).subscribe({

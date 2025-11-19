@@ -1,4 +1,4 @@
-<div class="dashboard-wrapper">
+<div class="dashboard-wrapper" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
   <app-s-header></app-s-header>
 
   <main class="dashboard-main-content">
@@ -9,13 +9,17 @@
         </div>
 
         <div class="card-content">
+          <!-- Loading Spinner -->
           <div *ngIf="isLoading" class="loader-container">
             <div class="spinner"></div>
             <p>{{ 'dashboard.loadingAppointments' | transloco }}</p>
           </div>
 
+          <!-- Dashboard Data -->
           <div *ngIf="!isLoading">
             <div *ngIf="hasAppointmentData; else noDataTemplate" class="chart-and-stats-area">
+              
+              <!-- Pie Chart -->
               <div class="chart-container" #chartContainerRef>
                 <ngx-charts-pie-chart
                   *ngIf="isMobile"
@@ -45,7 +49,9 @@
                 </ngx-charts-pie-chart>
               </div>
 
+              <!-- Stats Boxes -->
               <div class="appointment-stats">
+                <!-- Upcoming -->
                 <div class="stat-box">
                   <div class="stat-icon upcoming-icon">
                     <i class="fas fa-calendar-alt"></i>
@@ -56,6 +62,55 @@
                   </div>
                 </div>
 
+                <!-- Arrived -->
+                <div class="stat-box">
+                  <div class="stat-icon arrived-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ arrivedCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.arrived' | transloco }}</span>
+                  </div>
+                </div>
+
+                
+
+                
+
+                <!-- Next in Queue -->
+                <div class="stat-box">
+                  <div class="stat-icon next-queue-icon">
+                    <i class="fas fa-forward"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ nextInQueueCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.nextInQueue' | transloco }}</span>
+                  </div>
+                </div>
+
+                <!-- In Progress -->
+                <div class="stat-box">
+                  <div class="stat-icon in-progress-icon">
+                    <i class="fas fa-tasks"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ inProgressCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.inProgress' | transloco }}</span>
+                  </div>
+                </div>
+
+                <!-- Processed -->
+                <div class="stat-box">
+                  <div class="stat-icon processed-icon">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">{{ processedCount }}</span>
+                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.processed' | transloco }}</span>
+                  </div>
+                </div>
+
+                <!-- Cancelled -->
                 <div class="stat-box">
                   <div class="stat-icon cancelled-icon">
                     <i class="fas fa-times-circle"></i>
@@ -66,18 +121,10 @@
                   </div>
                 </div>
 
-                <div class="stat-box">
-                  <div class="stat-icon processed-icon">
-                    <i class="fas fa-check-circle"></i>
-                  </div>
-                  <div class="stat-content">
-                    <span class="stat-value">{{ processedCount }}</span>
-                    <span class="stat-label">{{ 'dashboard.appointmentStatuses.processed' | transloco }}</span>
-                  </div>
-                </div>
               </div>
             </div>
 
+            <!-- No Data Template -->
             <ng-template #noDataTemplate>
               <div class="empty-state">
                 <div class="empty-icon">
@@ -92,6 +139,7 @@
       </div>
     </section>
 
+    <!-- Quick Actions -->
     <aside class="secondary-content">
       <div class="actions-card enhanced">
         <div class="card-header">

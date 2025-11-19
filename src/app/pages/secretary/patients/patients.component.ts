@@ -3,12 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SHeaderComponent } from '../s-header/s-header.component';
 import { SSidenavbarComponent } from '../s-sidenavbar/s-sidenavbar.component';
-import { PatientService } from '../../../services/patient.service'; // Import PatientService
-import { UserService } from '../../../services/user.service'; // Import UserService
-import { FormsModule } from '@angular/forms'; // Import FormsModule for search bar
-import { ToastrService } from 'ngx-toastr'; // Import ToastrService for notifications
+import { PatientService } from '../../../services/patient.service';
+import { UserService } from '../../../services/user.service';
+import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
+import { DoctorService } from '../../../services/doctor.service';
+import { take } from 'rxjs/operators';
+import { LoginResponse } from '../../../shared/models/login-response';
+import { Doctor } from '../../../shared/models/doctor.model';
 
 @Component({
   selector: 'app-patients',
@@ -18,59 +22,74 @@ import { FooterComponent } from '../../footer/footer.component';
   styleUrls: ['./patients.component.css'],
 })
 export class PatientsComponent implements OnInit {
-  patients: any[] = []; // Array to store patient data
-  filteredPatients: any[] = []; // Array to store filtered patient data
-  searchQuery: string = ''; // Search query for filtering patients
-  doctorId: number | null = null; // Doctor ID fetched from the login response
+  patients: any[] = [];
+  filteredPatients: any[] = [];
+  searchQuery: string = '';
+  doctorId: number | null = null;
 
   constructor(
-    private patientService: PatientService, // Inject PatientService
-    private userService: UserService, // Inject UserService
+    private patientService: PatientService,
+    private userService: UserService,
+    private doctorService: DoctorService,
     private toastr: ToastrService,
     public translocoService: TranslocoService
   ) {}
 
   ngOnInit(): void {
-    this.fetchDoctorId();
+    this.loadDoctorIdAndPatients();
   }
 
-  // Fetch doctorId from the login response
-  fetchDoctorId(): void {
-    const user = this.userService.getUser();
-    console.log('User data:', user); // Debug log
-    
-    if (user && user.data.applicationRole_En === 'Secretary' && user.data.doctorId) {
-      this.doctorId = user.data.doctorId;
-      console.log('Doctor ID:', this.doctorId); // Debug log
+  private loadDoctorIdAndPatients(): void {
+    const user: LoginResponse | null = this.userService.getUser();
+    if (!user) {
+      console.error('No user data found.');
+      this.toastr.error('User data not found.');
+      return;
+    }
+
+    if (user.data.applicationRole_En === 'Secretary') {
+      // Fetch doctor assigned to the secretary
+      this.doctorService.getDoctorsFromSecretary().pipe(take(1)).subscribe({
+        next: (doctor: Doctor) => {
+          if (doctor && doctor.id) {
+            this.doctorId = doctor.id;
+            this.userService.setDoctorIdForSecretary(this.doctorId);
+            this.fetchPatients();
+          } else {
+            console.warn('No doctor assigned to this secretary.');
+            this.toastr.warning(this.translocoService.translate('errors.noDoctorAssigned'));
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching doctor for secretary:', err);
+          this.toastr.error(this.translocoService.translate('error.fetch_doctors_failed'));
+        },
+      });
+    } else if (user.data.applicationRole_En === 'Doctor') {
+      // Doctor: use own ID
+      this.doctorId = user.data.id;
       this.fetchPatients();
-    } else {
-      console.error('No doctor ID found for the secretary or user data is invalid');
-      this.toastr.error('No doctor ID found for the secretary.', 'Error');
     }
   }
-  
+
   fetchPatients(): void {
     if (!this.doctorId) {
       console.error('Doctor ID is null or undefined');
       return;
     }
-  
-    console.log('Fetching patients for doctor ID:', this.doctorId); // Debug log
-    
+
     this.patientService.getPatientsByDoctorId(this.doctorId).subscribe({
       next: (response: any) => {
-        console.log('API Response:', response); // Debug log
         this.patients = response.data || [];
         this.filteredPatients = this.patients;
       },
       error: (error) => {
-        console.error('API Error:', error); // Debug log
+        console.error('API Error:', error);
         this.toastr.error('Failed to fetch patients.', 'Error');
       },
     });
   }
 
-  // Filter patients based on search query
   filterPatients(): void {
     this.filteredPatients = this.patients.filter(
       (patient) =>
@@ -79,19 +98,4 @@ export class PatientsComponent implements OnInit {
         patient.phoneNumber.includes(this.searchQuery)
     );
   }
-
-  // onFileUpload(event: any, patientId: number): void {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     this.patientService.uploadDocument(patientId, file).subscribe({
-  //       next: (response: any) => {
-  //         this.toastr.success('Document uploaded successfully.', 'Success');
-  //         this.fetchPatients(); // Refresh patient data
-  //       },
-  //       error: (error) => {
-  //         this.toastr.error('Failed to upload document.', 'Error');
-  //       },
-  //     });
-  //   }
-  // }
 }

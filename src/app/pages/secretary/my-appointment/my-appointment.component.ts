@@ -10,10 +10,12 @@ import { UserService } from '../../../services/user.service';
 import { ConfirmationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
 import { CheckoutModalComponent } from '../checkout-modal/checkout-modal.component';
 import { Observable, interval, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { Appointment } from '../../../shared/models/appointment.model';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
+import { Doctor } from '../../../shared/models/doctor.model';
+import { DoctorService } from '../../../services/doctor.service';
 
 @Component({
   selector: 'app-my-appointment',
@@ -33,168 +35,177 @@ import { FooterComponent } from '../../footer/footer.component';
   styleUrls: ['./my-appointment.component.css'],
 })
 export class MyAppointmentComponent implements OnInit, OnDestroy {
-    private audio = new Audio(); // This is for the "InProgress" notification sound
-    private actionSound = new Audio(); // New audio object for "arrive", "next in queue", "checkout"
-    private previousInProgressAppointments: number[] = [];
+     private audio = new Audio(); 
+  private actionSound = new Audio(); 
+  private previousInProgressAppointments: number[] = [];
 
-    availableDays: { date: string; dayOfWeek: string }[] = [];
-    selectedDate: string = '';
-    appointments: any[] = [];
-    doctorId!: number;
-    isCancelModalOpen: boolean = false;
-    isCheckoutModalVisible: boolean = false;
-    appointmentToCancel: any = null;
-    appointmentToCheckout: any = null;
-    selectedAppointmentId: number | null = null;
-    private pollingSubscription!: Subscription;
-
+  availableDays: { date: string; dayOfWeek: string }[] = [];
+  selectedDate: string = '';
+  appointments: any[] = [];
+  doctorId!: number;
+  secretaryDoctors: Doctor[] = [];
+  isCancelModalOpen: boolean = false;
+  isCheckoutModalVisible: boolean = false;
+  appointmentToCancel: any = null;
+  appointmentToCheckout: any = null;
+  selectedAppointmentId: number | null = null;
+  private pollingSubscription!: Subscription;
+  
     constructor(
         private appointmentService: AppointmentService,
         private toastr: ToastrService,
         private userService: UserService,
         private router: Router,
         private cdr: ChangeDetectorRef,
-        public translocoService: TranslocoService
+        public translocoService: TranslocoService,
+         private doctorService: DoctorService
     ) {}
 
-    ngOnInit(): void {
-        this.audio.src = 'notification.mp3'; // Sound for InProgress
-        this.audio.load();
+   ngOnInit(): void {
+    this.audio.src = 'notification.mp3'; 
+    this.audio.load();
 
-        this.actionSound.src = 'notification2.mp3'; // New sound for actions
-        this.actionSound.load();
+    this.actionSound.src = 'notification2.mp3'; 
+    this.actionSound.load();
 
-        const user = this.userService.getUser();
-        if (user && user.data.applicationRole_En === 'Secretary' && user.data.doctorId) {
-            this.doctorId = user.data.doctorId;
-            this.fetchAvailableDays();
-            this.startPolling();
-        } else {
-            this.toastr.error(this.getTranslation('errors.noDoctorId'), 'Error');
-        }
+    const user = this.userService.getUser();
+    if (!user) return;
+
+    if (user.data.applicationRole_En === 'Secretary') {
+      // Fetch doctors for secretary from backend using token
+      this.loadDoctorsForSecretary();
+    } else if (user.data.applicationRole_En === 'Doctor') {
+      this.doctorId = user.data.id;
+      this.fetchAvailableDays();
+      this.startPolling();
     }
+  }
 
-    ngOnDestroy(): void {
-        if (this.pollingSubscription) {
-            this.pollingSubscription.unsubscribe();
-        }
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
     }
+  }
 
-    startPolling(): void {
-        this.pollingSubscription = interval(5000)
-            .pipe(
-                switchMap(() => this.appointmentService.searchAppointmentsByOptionalParams(this.doctorId))
-            )
-            .subscribe({
-                next: (response: any) => {
-                    const newAppointments = (response.data || [])
-                        .filter((appointment: any) => {
-                            return (
-                                appointment.timeSlot?.date === this.selectedDate &&
-                                appointment.appointmentStatus_En !== 'Cancelled' &&
-                                appointment.appointmentStatus_En !== 'Proccessed'
-                            );
-                        })
-                        .sort((a: any, b: any) => {
-                            const timeA = new Date(`1970-01-01T${a.timeSlot.startTime}`);
-                            const timeB = new Date(`1970-01-01T${b.timeSlot.startTime}`);
-                            return timeA.getTime() - timeB.getTime();
-                        });
-
-                    // Check for new InProgress appointments
-                    this.checkForInProgressChanges(newAppointments);
-
-                    this.appointments = newAppointments;
-                    this.cdr.detectChanges();
-                },
-                error: (error) => {
-                    this.toastr.error(this.getTranslation('errors.fetchAppointments'), 'Error');
-                },
-            });
-    }
-
-    private checkForInProgressChanges(newAppointments: any[]): void {
-        const currentInProgress = newAppointments
-            .filter(a => a.appointmentStatus_En === 'InProgress')
-            .map(a => a.id);
-
-        // Find newly added InProgress appointments
-        const newInProgress = currentInProgress.filter(id =>
-            !this.previousInProgressAppointments.includes(id)
-        );
-
-        if (newInProgress.length > 0) {
-            this.playNotificationSound(this.audio); // Use the original audio for inProgress
-        }
-
-        // Update our tracking
-        this.previousInProgressAppointments = currentInProgress;
-    }
-
-    // Renamed and generalized the play sound method
-    private playNotificationSound(audioElement: HTMLAudioElement): void {
-        try {
-            audioElement.currentTime = 0; // Reset audio to start
-            audioElement.play().catch(e => console.warn('Audio play failed:', e));
-        } catch (e) {
-            console.warn('Audio error:', e);
-        }
-    }
-
-    fetchAvailableDays(): void {
-  const numberOfRequiredDays = 14;
-
-  this.appointmentService.getAllDays(this.doctorId, numberOfRequiredDays).subscribe({
-    next: (response: any) => {
-      this.availableDays = (response.data.workingDays || []).map((date: string) => {
-        const dayOfWeek = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
-        return { date, dayOfWeek };
-      });
-
-      if (this.availableDays.length > 0) {
-        // Find today's date or the first upcoming date
-        const today = new Date().toISOString().split('T')[0];
-        const todayOrFirstUpcoming = this.availableDays.find(day => day.date >= today) || this.availableDays[0];
-        
-        this.selectedDate = todayOrFirstUpcoming.date;
-        this.fetchAppointmentsForDate(this.selectedDate);
+ private loadDoctorsForSecretary(): void {
+  this.doctorService.getDoctorsFromSecretary().pipe(take(1)).subscribe({
+    next: (doctor: Doctor) => {
+      if (doctor && doctor.id) {
+        this.secretaryDoctors = [doctor]; // wrap in array if needed
+        this.doctorId = doctor.id;
+        this.userService.setDoctorIdForSecretary(this.doctorId); // optional
+        this.fetchAvailableDays();
+        this.startPolling();
+      } else {
+        this.toastr.warning(this.translocoService.translate('errors.noDoctorAssigned'));
       }
     },
-    error: (error) => {
-      this.toastr.error('Failed to fetch available days', 'Error');
-    },
+    error: (err) => {
+      console.error('Error fetching doctor for secretary:', err);
+      this.toastr.error(this.translocoService.translate('errors.fetchDoctorsFailed'));
+    }
   });
 }
-    fetchAppointmentsForDate(date: string): void {
-        this.appointmentService.searchAppointmentsByOptionalParams(this.doctorId).subscribe({
-            next: (response: any) => {
-                this.appointments = (response.data || [])
-                    .filter((appointment: any) => {
-                        return (
-                            appointment.timeSlot?.date === date &&
-                            appointment.appointmentStatus_En !== 'Cancelled' &&
-                            appointment.appointmentStatus_En !== 'Proccessed'
-                        );
-                    })
-                    .sort((a: any, b: any) => {
-                        // Convert time strings to Date objects for comparison
-                        const timeA = new Date(`1970-01-01T${a.timeSlot.startTime}`);
-                        const timeB = new Date(`1970-01-01T${b.timeSlot.startTime}`);
-                        return timeA.getTime() - timeB.getTime();
-                    });
-                this.cdr.detectChanges();
-            },
-            error: (error) => {
-                this.toastr.error(this.getTranslation('errors.fetchAppointments'), 'Error');
-            },
+
+
+  startPolling(): void {
+    if (!this.doctorId) return;
+
+    this.pollingSubscription = interval(5000)
+      .pipe(
+        switchMap(() => this.appointmentService.searchAppointmentsByOptionalParams(this.doctorId))
+      )
+      .subscribe({
+        next: (response: any) => {
+          const newAppointments = (response.data || [])
+            .filter((appt: any) => appt.timeSlot?.date === this.selectedDate &&
+                                   appt.appointmentStatus_En !== 'Cancelled' &&
+                                   appt.appointmentStatus_En !== 'Proccessed')
+            .sort((a: any, b: any) => {
+              const timeA = new Date(`1970-01-01T${a.timeSlot.startTime}`);
+              const timeB = new Date(`1970-01-01T${b.timeSlot.startTime}`);
+              return timeA.getTime() - timeB.getTime();
+            });
+
+          this.checkForInProgressChanges(newAppointments);
+          this.appointments = newAppointments;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.toastr.error(this.translocoService.translate('errors.fetchAppointments'), 'Error');
+        },
+      });
+  }
+
+  private checkForInProgressChanges(newAppointments: any[]): void {
+    const currentInProgress = newAppointments
+      .filter(a => a.appointmentStatus_En === 'InProgress')
+      .map(a => a.id);
+
+    const newInProgress = currentInProgress.filter(id =>
+      !this.previousInProgressAppointments.includes(id)
+    );
+
+    if (newInProgress.length > 0) {
+      this.playNotificationSound(this.audio);
+    }
+
+    this.previousInProgressAppointments = currentInProgress;
+  }
+
+  private playNotificationSound(audioElement: HTMLAudioElement): void {
+    try {
+      audioElement.currentTime = 0;
+      audioElement.play().catch(e => console.warn('Audio play failed:', e));
+    } catch (e) {
+      console.warn('Audio error:', e);
+    }
+  }
+
+  fetchAvailableDays(): void {
+    const numberOfRequiredDays = 14;
+    this.appointmentService.getAllDays(this.doctorId, numberOfRequiredDays).subscribe({
+      next: (response: any) => {
+        this.availableDays = (response.data.workingDays || []).map((date: string) => {
+          const dayOfWeek = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
+          return { date, dayOfWeek };
         });
-    }
 
-    onDateSelect(event: any): void {
-        this.selectedDate = event.target.value;
-        this.fetchAppointmentsForDate(this.selectedDate);
-    }
+        if (this.availableDays.length > 0) {
+          const today = new Date().toISOString().split('T')[0];
+          const todayOrFirstUpcoming = this.availableDays.find(day => day.date >= today) || this.availableDays[0];
+          this.selectedDate = todayOrFirstUpcoming.date;
+          this.fetchAppointmentsForDate(this.selectedDate);
+        }
+      },
+      error: () => {
+        this.toastr.error(this.translocoService.translate('errors.fetchAvailableDays'), 'Error');
+      }
+    });
+  }
 
+  fetchAppointmentsForDate(date: string): void {
+    this.appointmentService.searchAppointmentsByOptionalParams(this.doctorId).subscribe({
+      next: (response: any) => {
+        this.appointments = (response.data || [])
+          .filter((appointment: any) => appointment.timeSlot?.date === date &&
+                                         appointment.appointmentStatus_En !== 'Cancelled' &&
+                                         appointment.appointmentStatus_En !== 'Proccessed')
+          .sort((a: any, b: any) => new Date(`1970-01-01T${a.timeSlot.startTime}`).getTime() -
+                                    new Date(`1970-01-01T${b.timeSlot.startTime}`).getTime());
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.toastr.error(this.translocoService.translate('errors.fetchAppointments'), 'Error');
+      },
+    });
+  }
+
+  onDateSelect(event: any): void {
+    this.selectedDate = event.target.value;
+    this.fetchAppointmentsForDate(this.selectedDate);
+  }
+  
     markAsArrived(appointmentId: number): void {
         this.makeAppointmentArrived(appointmentId).subscribe({
             next: () => {

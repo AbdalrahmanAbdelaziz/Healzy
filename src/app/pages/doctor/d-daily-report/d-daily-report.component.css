@@ -3,10 +3,10 @@
 .main-content-wrapper {
   padding: 20px;
   margin-top: 70px;
-  margin-left: 240px;
+  /* margin-left: 240px; */
   min-height: calc(100vh - 70px);
   transition: margin-left 0.3s ease;
-}
+  }
 
 @media (max-width: 992px) {
   .main-content-wrapper {
@@ -19,6 +19,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
+  box-shadow: 0 10px 25px #24CC81;
 }
 
 /* ===== Header Styles ===== */
@@ -29,6 +30,7 @@
   align-items: center;
   margin-bottom: 30px;
   gap: 20px;
+  color: #24CC81;
 }
 
 .report-title {
@@ -37,6 +39,11 @@
   margin: 0;
   flex: 1;
   min-width: 200px;
+background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;  
 }
 
 .header-actions {
@@ -44,6 +51,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 20px;
+  
 }
 
 .date-selector {
@@ -131,6 +139,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
 }
 
 .report-card:hover {
@@ -178,7 +187,7 @@
 }
 
 .revenue-table th.payment-method {
-  background-color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   font-weight: 500;
 }
 
@@ -242,6 +251,7 @@
     flex-direction: column;
     align-items: stretch;
     gap: 15px;
+    
   }
   
   .date-selector {

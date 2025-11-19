@@ -183,7 +183,7 @@ getHistoryAppointments(appointments: any[]): any[] {
 
   checkForUnratedAppointments(): void {
     const unratedProcessed = this.appointments
-      .filter(appt => appt.appointmentStatus_En === 'Proccessed' && !appt.hasRated)
+      .filter(appt => appt.appointmentStatus_En === 'Finished' && !appt.hasRated)
       .sort((a, b) => new Date(b.timeSlot.date).getTime() - new Date(a.timeSlot.date).getTime());
 
     if (unratedProcessed.length > 0) {
@@ -236,18 +236,27 @@ getHistoryAppointments(appointments: any[]): any[] {
     this.filterAndSortAppointments();
   }
 
-  getDoctorInfoForAppointments(): void {
-    this.appointments.forEach(ap => {
-      this.doctorService.getDoctorsByOptionalParams({ id: ap.doctorId }).subscribe(
-        (doc) => {
-          ap.doctorProfilePicture = doc.data[0].profilePicture;
-          this.clinicService.getClinicById(doc.data[0].clinicId).subscribe(
-            (c) => ap.clinicName = c.data.name
-          );
+getDoctorInfoForAppointments(): void {
+  this.appointments.forEach(ap => {
+    this.doctorService.getDoctorsByOptionalParams({ id: ap.doctorId }).subscribe(
+      (res) => {
+        if (res && res.data && res.data.length > 0) {
+          const doctor = res.data.find((d: any) => d.id === ap.doctorId); // find matching doctor
+          if (doctor) {
+            ap.doctorProfilePicture = doctor.profilePicture;
+            ap.doctorName = doctor.firstName + " " +doctor.lastName; 
+       
+
+            this.clinicService.getClinicById(doctor.clinicId).subscribe(
+              (c) => ap.clinicName = c.data.name
+            );
+          }
         }
-      );
-    });
-  }
+      }
+    );
+  });
+}
+
 
   filterAndSortAppointments(): void {
     this.filteredAppointments = this.appointments.filter(
@@ -255,11 +264,11 @@ getHistoryAppointments(appointments: any[]): any[] {
     );
 
     this.historyAppointments = this.appointments.filter(
-      appt => appt.appointmentStatus_En === 'Proccessed'
+      appt => appt.appointmentStatus_En === 'Finished'
     );
 
     this.processedAppointments = this.appointments.filter(
-      appt => appt.appointmentStatus_En === 'Proccessed' && !appt.hasRated
+      appt => appt.appointmentStatus_En === 'Finished' && !appt.hasRated
     );
 
     this.appointments.sort(

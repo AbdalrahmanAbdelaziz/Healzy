@@ -3,7 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #f8f9fa;
+  
 }
 
 .dashboard-main-content {
@@ -17,17 +17,20 @@
   width: 100%;
   box-sizing: border-box;
   padding-top: 150px;
+  
 }
 
 /* ================ LAYOUT STRUCTURE ================ */
 .primary-content {
   flex: 1;
   min-width: 0;
+  box-shadow: 0 10px 25px #24CC81;
 }
 
 .secondary-content {
   width: 320px;
   min-width: 320px;
+  box-shadow: 0 10px 25px #24CC81;
 }
 
 /* ================ CARD COMPONENTS ================ */
@@ -536,4 +539,25 @@
 .dashboard-card:focus {
   outline: 3px solid #3498db;
   outline-offset: 2px;
+}
+
+/* ================== ADDITIONAL STAT COLORS ================== */
+.arrived-icon {
+  background-color: #FFBB33; /* Yellow/Orange for Arrived */
+}
+
+.in-progress-icon {
+  background-color: #F97316; /* Bright Orange for In Progress */
+}
+
+.next-queue-icon {
+  background-color: #8B5CF6; /* Purple for Next in Queue */
+}
+
+/* Optional: hover effect for new stat boxes */
+.arrived-icon:hover,
+.in-progress-icon:hover,
+.next-queue-icon:hover {
+  filter: brightness(1.1);
+  transition: filter 0.2s ease-in-out;
 }

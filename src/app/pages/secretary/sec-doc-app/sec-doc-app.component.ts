@@ -8,7 +8,6 @@ import { SSidenavbarComponent } from '../s-sidenavbar/s-sidenavbar.component';
 import { SHeaderComponent } from '../s-header/s-header.component';
 import { PatientService } from '../../../services/patient.service';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
-import { FooterComponent } from '../../footer/footer.component';
 
 @Component({
   selector: 'app-sec-doc-app',
@@ -18,8 +17,7 @@ import { FooterComponent } from '../../footer/footer.component';
     RouterModule, 
     SHeaderComponent, 
     SSidenavbarComponent,
-    TranslocoModule, 
-    FooterComponent
+    TranslocoModule
   ],
   templateUrl: './sec-doc-app.component.html',
   styleUrl: './sec-doc-app.component.css'

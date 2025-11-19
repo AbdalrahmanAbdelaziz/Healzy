@@ -1,83 +1,79 @@
 <div class="navbar" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
   <div class="navbar-content">
+    <!-- Logo -->
     <div class="logo-container">
-      <img src="vv_w.png" alt="Logo" class="logo-image" routerLink="/doctor-home" />
+      <img src="vv_b.png" alt="Logo" class="logo-image" routerLink="/doctor-home" />
     </div>
 
-    <div class="desktop-nav" *ngIf="!isMobileView">
-      <ul class="nav-links">
-        <li>
-          <a routerLink="/doctor-home" routerLinkActive="active" (click)="closeAllMenus()" [title]="'header.home' | transloco">
-            <i class="fas fa-home"></i>
-            <span class="nav-text">{{ 'header.home' | transloco }}</span>
-          </a>
-        </li>
-        
-        <li>
-          <a routerLink="/d-revenues" routerLinkActive="active" (click)="closeAllMenus()" [title]="'header.daybook' | transloco">
-            <i class="fas fa-calendar-check"></i>
-            <span class="nav-text">{{ 'header.daybook' | transloco }}</span>
-          </a>
-        </li>
+    <!-- Nav Links -->
+    <ul class="nav-links" *ngIf="!isMobileView">
+      <li>
+        <a routerLink="/doctor-home" routerLinkActive="active" (click)="closeAllMenus()" [title]="'header.home' | transloco">
+          <i class="fas fa-home"></i>
+          <span>{{ 'header.home' | transloco }}</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/d-revenues" routerLinkActive="active" (click)="closeAllMenus()" [title]="'header.daybook' | transloco">
+          <i class="fas fa-calendar-check"></i>
+          <span>{{ 'header.daybook' | transloco }}</span>
+        </a>
+      </li>
 
-        <li class="profile-menu-container">
-          <a (click)="toggleProfileMenu()" [title]="'header.profile' | transloco">
-            <i class="fas fa-user"></i>
-            <span class="nav-text">{{ patient?.data?.firstName | titlecase }}</span>
-            <i class="fas fa-chevron-down dropdown-icon" [class.rotate]="isProfileMenuOpen"></i>
+      <li>
+          <a routerLink="/d-daily-report" routerLinkActive="active" (click)="closeAllMenus()" [title]="'header.revenues' | transloco">
+            <i class="fas fa-clipboard-list"></i>
+           <span>{{ 'header.revenues' | transloco }}</span> 
           </a>
-          
-          <div class="profile-menu" [class.open]="isProfileMenuOpen">
-            <a routerLink="/d-profile" (click)="closeAllMenus()">
-              <i class="fas fa-user-cog"></i>
-              {{ 'header.profile' | transloco }}
-            </a>
-            <a routerLink="/d-daily-report" (click)="closeAllMenus()">
-              <i class="fas fa-clipboard-list"></i>
-              {{ 'header.revenues' | transloco }}
-            </a>
-            <a routerLink="/d-contact-us" (click)="closeAllMenus()">
-              <i class="fas fa-envelope"></i>
-              {{ 'header.contactUs' | transloco }}
-            </a>
-            <a (click)="logout()">
-              <i class="fas fa-sign-out-alt"></i>
-              {{ 'header.logout' | transloco }}
-            </a>
-          </div>
-        </li>
-      </ul>
+      </li>
+    </ul>
 
-      <div class="top-nav-items">
-        <button class="lang-switcher" (click)="toggleLanguage()" [title]="'header.languageToggle' | transloco">
-          {{ currentLang === 'en' ? 'عربي' : 'EN' }}
-        </button>
+    <!-- Right Section: Profile + Language -->
+    <div class="right-section" *ngIf="!isMobileView">
+      <!-- Profile Dropdown -->
+      <div class="profile-menu-container">
+        <a (click)="toggleProfileMenu()" [title]="'header.profile' | transloco">
+          <img
+            class="avatar"
+            [src]="patient?.data?.profilePicture 
+                    ? BASE_URL + '/' + patient.data.profilePicture 
+                    : 'https://ui-avatars.com/api/?name=' + patient?.data?.firstName + '&background=24CC81&color=fff&rounded=true'"
+            alt="User"
+          />
+          <span>{{ patient?.data?.firstName | titlecase }}</span>
+          <i class="fas fa-chevron-down dropdown-icon" [class.rotate]="isProfileMenuOpen"></i>
+        </a>
+        <div class="profile-menu" [class.open]="isProfileMenuOpen">
+          <a routerLink="/complete-data" (click)="closeAllMenus()">
+            <i class="fas fa-user-cog"></i>
+            {{ 'header.profile' | transloco }}
+          </a>
         
-        <!-- <a class="dark-mode-toggle" (click)="toggleDarkMode()" [title]="'header.darkModeToggle' | transloco">
-          <i class="fas" [class.fa-moon]="!isDarkMode" [class.fa-sun]="isDarkMode"></i>
-        </a> -->
+          <!-- <a routerLink="/d-contact-us" (click)="closeAllMenus()">
+            <i class="fas fa-envelope"></i>
+            {{ 'header.contactUs' | transloco }}
+          </a> -->
+          <a (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            {{ 'header.logout' | transloco }}
+          </a>
+        </div>
       </div>
+
+      <!-- Language Switcher -->
+      <button class="lang-switcher" (click)="toggleLanguage()" [title]="'header.languageToggle' | transloco">
+        {{ currentLang === 'en' ? 'عربي' : 'EN' }}
+      </button>
     </div>
 
+    <!-- Mobile Navigation -->
     <div class="mobile-nav" *ngIf="isMobileView">
       <div class="top-nav-items">
         <button class="lang-switcher" (click)="toggleLanguage()" [title]="'header.languageToggle' | transloco">
           {{ currentLang === 'en' ? 'عربي' : 'EN' }}
         </button>
-        
-        <!-- <a class="dark-mode-toggle" (click)="toggleDarkMode()" [title]="'header.darkModeToggle' | transloco">
-          <i class="fas" [class.fa-moon]="!isDarkMode" [class.fa-sun]="isDarkMode"></i>
-        </a> -->
-        
-        <button 
-          type="button"
-          class="hamburger" 
-          (click)="toggleMenu()" 
-          [attr.aria-label]="isMenuOpen ? ('header.closeMenu' | transloco) : ('header.openMenu' | transloco)"
-          [title]="isMenuOpen ? ('header.closeMenu' | transloco) : ('header.openMenu' | transloco)"
-        >
+        <button type="button" class="hamburger" (click)="toggleMenu()">
           <i class="fas" [class.fa-times]="isMenuOpen" [class.fa-bars]="!isMenuOpen"></i>
-          <span class="sr-only">{{ isMenuOpen ? ('header.closeMenu' | transloco) : ('header.openMenu' | transloco) }}</span>
         </button>
       </div>
 
@@ -86,27 +82,25 @@
           <i class="fas fa-home"></i>
           {{ 'header.home' | transloco }}
         </a>
-        
-        <a routerLink="/d-daily-report" routerLinkActive="active" (click)="closeAllMenus()">
-          <i class="fas fa-chart-line"></i>
+        <a routerLink="/d-revenues" routerLinkActive="active" (click)="closeAllMenus()">
+          <i class="fas fa-calendar-check"></i>
+          {{ 'header.daybook' | transloco }}
+        </a>
+
+         <a routerLink="/d-daily-report" routerLinkActive="active" (click)="closeAllMenus()">
+          <i class="fas fa-clipboard-list"></i>
           {{ 'header.revenues' | transloco }}
         </a>
         
-        <a routerLink="/d-revenues" routerLinkActive="active" (click)="closeAllMenus()">
-          <i class="fas fa-clipboard-list"></i>
-          {{ 'header.daybook' | transloco }}
-        </a>
-        
-        <a routerLink="/d-profile" routerLinkActive="active" (click)="closeAllMenus()">
+        <a routerLink="/complete-data" routerLinkActive="active" (click)="closeAllMenus()">
           <i class="fas fa-user"></i>
           {{ 'header.profile' | transloco }}
         </a>
-        
-        <a routerLink="/d-contact-us" routerLinkActive="active" (click)="closeAllMenus()">
+       
+        <!-- <a routerLink="/d-contact-us" routerLinkActive="active" (click)="closeAllMenus()">
           <i class="fas fa-envelope"></i>
           {{ 'header.contactUs' | transloco }}
-        </a>
-        
+        </a> -->
         <a (click)="logout()">
           <i class="fas fa-sign-out-alt"></i>
           {{ 'header.logout' | transloco }}

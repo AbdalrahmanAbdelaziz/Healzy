@@ -11,6 +11,8 @@ import { UserService } from '../../../services/user.service';
 import { ServiceOfDoctor } from '../../../services/doctorService.service';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { FooterComponent } from '../../footer/footer.component';
+import { LoginResponse } from '../../../shared/models/login-response';
+import { Doctor } from '../../../shared/models/doctor.model';
 
 @Component({
   selector: 'app-service-setting',
@@ -24,12 +26,14 @@ import { FooterComponent } from '../../footer/footer.component';
     FooterComponent
   ],
   templateUrl: './service-setting.component.html',
-  styleUrl: './service-setting.component.css'
+  styleUrls: ['./service-setting.component.css']
 })
 export class ServiceSettingComponent implements OnInit {
   doctorServices: any[] = [];
   availableServices: any[] = [];
   isModalOpen: boolean = false;
+  doctorId!: number;
+  doctorSpecializationId: number | null = null;
 
   constructor(
     private serivicesOfDoctor: ServiceOfDoctor,
@@ -40,39 +44,67 @@ export class ServiceSettingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadDoctorServices();
+    this.loadDoctorIdAndServices();
   }
 
-  loadDoctorServices() {
-    const user = this.userService.getUser();
-    if (user && user.data.doctorId) {
-      this.serivicesOfDoctor.getServicesByDoctorId(user.data.doctorId).subscribe((response) => {
-        this.doctorServices = response.data;
+  private loadDoctorIdAndServices(): void {
+    const user: LoginResponse | null = this.userService.getUser();
+
+    if (!user) {
+      console.error('No user data found.');
+      return;
+    }
+
+    if (user.data.applicationRole_En === 'Secretary') {
+      // Secretary: fetch the doctor assigned to them
+      this.doctorService.getDoctorsFromSecretary().subscribe({
+        next: (doctor: Doctor) => {
+          if (doctor && doctor.id) {
+            this.doctorId = doctor.id;
+            this.doctorSpecializationId = doctor.specializationId; // <-- use specializationId directly
+            this.userService.setDoctorIdForSecretary(this.doctorId);
+            this.loadDoctorServices();
+          } else {
+            console.warn('No doctor assigned to this secretary.');
+            this.toastr.warning(this.translocoService.translate('errors.noDoctorAssigned'));
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching doctor for secretary:', err);
+          this.toastr.error(this.translocoService.translate('error.fetch_doctors_failed'), 'Error');
+        }
       });
+    } else if (user.data.applicationRole_En === 'Doctor') {
+      // Doctor: use own ID
+      this.doctorId = user.data.id;
+      this.doctorSpecializationId = user.data.specializationId;
+      this.loadDoctorServices();
+    } else {
+      console.error('No valid doctor ID available.');
     }
   }
 
   openServiceModal() {
-    const user = this.userService.getUser();
-    if (user && user.data.specializationId) {
-      this.serivicesOfDoctor.getServicesBySpecializationId(user.data.specializationId).subscribe(
-        (response) => {
-          this.availableServices = response.data.map((service: any) => ({
-            ...service,
-            price: null,
-            doctorAvgDurationForServiceInMinutes: null
-          }));
-          this.isModalOpen = true;
-        },
-        (error) => {
-          console.error('Error fetching available services:', error);
-          this.toastr.error(this.translocoService.translate('error.fetch_services_failed'), 'Error');
-        }
-      );
-    } else {
-      console.error('Specialization ID is missing in user data.');
+    if (!this.doctorSpecializationId) {
+      console.error('Specialization ID is missing.');
       this.toastr.error(this.translocoService.translate('error.specialization_missing'), 'Error');
+      return;
     }
+
+    this.serivicesOfDoctor.getServicesBySpecializationId(this.doctorSpecializationId).subscribe(
+      (response) => {
+        this.availableServices = response.data.map((service: any) => ({
+          ...service,
+          price: null,
+          doctorAvgDurationForServiceInMinutes: null
+        }));
+        this.isModalOpen = true;
+      },
+      (error) => {
+        console.error('Error fetching available services:', error);
+        this.toastr.error(this.translocoService.translate('error.fetch_services_failed'), 'Error');
+      }
+    );
   }
 
   closeServiceModal() {
@@ -88,9 +120,8 @@ export class ServiceSettingComponent implements OnInit {
   }
 
   addService(service: any) {
-    const user = this.userService.getUser();
-    if (!user || !user.data.doctorId) {
-      console.error('Doctor ID is missing in user data.');
+    if (!this.doctorId) {
+      console.error('Doctor ID is missing.');
       this.toastr.error(this.translocoService.translate('error.specialization_missing'), 'Error');
       return;
     }
@@ -99,11 +130,11 @@ export class ServiceSettingComponent implements OnInit {
       doctorPriceForService: service.price || 0,
       doctorAvgDurationForServiceInMinutes: service.doctorAvgDurationForServiceInMinutes || 0,
       specializationServiceId: service.id,
-      doctorId: user.data.doctorId
+      doctorId: this.doctorId
     };
 
-    this.serivicesOfDoctor.assignServiceToDoctor(requestBody).subscribe(
-      (response) => {
+    this.serivicesOfDoctor.assignServiceToDoctor(requestBody).subscribe({
+      next: (response) => {
         if (response.message === 'This service is already assigned to you.') {
           this.toastr.warning(this.translocoService.translate('info.already_assigned'), 'Info');
         } else {
@@ -112,10 +143,24 @@ export class ServiceSettingComponent implements OnInit {
           this.closeServiceModal();
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Error assigning service to doctor:', error);
         this.toastr.info(this.translocoService.translate('info.already_assigned'), 'Info');
       }
-    );
+    });
+  }
+
+  private loadDoctorServices(): void {
+    if (!this.doctorId) return;
+
+    this.serivicesOfDoctor.getServicesByDoctorId(this.doctorId).subscribe({
+      next: (response) => {
+        this.doctorServices = response.data;
+      },
+      error: (err) => {
+        console.error('Error loading doctor services:', err);
+        this.toastr.error(this.translocoService.translate('error.fetch_services_failed'), 'Error');
+      }
+    });
   }
 }

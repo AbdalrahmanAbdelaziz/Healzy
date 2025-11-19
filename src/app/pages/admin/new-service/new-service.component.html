@@ -5,76 +5,55 @@
     <div class="cover-image"></div>
     <div class="overlay"></div>
   </div>
-  
+
   <div class="form-container">
     <div class="form-content">
       <div class="form-header">
-        <h1>{{ 'service_form.title' | transloco }}</h1>
+        <hr class="my-4" />
+        <h3>{{ 'services.add_new' | transloco }}</h3>
       </div>
 
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()" novalidate>
+        <!-- Service Name -->
         <div class="form-field">
-          <label for="serviceName">{{ 'service_form.service_name' | transloco }}</label>
-          <input 
-            type="text" 
-            id="serviceName" 
-            [(ngModel)]="newService.serviceName"
-            name="serviceName"
-            [placeholder]="'service_form.service_name_placeholder' | transloco"
-            required
-          >
+          <label for="serviceName">{{ 'services.fields.name' | transloco }}</label>
+          <input id="serviceName" type="text" [(ngModel)]="newService.serviceName" name="serviceName" />
+          <span class="error" *ngIf="hasError('serviceName')">{{ getError('serviceName') }}</span>
         </div>
 
+        <!-- Service Description -->
         <div class="form-field">
-          <label for="serviceDescription">{{ 'service_form.description' | transloco }}</label>
-          <textarea 
-            id="serviceDescription" 
-            [(ngModel)]="newService.serviceDescription"
-            name="serviceDescription"
-            [placeholder]="'service_form.description_placeholder' | transloco"
-          ></textarea>
+          <label for="serviceDescription">{{ 'services.fields.description' | transloco }}</label>
+          <textarea id="serviceDescription" rows="3" [(ngModel)]="newService.serviceDescription" name="serviceDescription"></textarea>
+          <span class="error" *ngIf="hasError('serviceDescription')">{{ getError('serviceDescription') }}</span>
         </div>
 
+        <!-- Duration -->
         <div class="form-field">
-          <label for="duration">{{ 'service_form.duration' | transloco }}</label>
-          <input 
-            type="number" 
-            id="duration" 
-            [(ngModel)]="newService.avgDurationInMinutes"
-            name="avgDurationInMinutes"
-            min="1"
-            [placeholder]="'service_form.duration_placeholder' | transloco"
-            required
-          >
+          <label for="avgDurationInMinutes">{{ 'services.fields.duration' | transloco }}</label>
+          <input id="avgDurationInMinutes" type="number" [(ngModel)]="newService.avgDurationInMinutes" name="avgDurationInMinutes" />
+          <span class="error" *ngIf="hasError('avgDurationInMinutes')">{{ getError('avgDurationInMinutes') }}</span>
         </div>
 
+        <!-- Specialization -->
         <div class="form-field">
-          <label for="specialization">{{ 'service_form.specialization' | transloco }}</label>
-          <select 
-            id="specialization"
-            [(ngModel)]="newService.specializationId"
-            name="specializationId"
-            required
-          >
-            <option value="" disabled selected hidden>
-              {{ 'service_form.select_specialization' | transloco }}
-            </option>
+          <label for="specialization">{{ 'services.fields.specialization' | transloco }}</label>
+          <select id="specialization" [(ngModel)]="newService.specializationId" name="specializationId">
             <option *ngFor="let spec of specializations" [value]="spec.id">
-              {{ getTranslatedName(spec) }}
+              {{ spec | localizedField:'name' }}
             </option>
           </select>
+          <span class="error" *ngIf="hasError('specializationId')">{{ getError('specializationId') }}</span>
         </div>
 
+        <!-- Actions -->
         <div class="form-actions">
-          <button type="button" class="btn btn-outline" (click)="resetForm()">
-            {{ 'common.reset' | transloco }}
+          <button type="button" class="btn btn-outline"
+            (click)="newService = { serviceName: '', serviceDescription: '', avgDurationInMinutes: 0, specializationId: 0 }">
+            {{ 'common.cancel' | transloco }}
           </button>
-          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
-            <span *ngIf="!isSubmitting">{{ 'service_form.create_button' | transloco }}</span>
-            <span *ngIf="isSubmitting">
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              {{ 'common.creating' | transloco }}
-            </span>
+          <button type="submit" class="btn btn-primary">
+            {{ 'common.save' | transloco }}
           </button>
         </div>
       </form>

@@ -47,11 +47,23 @@ export class CreateClinicComponent implements OnInit {
 
   private initForm(): void {
     this.clinicForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z\u0600-\u06FF\s]+$/) // letters only (Arabic + English)
+        ]
+      ],
       countryId: ['', [Validators.required]],
       governorateId: ['', [Validators.required]],
       districtId: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9]{6,15}$/) // numbers only, length between 6–15
+        ]
+      ],
       email: ['', [Validators.required, Validators.email]],
       gallery: [null]
     });
@@ -59,7 +71,7 @@ export class CreateClinicComponent implements OnInit {
 
   private loadLookups(): void {
     this.lookupService.loadCountries().subscribe(
-      (res: APIResponse<Lookup[]>) => this.countries = res.data,
+      (res: APIResponse<Lookup[]>) => (this.countries = res.data),
       () => this.toastr.error(this.translocoService.translate('errors.failed_load_countries'))
     );
   }
@@ -81,7 +93,7 @@ export class CreateClinicComponent implements OnInit {
   updateGovernorates(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const countryId = selectElement.value;
-    
+
     if (!countryId) {
       this.governorates = [];
       this.districts = [];
@@ -101,14 +113,14 @@ export class CreateClinicComponent implements OnInit {
   updateDistricts(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const governorateId = selectElement.value;
-    
+
     if (!governorateId) {
       this.districts = [];
       this.clinicForm.patchValue({ districtId: '' });
       return;
     }
     this.lookupService.loadDistrictsOfGovernorate(Number(governorateId)).subscribe(
-      (res: APIResponse<Lookup[]>) => this.districts = res.data,
+      (res: APIResponse<Lookup[]>) => (this.districts = res.data),
       () => this.toastr.error(this.translocoService.translate('errors.failed_load_districts'))
     );
   }
@@ -142,9 +154,20 @@ export class CreateClinicComponent implements OnInit {
         this._router.navigate(['/admin/clinics']);
       },
       error: (err) => {
-        this.toastr.error(this.translocoService.translate('clinic_form.create_error'));
-        console.error(err);
         this.isLoading = false;
+
+        const backendMessage =
+          err?.error?.message ||
+          err?.error?.title ||
+          err?.message ||
+          this.translocoService.translate('clinic_form.create_error');
+
+        this.toastr.error(
+          backendMessage,
+          this.translocoService.translate('errors.error_title')
+        );
+
+        console.error(err);
       },
       complete: () => {
         this.isLoading = false;

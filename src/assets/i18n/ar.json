@@ -30,10 +30,12 @@
       "manageAppointmentsText": "عرض زياراتك القادمة، تلقي التذكيرات، والوصول إلى سجل استشاراتك في مكان واحد.",
       "viewAppointments": "عرض مواعيدك",
       "trackAppointments": "تتبع المواعيد",
-      "already_assigned": "تم تعيين هذه الخدمة لك بالفعل."
+      "already_assigned": "تم تعيين هذه الخدمة لك بالفعل.",
+      "assign_failed": "فشل في إضافة الخدمة. قد تكون مضافة مسبقًا."
     },
 
     "login": {
+      "passwordLabel": "كلمة السر",
        "or": "أو",
     "signInWithGoogle": "تسجيل الدخول باستخدام جوجل",
     "googleLoginFailed": "فشل تسجيل الدخول عبر جوجل",
@@ -73,46 +75,51 @@
         "coverImageAlt": "خلفية الرعاية الصحية",
         "logoAlt": "شعار هوغوزاتي",
         "form": {
-          "firstName": "الاسم الأول",
-          "firstNamePlaceholder": "أدخل اسمك الأول",
-          "lastName": "الاسم الأخير",
-          "lastNamePlaceholder": "أدخل اسمك الأخير",
-          "username": "اسم المستخدم",
-          "usernamePlaceholder": "أدخل اسم المستخدم",
-          "password": "كلمة المرور",
-          "passwordPlaceholder": "أدخل كلمة المرور",
-          "phoneNumber": "رقم الهاتف",
-          "phoneNumberPlaceholder": "أدخل رقم هاتفك",
-          "email": "البريد الإلكتروني",
-          "emailPlaceholder": "أدخل بريدك الإلكتروني",
-          "dateOfBirth": "تاريخ الميلاد",
-          "gender": "الجنس",
-          "selectGender": "اختر الجنس",
-          "country": "البلد",
-          "selectCountry": "اختر البلد",
-          "governorate": "المحافظة",
-          "selectGovernorate": "اختر المحافظة",
-          "district": "المنطقة",
-          "selectDistrict": "اختر المنطقة",
-          "profilePicture": "صورة الملف الشخصي",
-          "emergencyContactName": "اسم جهة الاتصال للطوارئ",
-          "emergencyContactPlaceholder": "أدخل اسم جهة الاتصال للطوارئ",
-          "emergencyContactPhone": "هاتف جهة الاتصال للطوارئ",
-          "emergencyContactPhonePlaceholder": "أدخل هاتف جهة الاتصال للطوارئ",
-          "bloodType": "فصيلة الدم",
-          "bloodTypePlaceholder": "أدخل فصيلة دمك",
-            "usernameHint": "يجب أن يكون 4 أحرف على الأقل (بالإنجليزية فقط)"
+            "usernameHint": "يجب أن يكون 4 أحرف على الأقل (بالإنجليزية فقط)",
+               "firstName": "الاسم الأول",
+      "firstNamePlaceholder": "ادخل الاسم الأول",
+      "lastName": "اسم العائلة",
+      "lastNamePlaceholder": "ادخل اسم العائلة",
+      "username": "اسم المستخدم",
+      "usernamePlaceholder": "اختر اسم مستخدم",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "ادخل كلمة مرور قوية",
+      "phoneNumber": "رقم الهاتف",
+      "phoneNumberPlaceholder": "ادخل رقم الهاتف",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "ادخل البريد الإلكتروني",
+      "dateOfBirth": "تاريخ الميلاد",
+      "gender": "النوع",
+      "selectGender": "اختر النوع",
+      "country": "الدولة",
+      "selectCountry": "اختر الدولة",
+      "governorate": "المحافظة",
+      "selectGovernorate": "اختر المحافظة",
+      "district": "الحي / المنطقة",
+      "selectDistrict": "اختر الحي",
+      "profilePicture": "الصورة الشخصية",
+      "emergencyContactName": "اسم شخص للطوارئ",
+      "emergencyContactPlaceholder": "ادخل اسم شخص للطوارئ",
+      "emergencyContactPhone": "رقم هاتف الطوارئ",
+      "emergencyContactPhonePlaceholder": "ادخل رقم هاتف الطوارئ",
+      "bloodType": "فصيلة الدم",
+      "bloodTypePlaceholder": "مثال: A+ ، O-"
         },
         "formErrors": {
-          "firstNameRequired": "الاسم الأول مطلوب.",
-          "lastNameRequired": "الاسم الأخير مطلوب.",
-          "usernameRequired": "اسم المستخدم مطلوب.",
-          "usernameMinLength": "الحد الأدنى للطول هو {{length}} أحرف.",
-          "passwordRequired": "كلمة المرور مطلوبة.",
-          "passwordMinLength": "الحد الأدنى للطول هو {{length}} أحرف.",
-          "phoneNumberRequired": "رقم الهاتف مطلوب.",
-          "incompleteFields": "يرجى استكمال جميع الحقول المطلوبة.",
-          "warning": "بيانات غير مكتملة"
+          "dateOfBirthFuture": "تاريخ الميلاد لا يمكن أن يكون في المستقبل.",
+             "incompleteFields": "يرجى إكمال الحقول المطلوبة.",
+      "warning": "تحذير",
+      "firstNameRequired": "الاسم الأول مطلوب.",
+      "lastNameRequired": "اسم العائلة مطلوب.",
+      "usernameRequired": "اسم المستخدم مطلوب.",
+      "usernameMinLength": "اسم المستخدم يجب أن لا يقل عن {{length}} أحرف.",
+      "passwordRequired": "كلمة المرور مطلوبة.",
+      "passwordMinLength": "كلمة المرور يجب أن تكون 8 أحرف على الأقل.",
+      "passwordUppercase": "كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل (A–Z).",
+      "passwordDigit": "كلمة المرور يجب أن تحتوي على رقم واحد على الأقل (0–9).",
+      "passwordNonAlpha": "كلمة المرور يجب أن تحتوي على رمز خاص واحد على الأقل (مثل !@#$).",
+      "phoneNumberRequired": "رقم الهاتف مطلوب.",
+      "usernamePattern": "يجب أن يتكون اسم المستخدم من 4 أحرف على الأقل، أحرف أو أرقام إنجليزية فقط، بدون مسافات"
         },
         "buttons": {
           "register": "تسجيل"
@@ -234,8 +241,15 @@
     "failed_load_districts": "فشل تحميل المناطق",
     "load_specializations_error": "حدث خطأ أثناء تحميل التخصصات",
     "service_creation_error": "حدث خطأ أثناء إنشاء الخدمة",
-    "load_doctors_error": "حدث خطأ أثناء تحميل بيانات الأطباء"
+    "load_doctors_error": "حدث خطأ أثناء تحميل بيانات الأطباء",
+     "error_title": "خطأ",
+    "file_not_allowed": "نوع الملف غير مسموح",
+    "incomplete_fields": "من فضلك أكمل كل الحقول المطلوبة",
+     "passwordMinLength": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
+  "passwordsMismatch": "كلمات المرور غير متطابقة",
+  "required": "هذا الحقل مطلوب"
   },
+  
 
   "findDoctors": {
     "title": "ابحث عن طبيبك",
@@ -401,8 +415,32 @@
     "picture_alt": "صورة الملف الشخصي",
     "first_name": "الاسم الأول",
     "last_name": "الاسم الأخير",
-    "phone_number": "رقم الهاتف"
+    "phone_number": "رقم الهاتف",
+     "dateOfBirth": "تاريخ الميلاد",
+    "gender":"النوع",
+    "saveChanges": "حفظ",
+    "profilePicture":"الصورة الشخصية",
+    "country":"البلد",
+    "governorate":"المحافظة",
+    "district":"المنطقة",
+    "selectGender":"اختر النوع",
+     "selectCountry":"Select Country",
+    "selectGovernorate":"Select Governorate",
+    "selectDistrict":"Select District",
+    "deletePicture":"حذف الصورى",
+    "pictureRemoved": "تمت إزالة صورة الملف الشخصي بنجاح",
+     "saveCropped": "حفظ الصورة المقصوصة",
+    "cancelCrop": "إلغاء",
+     "personalInfo": "المعلومات الشخصية",
+    "address": "العنوان",
+     "changePassword": "تغيير كلمة المرور",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "updatePassword": "تحديث كلمة المرور"
+
   },
+
   "validation": {
     "firstNameRequired": "الاسم الأول مطلوب",
     "lastNameRequired": "الاسم الأخير مطلوب",
@@ -417,7 +455,7 @@
     "username_required": "اسم المستخدم مطلوب (4 أحرف على الأقل)",
     "valid_email": "بريد إلكتروني صالح مطلوب",
     "phone_required": "رقم الهاتف مطلوب",
-    "password_required": "كلمة المرور مطلوبة (6 أحرف على الأقل)",
+    "password_required": "كلمة المرور مطلوبة (8 أحرف على الأقل, رمز غير أبجدي رقمي واحد على الأقل, رقم واحد على الأقل,  حرف كبير واحد على الأقل)",
     "dob_required": "تاريخ الميلاد مطلوب",
     "gender_required": "الجنس مطلوب",
     "clinic_required": "العيادة مطلوبة",
@@ -434,7 +472,24 @@
     "duration_positive": "يجب أن تكون المدة أكبر من الصفر",
     "english_name_required": "الاسم بالإنجليزية مطلوب",
     "arabic_name_required": "الاسم بالعربية مطلوب",
-    "max_length_50": "الحد الأقصى 50 حرفًا مسموح به"
+    "only_english_letters": "مسموح باستخدام الحروف الإنجليزية فقط",
+    "max_length_50": "الحد الأقصى المسموح 50 حرفًا",
+
+    "username_min_length": "اسم المستخدم يجب ألا يقل عن 4 أحرف",
+    "username_max_length": "اسم المستخدم يجب ألا يتجاوز 20 حرفًا",
+    "username_invalid": "اسم المستخدم يمكن أن يحتوي فقط على أحرف، أرقام، نقطة، شرطة سفلية أو شرطة",
+
+    "email_required": "البريد الإلكتروني مطلوب",
+   
+    "valid_phone": "رقم الهاتف يجب أن يكون بين 10–15 رقمًا",
+
+    "password_min_length": "كلمة المرور يجب ألا تقل عن 8 أحرف",
+    "password_max_length": "كلمة المرور يجب ألا تتجاوز 20 حرفًا",
+    "password_complexity": "يجب أن تحتوي كلمة المرور على حرف واحد على الأقل ورقم واحد على الأقل",
+
+   
+
+    "price_required": "سعر الكشف مطلوب"
   },
 
   "auth": {
@@ -445,7 +500,14 @@
     "resetSuccess": "تم إعادة تعيين كلمة المرور بنجاح",
     "resetFailed": "فشل إعادة تعيين كلمة المرور",
     "patientRegistrationSuccess": "تم تسجيل المريض بنجاح!",
-    "patientRegistrationError": "فشل تسجيل المريض، يرجى المحاولة مرة أخرى."
+    "patientRegistrationError": "فشل تسجيل المريض، يرجى المحاولة مرة أخرى.",
+     "changePasswordSuccess": "تم تغيير كلمة المرور بنجاح",
+  "changePasswordFailed": "فشل في تغيير كلمة المرور",
+    "changePassword": "تغيير كلمة المرور",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "updatePassword": "تحديث كلمة المرور"
   },
 
   
@@ -478,7 +540,11 @@
   "notRegistered": "المريض غير مسجل.",
   "addPatientButton": "إضافة مريض جديد",
   "registeredMessage": "المريض مسجل! رقم المريض: {{patientId}}",
-  "goToAppointments": "الذهاب إلى مواعيد الطبيب"
+  "goToAppointments": "الذهاب إلى مواعيد الطبيب",
+    "validation": {
+      "required": "رقم الهاتف مطلوب.",
+      "phoneInvalid": "يجب أن يكون رقم الهاتف مكون من 11 أرقام."
+    }
 },
 
 "confirmReschedule": {
@@ -566,7 +632,8 @@
   "arrivalTime": "زمن الوصول",
      "bookingWay": " الحجز",
     "notes": "ملاحظات",
-    "status": "الحالة"
+    "status": "الحالة",
+    "noNotes": "لا توجد ملاحظات"
 },
 
 "confirmationModal": {
@@ -616,7 +683,7 @@
     "totalPrice": "السعر الإجمالي",
     "amountPaid": "المبلغ المدفوع",
     "remainingBalance": "الرصيد المتبقي",
-    "thankYou": "شكراً لاختيارك عيادتنا",
+    "thankYou": "جميع الحقوق محفوظة  HEALZY.",
     "noServices": "لم يتم تسجيل أي خدمات لهذا الموعد",
     "paymentDetails": "تفاصيل الدفع",
     "method": "طريقة الدفع",
@@ -663,6 +730,9 @@
   },
 
   "toastr": {
+    "receipt_download_success": "تم تنزيل الفاتورة بنجاح.",
+    "receipt_download_error": "فشل في إنشاء ملف الفاتورة.",
+    "no_receipt_info": "معلومات الفاتورة مفقودة لهذه الزيارة.",
     "no_doctor_id": "لم يتم العثور على معرف المستخدم للطبيب",
     "fetch_appointments_failed": "فشل جلب المواعيد",
     "fetch_days_failed": "فشل جلب الأيام المتاحة",
@@ -718,6 +788,23 @@
   },
 
   "patient_profile": {
+     "unit_price": "سعر الوحدة",
+    "download_receipt": "تنزيل الفاتورة",
+    "receipt_title": "إيصال الدفع",
+    "patient": "المريض",
+    "doctor": "الطبيب",
+    "total_paid": "إجمالي المدفوع",
+ "open_checkout": "فتح الدفع",
+    "total_price": "السعر الإجمالي",
+    "remaining_to_pay": "المتبقي للدفع",
+    "service_name": "اسم الخدمة",
+    "edit_attachments": "تعديل المرفقات",
+    "edit": "تعديل المرفقات",
+    "done": "تم",
+    "upload": "رفع",
+    "file_uploaded_success": "تم رفع الملف بنجاح",
+    "file_upload_failed": "فشل رفع الملف",
+    "select_file_warning": "من فضلك اختر ملف أولاً",
      "no_diagnosis_provided": "لم يتم تقديم تشخيص",
     "no_signs_provided": "لم يتم توثيق العلامات",
     "no_prescription_provided": "لم يتم إعطاء وصفة طبية",
@@ -920,6 +1007,7 @@
   },
 
   "common": {
+     "save": "حفظ",
     "cancel": "إلغاء",
      "reset": "إعادة تعيين",
     "creating": "جاري الإنشاء...",
@@ -1028,12 +1116,30 @@
   "services": {
     "title": "الخدمات الطبية",
     "services_count": "خدمة",
+    "add_new": "إضافة خدمة جديدة",
     "all_specializations": "جميع التخصصات",
     "no_services_found": "لا توجد خدمات مطابقة للتصفية المحددة",
+     "fields": {
+      "name": "اسم الخدمة",
+      "description": "الوصف",
+      "duration": "المدة المتوسطة (بالدقائق)",
+      "specialization": "التخصص"
+    },
+    
     "errors": {
+       "name_required": "اسم الخدمة مطلوب",
+      "name_min": "اسم الخدمة يجب أن يكون 3 أحرف على الأقل",
+      "description_required": "الوصف مطلوب",
+      "description_min": "الوصف يجب أن يكون 10 أحرف على الأقل",
+      "duration_required": "المدة يجب أن تكون أكبر من 0",
+      "specialization_required": "يرجى اختيار التخصص",
       "load_failed": "فشل تحميل البيانات",
       "generic": "حدث خطأ أثناء تحميل البيانات. يرجى المحاولة مرة أخرى لاحقًا."
     },
+        "messages": {
+      "create_success": "تم إنشاء الخدمة بنجاح!"
+    },
+
     "table": {
       "id": "الرقم",
       "service_name": "اسم الخدمة",
@@ -1351,7 +1457,90 @@
     "governorates_load_failed": "فشل في تحميل المحافظات",
     "governorates_load_error": "حدث خطأ أثناء تحميل المحافظات"
   }
+},
+ "user_type_modal": {
+    "title": "اختر نوع المستخدم",
+    "subtitle": "من فضلك اختر نوع المستخدم الذي تريد إضافته:",
+    "doctor": {
+      "title": "طبيب",
+      "description": "إنشاء حساب طبيب جديد"
+    },
+    "secretary": {
+      "title": "سكرتير",
+      "description": "إنشاء حساب سكرتير جديد"
+    }
+  },
+
+
+  "new_country": {
+    "errors": {
+      "name_en_required": "الاسم بالإنجليزية مطلوب",
+      "name_en_letters_only": "الاسم بالإنجليزية يجب أن يحتوي على حروف إنجليزية فقط",
+      "name_ar_required": "الاسم بالعربية مطلوب",
+      "name_ar_letters_only": "الاسم بالعربية يجب أن يحتوي على حروف عربية فقط",
+      "create_failed": "فشل في إنشاء الدولة",
+      "create_error": "حدث خطأ أثناء إنشاء الدولة"
+    },
+    "messages": {
+      "create_success": "تم إنشاء الدولة بنجاح"
+    }
+  },
+
+    "new_district": {
+    "errors": {
+      "name_en_required": "الاسم بالإنجليزية مطلوب",
+      "name_en_letters_only": "الاسم بالإنجليزية يجب أن يحتوي على حروف إنجليزية فقط",
+      "name_ar_required": "الاسم بالعربية مطلوب",
+      "name_ar_letters_only": "الاسم بالعربية يجب أن يحتوي على حروف عربية فقط",
+      "governorate_required": "يجب اختيار المحافظة",
+      "governorates_load_failed": "فشل في تحميل المحافظات",
+      "governorates_load_error": "حدث خطأ أثناء تحميل المحافظات",
+      "create_failed": "فشل في إنشاء المنطقة",
+      "create_error": "حدث خطأ أثناء إنشاء المنطقة"
+    },
+    "messages": {
+      "create_success": "تم إنشاء المنطقة بنجاح"
+    }
+  },
+
+  "revenue": {
+  "title": "تقرير الإيرادات اليومية",
+  "reportDate": "تاريخ التقرير",
+  "generated": "تم الإنشاء",
+  "secretaryForDoctor": "سكرتير الطبيب",
+  "doctor": "الطبيب",
+  "patientName": "اسم المريض",
+  "total": "الإجمالي",
+  "paid": "المدفوع",
+  "cash": "نقدًا",
+  "wallet": "محفظة",
+  "instapay": "إنستاباي",
+  "visa": "فيزا",
+  "remaining": "المتبقي",
+  "summary": "الملخص",
+  "totalCollected": "إجمالي المبلغ المُحصَّل",
+  "totalRemaining": "إجمالي المبلغ المتبقي",
+  "totalRevenue": "إجمالي الإيرادات",
+  "noDataToExport": "لا توجد بيانات للتصدير للتاريخ المحدد",
+  "shareText": "تقرير الإيرادات ليوم {date}",
+  "shareDialogTitle": "مشاركة تقرير الإيرادات",
+  "pdfSavedAndShared": "تم حفظ ملف PDF وهو جاهز للمشاركة!",
+  "pdfSavedOnly": "تم تحميل ملف PDF بنجاح!",
+  "export_pdf": "تصدير PDF",
+  "exporting": "جارٍ التصدير...",
+  "pay_remaining": "دفع المتبقي",
+    "patient_name": "اسم المريض",
+    "actions": "الإجراءات",
+    "insta": "إنستا",
+    "no_data": "لا توجد بيانات إيرادات للتاريخ المحدد.",
+    "export_tooltip": "تصدير هذا التقرير كملف PDF",
+    "select_date": "اختر التاريخ"
+
 }
+
+
+
+
 
 
 

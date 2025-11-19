@@ -1,26 +1,23 @@
 <div class="modal-container">
-  <div class="modal-header">
-    <h2>{{ 'admin_dashboard.create_user' | transloco }}</h2>
-    <p>{{ 'admin_dashboard.select_user_type' | transloco }}</p>
-  </div>
+  <h2>{{ 'user_type_modal.title' | transloco }}</h2>
+  <p>{{ 'user_type_modal.subtitle' | transloco }}</p>
 
-  <div class="options-container">
-    <div *ngFor="let option of options" class="option-card" 
-         [style.border-color]="option.color"
-         (click)="selectOption(option.route)">
-      <div class="option-icon" [style.background-color]="option.color">
-        <mat-icon>{{option.icon}}</mat-icon>
-      </div>
-      <div class="option-content">
-        <h3>{{ option.title | transloco }}</h3>
-        <p>{{ option.description | transloco }}</p>
-      </div>
-      <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+  <div class="options">
+    <div class="option-card doctor" (click)="selectUser('doctor')">
+      <div class="icon">👨‍⚕️</div>
+      <h3>{{ 'user_type_modal.doctor.title' | transloco }}</h3>
+      <p>{{ 'user_type_modal.doctor.description' | transloco }}</p>
+    </div>
+
+    <div class="option-card secretary" (click)="selectUser('secretary')">
+      <div class="icon">👩‍💼</div>
+      <h3>{{ 'user_type_modal.secretary.title' | transloco }}</h3>
+      <p>{{ 'user_type_modal.secretary.description' | transloco }}</p>
     </div>
   </div>
 
-  <div class="modal-actions">
-    <button mat-stroked-button color="primary" (click)="close()">
+  <div class="actions">
+    <button mat-stroked-button color="warn" (click)="close()">
       {{ 'common.cancel' | transloco }}
     </button>
   </div>

@@ -61,7 +61,8 @@
                 'upcoming': appointment.appointmentStatus_En === 'UpComing',
                 'in-progress': appointment.appointmentStatus_En === 'InProgress' || appointment.appointmentStatus_En === 'In Progress',
                 'arrived': appointment.appointmentStatus_En === 'Arrived',
-                'cancelled': appointment.appointmentStatus_En === 'Cancelled'
+                'cancelled': appointment.appointmentStatus_En === 'Cancelled',
+                 'next': appointment.appointmentStatus_En === 'NextInQueue'
               }">
                 {{ 'pHome.status.' + (appointment.appointmentStatus_En === 'Proccessed' ? 'done' : appointment.appointmentStatus_En.toLowerCase()) | transloco }}
               </p>
@@ -131,10 +132,9 @@
   <!-- Cancel Confirmation Modal -->
   <div class="modal-overlay" *ngIf="isCancelModalOpen">
     <div class="confirmation-modal">
-      <div class="modal-header">
-        <h2>{{ 'pHome.cancelModal.title' | transloco }}</h2>
+      <!-- <div class="modal-header">
         <button class="close-btn" (click)="closeCancelModal()">&times;</button>
-      </div>
+      </div> -->
       <div class="modal-body">
         <p>{{ 'pHome.cancelModal.message' | transloco }}</p>
       </div>

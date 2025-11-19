@@ -166,7 +166,7 @@ body, html {
 }
 
 button[type="submit"] {
-  background-color: #24CC81;
+ background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   color: white;
   border: none;
   cursor: pointer;
@@ -180,14 +180,18 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #1A9A63;
+  background-color: #24CC81;
   transform: scale(1.05);
 }
 
 .register-container a {
   margin-top: 30px; /* Increased spacing between the link and the submit button */
   display: block; /* Ensure it takes up its own line */
-  color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -283,4 +287,45 @@ button[type="submit"]:hover {
 [dir="rtl"] .form-group input,
 [dir="rtl"] .form-group select {
   text-align: right;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 45px; /* مساحة كافية للعين في LTR */
+  padding-left: 45px;  /* مساحة في RTL */
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px; /* للـ LTR */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+}
+
+.toggle-password i {
+  pointer-events: none; /* الأيقونة ما تستقبلش كليك لوحدها */
+}
+
+.toggle-password:hover {
+  color: #24CC81;
+}
+
+/* دعم RTL */
+[dir="rtl"] .toggle-password {
+  right: auto;
+  left: 15px;
+}
+
+[dir="rtl"] .password-field input {
 }

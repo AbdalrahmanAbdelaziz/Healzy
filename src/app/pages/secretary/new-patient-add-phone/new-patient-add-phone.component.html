@@ -2,40 +2,93 @@
 <app-s-sidenavbar></app-s-sidenavbar>
 
 <div class="page-container">
-  <div class="container" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
+  <div class="form-wrapper" [dir]="translocoService.getActiveLang() === 'ar' ? 'rtl' : 'ltr'">
     <h2>{{ 'booking.title' | transloco }}</h2>
 
     <form (ngSubmit)="submitAppointment()">
+      <!-- First Name -->
       <div class="form-group">
-        <label for="firstName">{{ 'booking.firstNameLabel' | transloco }} <span class="required">*</span></label>
-        <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required 
-               [placeholder]="'booking.firstNamePlaceholder' | transloco">
+        <label for="firstName">
+          {{ 'booking.firstNameLabel' | transloco }} <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          id="firstName"
+          [(ngModel)]="firstName"
+          name="firstName"
+          required
+          [placeholder]="'booking.firstNamePlaceholder' | transloco"
+        >
       </div>
 
+      <!-- Last Name -->
       <div class="form-group">
-        <label for="lastName">{{ 'booking.lastNameLabel' | transloco }} <span class="required">*</span></label>
-        <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required 
-               [placeholder]="'booking.lastNamePlaceholder' | transloco">
+        <label for="lastName">
+          {{ 'booking.lastNameLabel' | transloco }} <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="lastName"
+          name="lastName"
+          required
+          [placeholder]="'booking.lastNamePlaceholder' | transloco"
+        >
       </div>
 
-     <div class="form-group">
-  <label for="username">{{ 'register.form.username' | transloco }} <span class="required">*</span></label>
-  <input type="text" id="username" [(ngModel)]="username" name="username" required 
-         [placeholder]="'register.form.usernamePlaceholder' | transloco" minlength="4"
-         (blur)="onUsernameBlur()">
- <div class="hint">{{ 'register.form.usernameHint' | transloco }}</div>
-  <div *ngIf="usernameTouched && username.length < 4" class="error">
-    {{ 'register.formErrors.usernameMinLength' | transloco: { length: 4 } }}
-  </div>
-</div>
-
+      <!-- Username -->
       <div class="form-group">
-        <label for="phoneNumber">{{ 'booking.phoneLabel' | transloco }} <span class="required">*</span></label>
-        <input type="tel" id="phoneNumber" [(ngModel)]="phoneNumber" name="phoneNumber" required 
-               [placeholder]="'booking.phonePlaceholder' | transloco" pattern="[0-9]*" inputmode="numeric">
+        <label for="username">
+          {{ 'register.form.username' | transloco }} <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          minlength="4"
+          [placeholder]="'register.form.usernamePlaceholder' | transloco"
+          (blur)="onUsernameBlur()"
+        >
+        <!-- <div class="hint">
+          {{ 'register.form.usernameHint' | transloco }}
+        </div> -->
+
+        @if (usernameTouched && username && username.length < 4) {
+          <!-- <div class="error">
+            {{ 'register.formErrors.usernameMinLength' | transloco: { length: 4 } }}
+          </div> -->
+        }
+
+        @if (usernameTouched && username && !isValidUsername(username)) {
+          <div class="error">
+            {{ 'register.formErrors.usernamePattern' | transloco }}
+          </div>
+        }
       </div>
 
-      <button type="submit" class="submit-button">{{ 'booking.submitButton' | transloco }}</button>
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phoneNumber">
+          {{ 'booking.phoneLabel' | transloco }} <span class="required">*</span>
+        </label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          [(ngModel)]="phoneNumber"
+          name="phoneNumber"
+          required
+          [placeholder]="'booking.phonePlaceholder' | transloco"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        >
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-button">
+        {{ 'booking.submitButton' | transloco }}
+      </button>
     </form>
   </div>
 </div>

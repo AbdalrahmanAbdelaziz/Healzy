@@ -22,7 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- 🔹 This handles the Google OAuth redirect back into your app -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Must match your appId -->
+                <data android:scheme="com.healzy.app" />
+            </intent-filter>
         </activity>
+
+        <!-- 🔹 Needed for the GoogleAuth plugin -->
+        <activity
+            android:name="com.codetrixstudio.capacitor.GoogleAuth.GoogleAuthActivity"
+            android:exported="true" />
+
+       
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -31,13 +46,14 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 
     <!-- Permissions -->
+   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> 
+
 </manifest>

@@ -18,30 +18,34 @@
 
   <div class="content">
     <div class="booking-container">
-      <h2>{{ 'reschedule.confirmTitle' | transloco }}</h2>
+      <h2 class="page-title">{{ 'reschedule.confirmTitle' | transloco }}</h2>
 
       <!-- Doctor Details -->
-      <div class="doctor-card">
+      <div class="info-card">
         <img 
-        [src]="(BASE_URL + '/' + selectedDoctor?.profilePicture) || 'default-profile.png'"
-        alt="Doctor profile picture"
-        title="Doctor profile picture"
-        class="doctor-image"
-      />
+          [src]="(BASE_URL + '/' + selectedDoctor?.profilePicture) || 'default-profile.png'"
+          alt="Doctor profile picture"
+          title="Doctor profile picture"
+          class="doctor-image"
+        />
         <h3>{{ selectedDoctor?.firstName }} {{ selectedDoctor?.lastName }}</h3>
-        <p>{{ 'reschedule.specialization' | transloco }}: {{ specialization }}</p>
-        <p>{{ 'reschedule.price' | transloco }}: {{ selectedDoctor?.checkPrice }} {{ 'reschedule.currency' | transloco }}</p>
+        <p class="specialization">
+          {{ 'reschedule.specialization' | transloco }}: {{ specialization }}
+        </p>
+        <p class="price">
+          {{ 'reschedule.price' | transloco }}: {{ selectedDoctor?.checkPrice }} {{ 'reschedule.currency' | transloco }}
+        </p>
       </div>
 
       <!-- Patient Details -->
-      <div class="doctor-card">
+      <div class="info-card">
         <h3>{{ 'reschedule.patientInfo' | transloco }}</h3>
         <p><strong>{{ 'reschedule.name' | transloco }}:</strong> {{ patient?.data?.firstName }} {{ patient?.data?.lastName }}</p>
         <p><strong>{{ 'reschedule.phone' | transloco }}:</strong> {{ patient?.data?.phoneNumber }}</p>
       </div>
 
       <!-- Appointment Details -->
-      <div class="doctor-card">
+      <div class="info-card">
         <h3>{{ 'reschedule.appointmentDetails' | transloco }}</h3>
         <p><strong>{{ 'reschedule.date' | transloco }}:</strong> {{ selectedTimeSlot?.date }}</p>
         <p><strong>{{ 'reschedule.from' | transloco }}:</strong> {{ selectedTimeSlot?.startTime }}</p>
@@ -54,16 +58,15 @@
       </div>
 
       <!-- Notes Field -->
-      <div class="notes-container">
+      <div class="info-card notes-card">
         <h3>{{ 'reschedule.notes' | transloco }}</h3>
         <textarea 
-        id="appointmentNotes"
-        [(ngModel)]="notes"
-        [placeholder]="'booking.notesPlaceholder' | transloco"
-        [title]="'booking.notesLabel' | transloco"
-        aria-label="Appointment notes"
-        class="form-control"
-      ></textarea>  
+          id="appointmentNotes"
+          [(ngModel)]="notes"
+          [placeholder]="'booking.notesPlaceholder' | transloco"
+          [title]="'booking.notesLabel' | transloco"
+          aria-label="Appointment notes"
+        ></textarea>  
       </div>
 
       <!-- Confirm Reschedule Button -->
@@ -73,5 +76,3 @@
     </div>
   </div>
 </div>
-
-<app-footer></app-footer>

@@ -78,58 +78,67 @@ export class NewDistrictComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    this.submitted = true;
-    this.errors = {};
+ onSubmit(): void {
+  this.submitted = true;
+  this.errors = {};
 
-    // Validate form
-    if (!this.district.name_En) {
-      this.errors['name_En'] = this.translocoService.translate('new_district.errors.name_en_required');
-    }
-    if (!this.district.name_Ar) {
-      this.errors['name_Ar'] = this.translocoService.translate('new_district.errors.name_ar_required');
-    }
-    if (!this.district.governorateID) {
-      this.errors['governorateID'] = this.translocoService.translate('new_district.errors.governorate_required');
-    }
-
-    if (Object.keys(this.errors).length > 0) {
-      return;
-    }
-
-    this.loading = true;
-
-    this.locationService.createDistrict(this.district).subscribe({
-      next: (response: ApiResponse<any>) => {
-        this.loading = false;
-        
-        if (response.succeeded) {
-          this.snackBar.open(
-            this.translocoService.translate('new_district.messages.create_success'),
-            'Close',
-            { 
-              duration: 3000, 
-              panelClass: ['success-snackbar'],
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom'
-            }
-          );
-          
-          // Redirect to districts list after success
-          setTimeout(() => {
-            this.router.navigate(['/districts']);
-          }, 1500);
-        } else {
-          this.showError(response.message || this.translocoService.translate('new_district.errors.create_failed'));
-        }
-      },
-      error: (err) => {
-        this.loading = false;
-        this.showError(this.translocoService.translate('new_district.errors.create_error'));
-        console.error('Error creating district:', err);
-      }
-    });
+  // Validate English name
+  if (!this.district.name_En) {
+    this.errors['name_En'] = this.translocoService.translate('new_district.errors.name_en_required');
+  } else if (!/^[A-Za-z\s]+$/.test(this.district.name_En)) {
+    this.errors['name_En'] = this.translocoService.translate('new_district.errors.name_en_letters_only');
   }
+
+  // Validate Arabic name
+  if (!this.district.name_Ar) {
+    this.errors['name_Ar'] = this.translocoService.translate('new_district.errors.name_ar_required');
+  } else if (!/^[\u0600-\u06FF\s]+$/.test(this.district.name_Ar)) {
+    this.errors['name_Ar'] = this.translocoService.translate('new_district.errors.name_ar_letters_only');
+  }
+
+  // Validate governorate selection
+  if (!this.district.governorateID || this.district.governorateID === 0) {
+    this.errors['governorateID'] = this.translocoService.translate('new_district.errors.governorate_required');
+  }
+
+  // Stop if errors exist
+  if (Object.keys(this.errors).length > 0) {
+    return;
+  }
+
+  this.loading = true;
+
+  this.locationService.createDistrict(this.district).subscribe({
+    next: (response: ApiResponse<any>) => {
+      this.loading = false;
+      
+      if (response.succeeded) {
+        this.snackBar.open(
+          this.translocoService.translate('new_district.messages.create_success'),
+          'Close',
+          { 
+            duration: 3000, 
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
+          }
+        );
+        
+        setTimeout(() => {
+          this.router.navigate(['/districts']);
+        }, 1500);
+      } else {
+        this.showError(response.message || this.translocoService.translate('new_district.errors.create_failed'));
+      }
+    },
+    error: (err) => {
+      this.loading = false;
+      this.showError(this.translocoService.translate('new_district.errors.create_error'));
+      console.error('Error creating district:', err);
+    }
+  });
+}
+
 
   onCancel(): void {
     this.router.navigate(['/districts']);

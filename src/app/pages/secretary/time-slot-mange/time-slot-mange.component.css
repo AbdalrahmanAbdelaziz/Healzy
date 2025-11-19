@@ -14,7 +14,10 @@
   font-size: 2.2rem;
   font-weight: 600; /* Semi-bold */
   margin-bottom: 30px;
-  letter-spacing: -0.5px; /* Slightly tighter letter spacing */
+  letter-spacing: -0.5px; 
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Form Elements */
@@ -102,7 +105,7 @@ input::-webkit-inner-spin-button {
 
 /* Submit Button */
 button {
-  background: #24CC81; /* Bright green */
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   color: white;
   border: none;
   padding: 14px;
@@ -118,7 +121,7 @@ button {
 
 /* Hover Effect for Button */
 button:hover {
-  background: #1A9A63; /* Darker green on hover */
+  background: #24CC81; /* Darker green on hover */
   transform: translateY(-2px); /* Slight lift */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
 }
@@ -175,10 +178,9 @@ select:hover {
   border-color: #24CC81; /* Bright green on hover */
 }
 
-/* Focus State for Labels */
-input:focus + label,
+
 select:focus + label {
-  color: #24CC81; /* Bright green for focused labels */
+  color: #24CC81; 
 }
 
 /* Add this to your existing media query */

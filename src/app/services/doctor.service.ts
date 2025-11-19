@@ -7,16 +7,17 @@ import { BASE_URL } from '../shared/constants/urls';
 import { APIResponse } from '../shared/models/api-response.dto';
 import { DoctorsRevenueResponse } from '../shared/models/DoctorsRevenueResponse';
 import { DoctorRevenue } from '../shared/models/DoctorRevenue';
+import { MedicalRecordEntry } from '../shared/models/medical-record-entry.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DoctorService {
-    private apiUrl = BASE_URL + '/api/Doctor'; 
+  private apiUrl = BASE_URL + '/api/Doctor'; 
 
   constructor(private http: HttpClient) {}
 
-   getCheckPriceByDocId(docId: number): Observable<number> {
+  getCheckPriceByDocId(docId: number): Observable<number> {
     return this.http.post<{
       data: number,
       statusCode: number,
@@ -58,24 +59,54 @@ export class DoctorService {
   }
 
   getDoctorDayFinalRevenue(docId: number, date: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/getDoctorDayFinalRevenue`, {
-      docId,
-      date
-    });
+    return this.http.post(`${this.apiUrl}/getDoctorDayFinalRevenue`, { docId, date });
   }
 
   getDoctorsWithRevenueForMonth(month: number, year: number): Observable<DoctorsRevenueResponse<DoctorRevenue[]>> {
-  return this.http.post<DoctorsRevenueResponse<DoctorRevenue[]>>(
-    `${this.apiUrl}/getDoctorsWithRevenuForMonth`, 
-    { month, year }
-  );
+    return this.http.post<DoctorsRevenueResponse<DoctorRevenue[]>>(
+      `${this.apiUrl}/getDoctorsWithRevenuForMonth`, 
+      { month, year }
+    );
+  }
+
+  getDoctorAppointmentsForMonth(doctorId: number, month: number, year: number): Observable<DoctorsRevenueResponse<any[]>> {
+    return this.http.post<DoctorsRevenueResponse<any[]>>(
+      `${BASE_URL}/api/Appointment/getDrAppointmentsForMonth`,
+      { doctorId, month, year }
+    );
+  }
+
+  // ---------------- New Method for Secretary ----------------
+getDoctorsFromSecretary(): Observable<Doctor> {
+  return this.http.post<{ data: Doctor }>(`${BASE_URL}/api/Secretary/getDoctor`, {})
+    .pipe(map(res => res.data));
 }
 
-// Add this to your DoctorService
-getDoctorAppointmentsForMonth(doctorId: number, month: number, year: number): Observable<DoctorsRevenueResponse<any[]>> {
-  return this.http.post<DoctorsRevenueResponse<any[]>>(
-    `${BASE_URL}/api/Appointment/getDrAppointmentsForMonth`,
-    { doctorId, month, year }
-  );
+
+
+
+  // ---------------- New Method for Specializations ----------------
+getSpecializations(): Observable<any> {
+  return this.http.get<{ data: any }>(`${this.apiUrl}/getSpecialization`)
+    .pipe(map(response => response.data));  
 }
+
+
+
+editMedicalRecordEntry(entry: MedicalRecordEntry): Observable<MedicalRecordEntry> {
+  return this.http.put<{ data: MedicalRecordEntry }>(
+    `${this.apiUrl}/editMedicalRecordEntry`,
+    entry
+  ).pipe(map(res => res.data));
+}
+
+addFileToMedicalRecordEntry(entryId: number, file: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('MedicalRecordEntryId', entryId.toString());
+  formData.append('File', file);
+
+  return this.http.put(`${this.apiUrl}/addFileToMedicalRecordEntry`, formData);
+}
+
+
 }

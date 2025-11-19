@@ -17,14 +17,17 @@
               class="form-control" 
               id="name_En"
               formControlName="name_En"
-              [ngClass]="{ 'is-invalid': f['name_En'].touched && f['name_En'].errors }"
+              [ngClass]="{ 'is-invalid': (f['name_En'].touched || isSubmitted) && f['name_En'].errors }"
             >
-            <div *ngIf="f['name_En'].touched && f['name_En'].errors" class="invalid-feedback">
+            <div *ngIf="(f['name_En'].touched || isSubmitted) && f['name_En'].errors" class="invalid-feedback">
               <div *ngIf="f['name_En'].errors?.['required']">
                 {{ 'validation.english_name_required' | transloco }}
               </div>
               <div *ngIf="f['name_En'].errors?.['maxlength']">
                 {{ 'validation.max_length_50' | transloco }}
+              </div>
+              <div *ngIf="f['name_En'].errors?.['pattern']">
+                {{ 'validation.only_english_letters' | transloco }}
               </div>
             </div>
           </div>
@@ -38,14 +41,17 @@
               id="name_Ar"
               formControlName="name_Ar"
               dir="rtl"
-              [ngClass]="{ 'is-invalid': f['name_Ar'].touched && f['name_Ar'].errors }"
+              [ngClass]="{ 'is-invalid': (f['name_Ar'].touched || isSubmitted) && f['name_Ar'].errors }"
             >
-            <div *ngIf="f['name_Ar'].touched && f['name_Ar'].errors" class="invalid-feedback">
+            <div *ngIf="(f['name_Ar'].touched || isSubmitted) && f['name_Ar'].errors" class="invalid-feedback">
               <div *ngIf="f['name_Ar'].errors?.['required']">
                 {{ 'validation.arabic_name_required' | transloco }}
               </div>
               <div *ngIf="f['name_Ar'].errors?.['maxlength']">
                 {{ 'validation.max_length_50' | transloco }}
+              </div>
+              <div *ngIf="f['name_Ar'].errors?.['pattern']">
+                {{ 'validation.only_arabic_letters' | transloco }}
               </div>
             </div>
           </div>

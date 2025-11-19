@@ -21,9 +21,8 @@ import { interval, Subscription, switchMap } from 'rxjs';
     FormsModule,
     DHeaderComponent,
     ConfirmationModalComponent,
-    TranslocoModule,
-    FooterComponent
-  ],
+    TranslocoModule
+    ],
   templateUrl: './appointments-list.component.html',
   styleUrl: './appointments-list.component.css'
 })
@@ -273,9 +272,17 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  canCancelAppointment(status: string): boolean {
-    return status !== 'Proccessed' && status !== 'Cancelled';
-  }
+canCancelAppointment(status: string): boolean {
+  const normalized = status.toLowerCase();
+  return normalized !== 'processed' && 
+         normalized !== 'proccessed' && 
+         normalized !== 'finished' && 
+         normalized !== 'cancelled';
+}
+
+
+
+  
 
   canRescheduleAppointment(status: string): boolean {
     return status === 'upcoming';

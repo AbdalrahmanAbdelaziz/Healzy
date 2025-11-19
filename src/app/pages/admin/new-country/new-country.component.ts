@@ -53,54 +53,62 @@ export class NewCountryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(): void {
-    this.submitted = true;
-    this.errors = {};
+onSubmit(): void {
+  this.submitted = true;
+  this.errors = {};
 
-    // Validate form
-    if (!this.country.name_En || !this.country.name_Ar) {
-      if (!this.country.name_En) {
-        this.errors['name_En'] = this.translocoService.translate('new_country.errors.name_en_required');
-      }
-      if (!this.country.name_Ar) {
-        this.errors['name_Ar'] = this.translocoService.translate('new_country.errors.name_ar_required');
-      }
-      return;
-    }
-
-    this.loading = true;
-
-    this.locationService.createCountry(this.country).subscribe({
-      next: (response: ApiResponse<any>) => {
-        this.loading = false;
-        
-        if (response.succeeded) {
-          this.snackBar.open(
-            this.translocoService.translate('new_country.messages.create_success'),
-            'Close',
-            { 
-              duration: 3000, 
-              panelClass: ['success-snackbar'],
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom'
-            }
-          );
-          
-          // Redirect to countries list after success
-          setTimeout(() => {
-            this.router.navigate(['/countries']);
-          }, 1500);
-        } else {
-          this.showError(response.message || this.translocoService.translate('new_country.errors.create_failed'));
-        }
-      },
-      error: (err) => {
-        this.loading = false;
-        this.showError(this.translocoService.translate('new_country.errors.create_error'));
-        console.error('Error creating country:', err);
-      }
-    });
+  // Validate English name
+  if (!this.country.name_En) {
+    this.errors['name_En'] = this.translocoService.translate('new_country.errors.name_en_required');
+  } else if (!/^[A-Za-z\s]+$/.test(this.country.name_En)) {
+    this.errors['name_En'] = this.translocoService.translate('new_country.errors.name_en_letters_only');
   }
+
+  // Validate Arabic name
+  if (!this.country.name_Ar) {
+    this.errors['name_Ar'] = this.translocoService.translate('new_country.errors.name_ar_required');
+  } else if (!/^[\u0600-\u06FF\s]+$/.test(this.country.name_Ar)) {
+    this.errors['name_Ar'] = this.translocoService.translate('new_country.errors.name_ar_letters_only');
+  }
+
+  // Stop if validation failed
+  if (Object.keys(this.errors).length > 0) {
+    return;
+  }
+
+  this.loading = true;
+
+  this.locationService.createCountry(this.country).subscribe({
+    next: (response: ApiResponse<any>) => {
+      this.loading = false;
+
+      if (response.succeeded) {
+        this.snackBar.open(
+          this.translocoService.translate('new_country.messages.create_success'),
+          'Close',
+          {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
+          }
+        );
+
+        setTimeout(() => {
+          this.router.navigate(['/countries']);
+        }, 1500);
+      } else {
+        this.showError(response.message || this.translocoService.translate('new_country.errors.create_failed'));
+      }
+    },
+    error: (err) => {
+      this.loading = false;
+      this.showError(this.translocoService.translate('new_country.errors.create_error'));
+      console.error('Error creating country:', err);
+    }
+  });
+}
+
 
   onCancel(): void {
     this.router.navigate(['/countries']);

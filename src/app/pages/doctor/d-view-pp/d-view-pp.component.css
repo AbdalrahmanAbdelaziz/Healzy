@@ -12,7 +12,11 @@
   border-bottom: 1px solid #e0e0e0;
 }
 .profile-header h2 {
-  color: #2c3e50;
+  background: linear-gradient(90deg, #24CC81, #165B40);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin-bottom: 0.75rem;
   font-size: 1.5rem;
 }
@@ -60,7 +64,7 @@
 
 .patient-basic-info h3 {
   margin: 0 0 0.5rem 0;
-  color: #2c3e50;
+  color: #333;
   font-size: 1.3rem;
 }
 
@@ -162,7 +166,7 @@
 }
 .receipt-header h3 {
   margin: 0 0 1.25rem 0;
-  color: #2c3e50;
+  color: #333;
   font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -0.5px;
@@ -1035,6 +1039,7 @@
 }
 
 /* Visit History Tab */
+/* Visit History Tab */
 .history-tab {
   background-color: white;
   border-radius: 10px;
@@ -1107,11 +1112,11 @@
   background-color: white;
 }
 
-.diagnosis-section, .services-section, .attachments-section {
+.diagnosis-section, .treatment-section, .services-section, .attachments-section {
   margin-bottom: 1.5rem;
 }
 
-.diagnosis-section h4, .services-section h4, .attachments-section h4 {
+.diagnosis-section h4, .signs-section h4, .signs-section h4,.prescription-section h4 , .services-section h4, .attachments-section h4 {
   color: #24CC81;
   margin-bottom: 0.75rem;
 }
@@ -2004,3 +2009,87 @@ input:checked + .toggle-slider:before {
     align-self: flex-end;
   }
 }
+
+.attachments-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.attachment-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 150px;
+  text-align: center;
+  background: #fafafa;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.attachment-thumb {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.attachment-thumb:hover {
+  transform: scale(1.05);
+}
+
+.attachment-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.attachment-info {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.view-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 1rem;
+}
+
+.view-btn:hover {
+  color: #0056b3;
+}
+
+
+.patient-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  font-weight: bold;
+  font-size: 20px;
+  color: #555;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d9d9d9;
+  color: #333;
+}
+

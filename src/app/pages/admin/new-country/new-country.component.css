@@ -4,6 +4,7 @@
   max-width: 800px;
   margin: 0 auto;
   min-height: calc(100vh - 64px);
+  padding-top: 100px;
 }
 
 .header-section {

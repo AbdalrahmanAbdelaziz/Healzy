@@ -8,6 +8,8 @@ import { PatientService } from '../../../services/patient.service';
 import { LoginResponse } from '../../../shared/models/login-response';
 import { UserService } from '../../../services/user.service';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { DoctorService } from '../../../services/doctor.service';
+import { Doctor } from '../../../shared/models/doctor.model';
 
 @Component({
   selector: 'app-walk-in',
@@ -21,7 +23,7 @@ import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
     TranslocoModule
   ],
   templateUrl: './walk-in.component.html',
-  styleUrl: './walk-in.component.css'
+  styleUrls: ['./walk-in.component.css']
 })
 export class WalkInComponent implements OnInit {
   phoneNumber: string = '';
@@ -29,9 +31,11 @@ export class WalkInComponent implements OnInit {
   isRegistered: boolean | null = null;
   bookingWayId: number | null = null;
   bookingWayName: string | null = null;
+  doctorId!: number;
 
   constructor(
     private patientService: PatientService,
+    private doctorService: DoctorService,
     private router: Router,
     private userService: UserService,
     public translocoService: TranslocoService,
@@ -42,65 +46,76 @@ export class WalkInComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.bookingWayId = params['bookingWayId'] ? Number(params['bookingWayId']) : null;
       this.bookingWayName = params['bookingWayName'] || null;
-      
-      console.log('Walk-In Booking Way ID:', this.bookingWayId);
-      console.log('Walk-In Booking Way Name:', this.bookingWayName);
     });
-  }
 
-  checkRegistration() {
-    if (!this.phoneNumber) {
-      console.error('Phone number is required.');
-      return;
-    }
+    const user: LoginResponse | null = this.userService.getUser();
 
-    this.patientService.checkPatientByPhone(this.phoneNumber).subscribe(
-      (response) => {
-        if (response.succeeded && response.data > 0) {
-          this.patientId = response.data;
-          this.isRegistered = true;
-          console.log('Patient is registered with ID:', this.patientId);
-        } else {
-          this.patientId = null;
-          this.isRegistered = false;
-          console.log('Patient is not registered.');
+    if (user?.data.applicationRole_En === 'Secretary') {
+      this.doctorService.getDoctorsFromSecretary().subscribe({
+        next: (doctor: Doctor) => {
+          if (doctor && doctor.id) {
+            this.doctorId = doctor.id;
+            this.userService.setDoctorIdForSecretary(this.doctorId);
+          } else {
+            console.warn('No doctor assigned to this secretary.');
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching doctor for secretary:', err);
         }
-      },
-      (error) => {
-        console.error('Error checking registration:', error);
-        this.isRegistered = false;
-        this.patientId = null;
-      }
-    );
+      });
+    } else if (user?.data.applicationRole_En === 'Doctor') {
+      this.doctorId = user.data.id;
+    } else {
+      console.error('No valid doctor ID available.');
+    }
   }
+
+checkRegistration() {
+  if (!this.phoneNumber.match(/^[0-9]{11}$/)) {
+    console.warn('Invalid phone number. Must be 11 digits.');
+    return;
+  }
+
+  this.patientService.checkPatientByPhone(this.phoneNumber).subscribe(
+    (response) => {
+      if (response.succeeded && response.data > 0) {
+        this.patientId = response.data;
+        this.isRegistered = true;
+      } else {
+        this.patientId = null;
+        this.isRegistered = false;
+      }
+    },
+    (error) => {
+      console.error('Error checking registration:', error);
+      this.isRegistered = false;
+      this.patientId = null;
+    }
+  );
+}
 
   goToRegister() {
-    const user: LoginResponse | null = this.userService.getUser();
-    if (user && user.data.doctorId) {
+    if (this.doctorId) {
       this.router.navigate(['/add-patient-walk'], {
         queryParams: { 
-          docId: user.data.doctorId,
+          docId: this.doctorId,
           phoneNumber: this.phoneNumber,
           bookingWayId: this.bookingWayId,
           bookingWayName: this.bookingWayName
         }
       });
-    } else {
-      console.error('Error: Secretary login response does not contain a doctorId.');
     }
   }
 
   goToAppointments() {
-    const user: LoginResponse | null = this.userService.getUser();
-    if (user && user.data.doctorId && this.patientId) {
-      this.router.navigate([`/sec-doctor-appointments-walk/${user.data.doctorId}/${this.patientId}`], {
+    if (this.doctorId && this.patientId) {
+      this.router.navigate([`/sec-doctor-appointments-walk/${this.doctorId}/${this.patientId}`], {
         queryParams: {
           bookingWayId: this.bookingWayId,
           bookingWayName: this.bookingWayName
         }
       });
-    } else {
-      console.error('Doctor ID or Patient ID is not available.');
     }
   }
 }

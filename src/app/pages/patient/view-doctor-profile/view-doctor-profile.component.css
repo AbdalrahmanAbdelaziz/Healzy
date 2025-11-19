@@ -17,11 +17,11 @@
   align-items: flex-start;
   width: 80%;
   max-width: 1100px;
-  background: #24CC81;
+  background: #f5f7fa;
   border-radius: 15px;
   padding: 3rem;
   text-align: left;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px #24CC81;
   margin-bottom: 3rem;
   margin-top: 150px;
 }
@@ -39,8 +39,8 @@
   height: 280px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3);
-  border: 5px solid #165B40;
+  box-shadow: 0 10px 25px #24CC81;
+  border: 5px solid #24CC81;
 }
 
 /* Doctor Details Section */
@@ -53,14 +53,22 @@
 .name {
   font-size: 2.2rem;
   font-weight: bold;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin-bottom: 0.8rem;
 }
 
 /* Info Group */
 .info-group {
   font-size: 1.2rem;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
@@ -70,21 +78,25 @@
 }
 
 .info-group span {
-  color: #165B40;
+color: #333;
   font-weight: bold;
 }
 
 /* Bio Section */
 .bio {
   font-size: 1.1rem;
-  color: #E0E0E0;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin: 1.5rem 0;
   line-height: 1.6;
 }
 
 /* Appointment Button */
 button {
-  background: #165B40;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   color: white;
   border: none;
   font-size: 1.2rem;
@@ -97,7 +109,7 @@ button {
 }
 
 button:hover {
-  background: #1A9A63;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -111,8 +123,11 @@ button:hover {
 
 .section-title {
   font-size: 1.8rem;
-  color: #165B40;
-  margin-bottom: 1.5rem;
+ background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;  margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 2px solid #24CC81;
 }
@@ -125,17 +140,17 @@ button:hover {
 
 /* Feedback Card */
 .feedback-card {
-  background: #24CC81;
+  background: #f5f7fa;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px #24CC81;
   transition: transform 0.3s ease;
-  border-left: 5px solid #165B40;
+  border-left: 5px solid #24CC81;
 }
 
 .feedback-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 25px #24CC81;
 }
 
 .feedback-header {
@@ -169,7 +184,11 @@ button:hover {
 
 .patient-name {
   font-weight: 600;
-  color: white;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1.1rem;
 }
 
@@ -190,7 +209,7 @@ button:hover {
 
 /* Comment Styling */
 .feedback-comment {
-  background: #1A9A63;
+  background: #24CC81;
   padding: 1.2rem 1.5rem;
   border-radius: 10px;
   border: 1px solid #e0e0e0;
@@ -262,7 +281,11 @@ button:hover {
 
 .rating-text {
   font-size: 1.2rem;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-weight: 500;
 }
 
@@ -273,7 +296,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  color: #165B40;
+  color: #24CC81;
 }
 
 .loading-spinner i {
@@ -377,11 +400,19 @@ button:hover {
 }
 
 .tabs button:hover {
-  color: #24CC81;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
 }
 
 .tabs button.active {
-  color: #24CC81;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
 }
 
 .tabs button.active::after {
@@ -391,7 +422,11 @@ button:hover {
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: #24CC81;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
 }
 
 /* Clinic Tab Styles */
@@ -410,7 +445,7 @@ button:hover {
 
 .clinic-info-card {
   flex: 1;
-  background: #24CC81;
+  background: #f5f7fa;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
@@ -429,7 +464,11 @@ button:hover {
 
 .clinic-title h3 {
   font-size: 1.8rem;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin: 0 0 0.5rem 0;
   font-weight: 700;
 }
@@ -464,11 +503,14 @@ button:hover {
 }
 
 .contact-item i {
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1.2rem;
-  color: #165B40;
   width: 30px;
   height: 30px;
-  background: rgba(36, 204, 129, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -484,7 +526,11 @@ button:hover {
 
 .contact-value {
   font-size: 1rem;
-  color: #fff;
+    background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-weight: 500;
 }
 
@@ -494,7 +540,11 @@ button:hover {
 
 .section-subtitle {
   font-size: 1.3rem;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin: 0 0 1.5rem 0;
   display: flex;
   align-items: center;
@@ -503,7 +553,11 @@ button:hover {
 }
 
 .section-subtitle i {
-  color: #165B40;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1.1rem;
 }
 
@@ -524,7 +578,11 @@ button:hover {
 }
 
 .location-item i {
-  color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1.1rem;
 }
 
@@ -594,10 +652,13 @@ button:hover {
 }
 
 .gallery-overlay i {
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 2rem;
-  background: rgba(36, 204, 129, 0.8);
-  width: 60px;
+background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);  width: 60px;
   height: 60px;
   border-radius: 50%;
   display: flex;
@@ -607,7 +668,7 @@ button:hover {
 
 .no-gallery {
   padding: 3rem 2rem;
-  background: #f8f9fa;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   border-radius: 8px;
   text-align: center;
 }
@@ -622,7 +683,11 @@ button:hover {
 
 .no-content-message i {
   font-size: 2.5rem;
-  color: #ddd;
+   background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
 }
 
 .no-content-message p {
@@ -637,7 +702,7 @@ button:hover {
 
 .map-placeholder {
   height: 300px;
-  background: #f5f7fa;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -665,7 +730,7 @@ button:hover {
 }
 
 .sidebar-card {
-  background: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 1.5rem;
@@ -674,7 +739,11 @@ button:hover {
 
 .sidebar-title {
   font-size: 1.2rem;
-  color: #165B40;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   margin: 0 0 1.5rem 0;
   display: flex;
   align-items: center;
@@ -683,7 +752,11 @@ button:hover {
 }
 
 .sidebar-title i {
-  color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1.1rem;
 }
 
@@ -711,7 +784,11 @@ button:hover {
 }
 
 .hours-row .time {
-  color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-weight: 600;
 }
 
@@ -732,7 +809,11 @@ button:hover {
 }
 
 .facilities-list i {
-  color: #24CC81;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 0.9rem;
 }
 
@@ -764,7 +845,11 @@ button:hover {
   right: 0;
   background: none;
   border: none;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
@@ -776,7 +861,11 @@ button:hover {
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.2);
   border: none;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -820,7 +909,11 @@ button:hover {
   left: 0;
   right: 0;
   text-align: center;
-  color: white;
+  background: linear-gradient(135deg, #1ABC9C 0%, #16A085 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; 
+  color: transparent;
   font-size: 1rem;
 }
 

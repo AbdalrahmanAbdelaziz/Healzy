@@ -20,7 +20,7 @@ export class AuthenticationService {
 
   addNewPatient(formData: FormData): Observable<APIResponse<LoginResponse>> {
     return this._httpClient.post<APIResponse<LoginResponse>>(
-      `${this._envService.getApiUrl()}/api/Authentiction/createPatient`, 
+      `${this._envService.getApiUrl()}/api/Authentication/createPatient`, 
       formData
     ).pipe(
       tap({

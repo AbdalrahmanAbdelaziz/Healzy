@@ -1,89 +1,112 @@
-<div class="bg-img" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
-  <div class="overlay"></div>
-  <div class="cover-image">
-    <img src="www.jpg" alt="" role="presentation" class="full-cover">
-  </div>
+<div class="login-page-container">
+  <div class="bg-img" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <div class="overlay"></div>
+    <div class="cover-image">
+      <img src="www.jpg" alt="" role="presentation" class="full-cover" />
+    </div>
+    <div class="navbar-spacer"></div>
 
-  <div class="navbar-spacer"></div>
+    <div class="content">
+      <img src="vv_b.png" alt="" class="logo" routerLink="/" />
 
-  <div class="content">
-    <img src="vv_b.png" alt="" class="logo" routerLink="/" />
-    
-    <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      <!-- الحقول الحالية -->
-      <div class="field">
-        <span class="fa fa-user"></span>
-        <label for="emailUsernamePhone" class="sr-only">
-          {{ 'login.emailLabel' | transloco }}
-        </label>
-        <input
-          id="emailUsernamePhone"
-          type="text"
-          formControlName="EmailOrUsernameOrPhone"
-          [placeholder]="'login.emailPlaceholder' | transloco"
-          [attr.aria-label]="'login.form.emailLabel' | transloco"
-          required
-        />
-        <div *ngIf="isSubmitted && fc['EmailOrUsernameOrPhone'].invalid" class="error">
-          {{ 'login.emailRequired' | transloco }}
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <!-- Email / Username / Phone -->
+        <div class="field">
+          <span class="fa fa-user"></span>
+          <label for="emailUsernamePhone" class="sr-only">
+            {{ 'login.emailLabel' | transloco }}
+          </label>
+          <input
+            id="emailUsernamePhone"
+            type="text"
+            formControlName="EmailOrUsernameOrPhone"
+            [placeholder]="'login.emailPlaceholder' | transloco"
+            [attr.aria-label]="'login.form.emailLabel' | transloco"
+            required
+          />
+          <div
+            *ngIf="isSubmitted && fc['EmailOrUsernameOrPhone'].invalid"
+            class="error"
+          >
+            {{ 'login.emailRequired' | transloco }}
+          </div>
         </div>
-      </div>
-      
-      <div class="field space">
-        <span class="fa fa-lock"></span>
-        <label for="passwordInput" class="sr-only">
-          {{ 'login.passwordLabel' | transloco }}
-        </label>
-        <input
-          id="passwordInput"
-          type="password"
-          formControlName="password"
-          class="pass-key"
-          [placeholder]="'login.passwordPlaceholder' | transloco"
-          required
-        />
-        <div *ngIf="isSubmitted && fc['password'].invalid" class="error">
-          {{ 'login.passwordRequired' | transloco }}
+
+        <!-- Password -->
+        <div class="field space">
+          <span class="fa fa-lock"></span>
+          <label for="passwordInput" class="sr-only">
+            {{ 'login.passwordLabel' | transloco }}
+          </label>
+          <input
+            id="passwordInput"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            class="pass-key"
+            [placeholder]="'login.passwordPlaceholder' | transloco"
+            required
+          />
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="togglePasswordVisibility()"
+            aria-label="Toggle password visibility"
+          >
+            <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+          <div *ngIf="isSubmitted && fc['password'].invalid" class="error">
+            {{ 'login.passwordRequired' | transloco }}
+          </div>
         </div>
+
+        <!-- Captcha -->
+        <div class="field" *ngIf="showCaptcha">
+          <re-captcha
+            formControlName="recaptcha"
+            (resolved)="onCaptchaResolved($event)"
+            siteKey="6LfiQ78rAAAAANFJaQLXeEZt_z89YgXwpozrTF52"
+          >
+          </re-captcha>
+          <div *ngIf="isSubmitted && fc['recaptcha'].invalid" class="error">
+            {{ 'login.captchaRequired' | transloco }}
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="field">
+          <input type="submit" [value]="'login.login' | transloco" />
+        </div>
+
+        <!-- Google Login Section -->
+        <!-- <div class="google-login-section">
+          <div class="or-separator">
+            <span>{{ 'login.or' | transloco }}</span>
+          </div>
+          <button
+            type="button"
+            (click)="googleLogin()"
+            class="google-login-btn"
+          >
+            <img src="google-icon.png" alt="Google icon" />
+            <span>{{ 'login.signInWithGoogle' | transloco }}</span>
+          </button> -->
+          <!-- Web fallback (only rendered by script if needed) -->
+          <!-- <div id="googleLoginButton"></div>
+        </div> -->
+
+        <!-- Forgot Password -->
+        <div class="forgot-password">
+          <a routerLink="/forget-password">
+            {{ 'login.forgotPassword' | transloco }}
+          </a>
+        </div>
+      </form>
+
+      <!-- Sign Up -->
+      <div class="signup">
+        {{ 'login.noAccount' | transloco }}
+        <a routerLink="/register">{{ 'login.signUp' | transloco }}</a>
       </div>
-
-
-      <div class="field" *ngIf="showCaptcha">
-  <re-captcha 
-    formControlName="recaptcha"
-    (resolved)="onCaptchaResolved($event)"
-    siteKey="6LfiQ78rAAAAANFJaQLXeEZt_z89YgXwpozrTF52"> <!-- Replace with your real site key -->
-  </re-captcha>
-  <div *ngIf="isSubmitted && fc['recaptcha'].invalid" class="error">
-    {{ 'login.captchaRequired' | transloco }}
-  </div>
-</div>
-
-
-      <div class="field">
-        <input type="submit" [value]="'login.login' | transloco" />
-      </div>
-
-      <!-- Add this after your existing form or as a separate login option -->
-<div class="google-login-section">
-  <div class="or-separator">
-    <span>{{ 'login.or' | transloco }}</span>
-  </div>
-  
-  <button type="button" (click)="loginWithGoogle()" class="google-login-btn">
-    <img src="google-icon.png" alt="Google icon">
-    <span>{{ 'login.signInWithGoogle' | transloco }}</span>
-  </button>
-</div>
-
-      <div class="forgot-password">
-        <a routerLink="/forget-password">{{ 'login.forgotPassword' | transloco }}</a>
-      </div>
-    </form>
-
-    <div class="signup">
-      {{ 'login.noAccount' | transloco }} 
-      <a routerLink="/register">{{ 'login.signUp' | transloco }}</a>
     </div>
   </div>
 </div>
