@@ -22,7 +22,7 @@ import { interval, Subscription, switchMap } from 'rxjs';
     DHeaderComponent,
     ConfirmationModalComponent,
     TranslocoModule
-    ],
+  ],
   templateUrl: './appointments-list.component.html',
   styleUrl: './appointments-list.component.css'
 })
@@ -82,16 +82,29 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
             return appointment.timeSlot?.date === this.selectedDate;
           });
 
-          // Check for new NextInQueue appointments
-          this.checkForNextInQueueChanges(newAppointments);
+          // Sort appointments by timeslot start time
+          const sortedAppointments = this.sortAppointmentsByTime(newAppointments);
 
-          this.appointments = newAppointments;
+          // Check for new NextInQueue appointments
+          this.checkForNextInQueueChanges(sortedAppointments);
+
+          this.appointments = sortedAppointments;
           this.cdr.detectChanges();
         },
         error: (error) => {
           this.toastr.error(this.getTranslation('errors.fetchAppointments'), 'Error');
         },
       });
+  }
+
+  private sortAppointmentsByTime(appointments: any[]): any[] {
+    return [...appointments].sort((a, b) => {
+      const timeA = a.timeSlot?.startTime || '00:00:00';
+      const timeB = b.timeSlot?.startTime || '00:00:00';
+      
+      // Compare times in HH:MM:SS format
+      return timeA.localeCompare(timeB);
+    });
   }
 
   private checkForNextInQueueChanges(newAppointments: any[]): void {
@@ -153,10 +166,13 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
           return appointment.timeSlot?.date === date;
         });
 
-        // Check for new NextInQueue appointments
-        this.checkForNextInQueueChanges(newAppointments);
+        // Sort appointments by timeslot start time
+        const sortedAppointments = this.sortAppointmentsByTime(newAppointments);
 
-        this.appointments = newAppointments;
+        // Check for new NextInQueue appointments
+        this.checkForNextInQueueChanges(sortedAppointments);
+
+        this.appointments = sortedAppointments;
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -272,17 +288,13 @@ export class AppointmentsListComponent implements OnInit, OnDestroy {
     }
   }
 
-canCancelAppointment(status: string): boolean {
-  const normalized = status.toLowerCase();
-  return normalized !== 'processed' && 
-         normalized !== 'proccessed' && 
-         normalized !== 'finished' && 
-         normalized !== 'cancelled';
-}
-
-
-
-  
+  canCancelAppointment(status: string): boolean {
+    const normalized = status.toLowerCase();
+    return normalized !== 'processed' && 
+           normalized !== 'proccessed' && 
+           normalized !== 'finished' && 
+           normalized !== 'cancelled';
+  }
 
   canRescheduleAppointment(status: string): boolean {
     return status === 'upcoming';
